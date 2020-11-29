@@ -1,0 +1,248 @@
+<!--The HTML code is property to Mr. You (Kristiyan Valchev) and can only be viewed-->
+<!--If you want to use part of the code, please first contact me: mr.youdevelopment@gmail.com-->
+
+<html id = "html">
+    <head>
+        <link href = "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">        <link type = "text/css" rel = "stylesheet" href = "Files/Style.css">
+        <link rel = "icon" href = "Images/Logo.png" type = "image" sizes = "16x16">
+
+        <meta charset = "utf-8">
+        <meta name = "description" content = "This is a website for ...">
+        <meta name = "keywords" content = "..., ...">
+        <meta name = "author" content = "Kristiyan Valchev">
+        <meta name = "viewport" content = "width = device-width, user-scalable = no, initial-scale = 1">
+        
+        <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
+        <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
+        <script type = "text/javascript" src = "Files/Functions.js"></script>
+
+        <title id = "Title">Reuse</title>
+    </head>
+
+    <body id = "body" onload = "loadUserdata();">
+        <!-- #region Default -->
+        <img src = "" alt = "Link image" style = "display: none;">
+
+        <script>
+            window.scroll(
+            {
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+		</script>
+        <!-- #endregion Default -->
+        
+        <div class = "redirectionBox a1" id = "redirectionBox1"></div>
+        <div class = "redirectionBox a2" id = "redirectionBox2"></div>
+        <div class = "redirectionBox a3" id = "redirectionBox3"></div>
+
+        <div class = "messageHolder">
+            <!-- Correctnesses -->
+            <div class = "correctnessHolder" id = "correctness userLoggedOut">
+                <p>User Logged Out.</p>
+            </div>
+
+            <!-- Errors -->
+            <div class = "errorHolder" id = "Error ..." onclick = "desableElement('Error ...', 0)">
+                <p>Error</p>
+            </div>
+        </div>
+
+        <h1 class = "pageTitle">REUSE</h1>
+
+        <div class = "pageHolder">
+            <div class = "toolBar">
+                <div onclick = "goTo('index.html')" class = "toolBarLogo"><img src = "Images/Logo.svg"></div>
+                <div class = "toolBarToolsHolder" id = "toolBarToolsHolder">
+                    <i onclick = "goTo('')" class = "fas fa-home Active" id = "Home"><div class = "activeTumb"><div class = "Hidders"></div></div></i>
+                    <i onclick = "goTo('')" class = "fas fa-shopping-cart" id = "Shop"></i>
+                    <i onclick = "goTo('')" class = "fas fa-info" id = "Info"></i>
+                    <i onclick = "goTo('')" class = "fas fa-user-alt" id = "Account"></i>
+                </div>
+            </div>
+    
+            <div class = "textBox Medium" id = "mainBox">
+                <h1 class = "textBoxDecorationText">REUSE</h1>
+                <h1 class = "textBoxDecorationText" id = "a2">REUSE</h1>
+                <div class = "textBoxTitleLines">
+                    <div class = "textBoxTitleLine1"></div>
+                    <div class = "textBoxTitleLine2"></div>
+                    <div class = "textBoxTitleLinesCircle"></div>
+                    <div class = "textBoxTitleLinesArrow"><div class = "textBoxTitleLinesArrowCircle"></div></div>
+                </div>
+                <h1 class = "textBoxTitle">REU SE</h1>
+                <p class = "textBoxText">
+                    Introducing you to the fastest way for you to sell or giveaway your
+                    old household machinery and old furniture.
+                </p>
+                
+                <p onclick = "goTo('signIn.html')" class = "textBoxButton Main" id = "signInButton">Sign In</p>
+                <p onclick = "goTo('logIn.html')" class = "textBoxButton Secondory" id = "logInButton">Log In</p>
+    
+                <p onclick = "goTo('myAccount.html')" class = "textBoxButton Main" id = "accountButton">Name</p>
+                <p onclick = "logOut()" class = "textBoxButton Secondory" id = "logOutButton">Log Out</p>
+            </div>
+    
+            <div class = "textBox Big UltraTall" id = "informationBox">
+                <h1 class = "textBoxTitle">Who are we?</h1>
+                <p class = "textBoxText">
+                    The one who will get rid of your old household machinery and old furniture.
+                    Just follow the steps and see how the procedure will happen.
+                </p>
+                <img src = "Images/whoAreWeImage.png" class = "textBoxImage" id = "informationImage">
+                <p onclick = "" class = "textBoxButton Main">Read more</p>
+            </div>
+    
+            <div class = "slideShowBox" id = "adsSlideShowBox">
+                <div class = "slideShowItem Ad" onclick = "changeSlide()" id = "ad1">
+                    <h1 class = "label1">50% OFF</h1>
+                    <h2 class = "label2">
+                        Find what <br><text style = "color: #f6d743;">you</text><br> want now!
+                    </h2>
+                    <svg viewBox = "0 0 200 200" id = "Blob01">
+                        <path fill = "#e5c632" d = "M35.5,-56.9C44.4,-56.4,48.9,-43.6,58.3,-32C67.7,-20.5,82,-10.3,85.8,2.2C89.6,14.7,82.9,29.3,70.6,35.9C58.4,42.5,40.6,41.1,27.9,39C15.2,37,7.6,34.3,-2.8,39.2C-13.3,44.1,-26.6,56.6,-36.6,57.1C-46.6,57.6,-53.3,46.1,-57.7,34.6C-62.1,23.1,-64.1,11.6,-62.3,1.1C-60.4,-9.5,-54.8,-18.9,-46.3,-23.2C-37.8,-27.6,-26.4,-26.8,-18.2,-27.7C-10,-28.7,-5,-31.5,4.2,-38.6C13.3,-45.8,26.6,-57.5,35.5,-56.9Z" transform = "translate(100 100)">
+                    </svg>
+                    <svg viewBox = "0 0 200 200" id = "Blob02">
+                        <path fill = "#e5c632" d = "M26.9,-49C34.2,-42.4,38.9,-33.8,46,-25.3C53.1,-16.8,62.6,-8.4,68.5,3.4C74.4,15.2,76.8,30.5,67.4,34.9C57.9,39.3,36.6,32.9,23.4,29.6C10.2,26.3,5.1,26.1,-2.8,30.9C-10.7,35.7,-21.3,45.6,-33.5,48.3C-45.6,51,-59.3,46.5,-67.2,37.3C-75.1,28,-77.4,14,-71.1,3.6C-64.9,-6.8,-50.2,-13.7,-45.2,-27.9C-40.1,-42.2,-44.8,-64,-38.9,-71.3C-33,-78.6,-16.5,-71.5,-3.3,-65.7C9.8,-59.9,19.7,-55.5,26.9,-49Z" transform = "translate(100 100)">
+                    </svg>
+                </div>
+    
+                <div class = "slideShowItem Ad" onclick = "changeSlide()" id = "ad2">
+                    <img src = "Images/Ads/ad02.png">
+                    <svg viewBox = "0 0 200 200" id = "Blob01">
+                        <path fill = "#70a103" d = "M37.8,-68.6C47.7,-59.9,53.3,-46.9,56.7,-34.8C60.1,-22.7,61.3,-11.3,61.9,0.3C62.4,12,62.3,23.9,60.1,38.2C57.9,52.4,53.6,68.9,43.2,67.2C32.8,65.5,16.4,45.6,1.2,43.5C-14,41.4,-28,57.1,-38.4,58.8C-48.8,60.5,-55.7,48.3,-58.9,36.2C-62.1,24.1,-61.6,12,-57.5,2.4C-53.4,-7.3,-45.6,-14.6,-38.1,-19.2C-30.6,-23.9,-23.4,-26,-17.1,-36.8C-10.8,-47.5,-5.4,-66.9,4.3,-74.4C14,-81.8,28,-77.3,37.8,-68.6Z" transform="translate(100 100)" />
+                    </svg>
+                    <svg viewBox = "0 0 200 200" id = "Blob02">
+                        <path fill = "#609002" d = "M47.1,-70.8C60.9,-73.6,72,-60.8,70.9,-46.4C69.7,-32,56.5,-16,49.4,-4.1C42.3,7.8,41.4,15.6,38.2,22.5C35,29.5,29.5,35.6,22.8,38.6C16,41.6,8,41.6,-2.3,45.5C-12.6,49.5,-25.1,57.4,-38.1,57.9C-51,58.5,-64.3,51.6,-68,40.8C-71.7,29.9,-65.8,14.9,-66.4,-0.3C-67,-15.6,-74,-31.2,-67.8,-37.8C-61.6,-44.3,-42.2,-41.9,-28.7,-39.3C-15.2,-36.7,-7.6,-34.1,4.5,-41.9C16.6,-49.7,33.3,-68.1,47.1,-70.8Z" transform="translate(100 100)" />
+                    </svg>
+                    <svg viewBox = "0 0 200 200" id = "Blob03">
+                        <path fill = "#609002" d = "M31.1,-45.7C41.9,-47.7,53.4,-42.6,62.9,-33.7C72.5,-24.9,80.2,-12.5,73.2,-4C66.2,4.4,44.6,8.8,33,14.1C21.4,19.3,19.8,25.4,15.9,30.5C12.1,35.5,6.1,39.6,-1.5,42.1C-9,44.6,-18,45.7,-24.8,42.4C-31.7,39.1,-36.3,31.4,-46.4,23.6C-56.6,15.8,-72.1,7.9,-72.7,-0.3C-73.2,-8.5,-58.7,-17,-46.2,-20.7C-33.7,-24.4,-23.3,-23.2,-15.9,-23.3C-8.5,-23.3,-4.3,-24.5,3,-29.6C10.2,-34.7,20.3,-43.8,31.1,-45.7Z" transform="translate(100 100)" />
+                    </svg>
+                    <svg viewBox = "0 0 200 200" id = "Blob04">
+                        <path fill = "#70a103" d = "M39.3,-69.3C49.6,-62.2,55.6,-48.9,64.9,-36.3C74.2,-23.7,86.6,-11.9,89.1,1.4C91.6,14.7,84,29.5,71.4,36.2C58.8,43,41.2,41.9,28.4,43.9C15.7,45.9,7.8,51.2,-0.2,51.5C-8.2,51.8,-16.4,47.2,-30.1,45.7C-43.8,44.2,-63,45.8,-68.2,38.7C-73.4,31.6,-64.7,15.8,-60.6,2.4C-56.5,-11.1,-57.1,-22.2,-55.7,-36C-54.3,-49.8,-51.1,-66.3,-41.5,-73.8C-31.9,-81.4,-15.9,-79.9,-0.7,-78.6C14.5,-77.4,29,-76.4,39.3,-69.3Z" transform="translate(100 100)" />
+                    </svg>
+                </div>
+            </div>
+    
+            <h1 class = "freeTitle">Shop</h1>
+            <div class = "Scroller Icons" id = "categoriesScroller">
+                <div onclick = "goTo('')" class = "scrollerItem Active"><i class = "fas fa-arrow-right"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-sink"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-bath"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-toilet"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-chair"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-couch"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-laptop"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-tv"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-desktop"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-volume-up"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-blender"></i></div>
+                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-camera"></i></div>
+            </div>
+    
+            <h2 class = "freeTitle">Newest Items <a href = "">View all</a></h2>
+            <div class = "Scroller Items" id = "itemsScroller">
+                <div class = "scrollerItem">
+                    <div class = "scrollerItemTopBar" id = "scrollerItemTopBar1">
+                        <i class = "fas fa-sink"></i>
+                        <i class = "fas fa-bath"></i>
+                    </div>
+                    <img src = "Images/01.jpg" class = "scrollerItemImage">
+                    <h3 class = "scrollerItemTitle">Kent single bath</h3>
+                    <p class = "scrollerItemText">245.90lv.</p>
+                    <p onclick = "goTo('')" class = "scrollerItemButton"><i class = "fas fa-plus"></i></p>
+                </div>
+    
+                <div class = "scrollerItem">
+                    <div class = "scrollerItemTopBar" id = "scrollerItemTopBar1">
+                        <i class = "fas fa-toilet"></i>
+                    </div>
+                    <img src = "Images/02.jpg" class = "scrollerItemImage">
+                    <h3 class = "scrollerItemTitle">Duel flush toilet</h3>
+                    <p class = "scrollerItemText">95.49lv.</p>
+                    <p onclick = "goTo('')" class = "scrollerItemButton"><i class = "fas fa-plus"></i></p>
+                </div>
+    
+                <div class = "scrollerItem">
+                    <div class = "scrollerItemTopBar" id = "scrollerItemTopBar1">
+                        <i class = "fas fa-sink"></i>
+                    </div>
+                    <img src = "Images/03.jpg" class = "scrollerItemImage">
+                    <h3 class = "scrollerItemTitle">Kraus sink</h3>
+                    <p class = "scrollerItemText">134lv.</p>
+                    <p onclick = "goTo('')" class = "scrollerItemButton"><i class = "fas fa-plus"></i></p>
+                </div>
+    
+                <div class = "scrollerItem">
+                    <div class = "scrollerItemTopBar" id = "scrollerItemTopBar1">
+                        <i class = "fas fa-tv"></i>
+                        <i class = "fas fa-desktop"></i>
+                        <i class = "fas fa-volume-up"></i>
+                    </div>
+                    <img src = "Images/04.jpg" class = "scrollerItemImage">
+                    <h3 class = "scrollerItemTitle">Asus Monitor</h3>
+                    <p class = "scrollerItemText">99lv.</p>
+                    <p onclick = "goTo('')" class = "scrollerItemButton"><i class = "fas fa-plus"></i></p>
+                </div>
+            </div>
+    
+            <div class = "bottomBar">
+                <div class = "bottomBarLinkHolder">
+                    <a href = "index.html" class = "bottomBarLinks Active">Home</a>
+                    <a href = "" class = "bottomBarLinks">Shop</a>
+                    <a href = "" class = "bottomBarLinks">Information</a>
+                </div>
+    
+                <p class = "Credits">
+                    <powerd>Site powered by <company>Mr. You Development</company>.</powerd>
+                    <managed> Managed by <my>Kristiyan Valchecv</my></managed>
+                </p>
+            </div>
+
+            <div class = "mobileExpander"></div>
+        </div>
+
+        <script>
+            var slideIndex = 0;
+            showSlides();
+            var nextSlideTimer;
+
+            function showSlides()
+            {
+                var slides = document.getElementsByClassName("slideShowItem Ad");
+
+                for (let index = 0; index < slides.length; index++)
+                    slides[index].style.opacity = "0";
+
+                slideIndex++;
+                if(slideIndex > slides.length)
+                    slideIndex = 1
+
+                slides[slideIndex - 1].style.opacity = "1";
+                nextSlideTimer = setTimeout(showSlides, 3 * 1000);
+            }
+
+            function changeSlide()
+            {
+                clearTimeout(nextSlideTimer);
+                showSlides();
+            }
+        </script>
+    </body>
+</html>
+
+<!--
+    <div class = "textBox" id = "">
+        <h1 class = "textBoxTitle">Title</h1>
+        <p class = "textBoxText">
+            Text
+        </p>
+        <img src = "#" class = "textBoxImage" id = "">
+        <p onclick = "goTo('')" class = "textBoxButton Main">Button</p>
+    </div>
+-->

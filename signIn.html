@@ -1,0 +1,137 @@
+<!--The HTML code is property to Mr. You (Kristiyan Valchev) and can only be viewed-->
+<!--If you want to use part of the code, please first contact me: mr.youdevelopment@gmail.com-->
+
+<html id = "html" style = "overflow: hidden;">
+    <head>
+        <link href = "https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel = "stylesheet">
+        <link type = "text/css" rel = "stylesheet" href = "Files/Style.css">
+        <link rel = "icon" href = "Images/Logo.png" type = "image" sizes = "16x16">
+
+        <meta charset = "utf-8">
+        <meta name = "description" content = "This is a website for ...">
+        <meta name = "keywords" content = "..., ...">
+        <meta name = "author" content = "Kristiyan Valchev">
+        <meta name = "viewport" content = "width = device-width, user-scalable = no, initial-scale = 1">
+        
+        <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
+        <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
+        <script type = "text/javascript" src = "Files/Functions.js"></script>
+
+        <title id = "Title">Sign in</title>
+    </head>
+
+    <body id = "body" onload = "loadUserdata()" class = "signAccount">
+        <!-- #region Default -->
+        <img src = "" alt = "Link image" style = "display: none;">
+
+        <script>
+            window.scroll(
+            {
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+		</script>
+        <!-- #endregion Default -->
+        
+        <div class = "redirectionBox a1" id = "redirectionBox1"></div>
+        <div class = "redirectionBox a2" id = "redirectionBox2"></div>
+        <div class = "redirectionBox a3" id = "redirectionBox3"></div>
+
+        <div class = "messageHolder">
+            <!-- Correctnesses -->
+            <div class = "correctnessHolder" id = "correctness userSighedIn">
+                <p>Successfully Signed In!</p>
+            </div>
+            <div class = "correctnessHolder" id = "correctness userLoggedIn">
+                <p>Successfully Logged In!</p>
+            </div>
+            <div class = "correctnessHolder" id = "correctness userLoggedOut">
+                <p>User Logged Out.</p>
+            </div>
+
+            <!-- Errors -->
+            <div class = "errorHolder" id = "Error invalidEmail" onclick = "desableElement('Error invalidEmail', 0)">
+                <p>The email is invalid.</p>
+            </div>
+            <div class = "errorHolder" id = "Error existingEmail" onclick = "desableElement('Error existingEmail', 0)">
+                <p>This email user is already existing.</p>
+            </div>
+            <div class = "errorHolder" id = "Error invalidPassword" onclick = "desableElement('Error invalidPassword', 0)">
+                <p>The password is invalid. It should be 6 characters long of higher.</p>
+            </div>
+            <div class = "errorHolder" id = "Error invalidFN" onclick = "desableElement('Error invalidFN', 0)">
+                <p>The First name is invalid.</p>
+            </div>
+            <div class = "errorHolder" id = "Error wrongPassword" onclick = "desableElement('Error wrongPassword', 0)">
+                <p>The password is wrong.</p>
+            </div>
+            <div class = "errorHolder" id = "Error nonExistingUser" onclick = "desableElement('Error nonExistingUser', 0)">
+                <p>There is no user found.</p>
+            </div>
+            <div class = "errorHolder" id = "Error toManyRequests" onclick = "desableElement('Error toManyRequests', 0)">
+                <p>Access to this account has been temporarily disabled. Try again in 30 seconds.</p>
+            </div>
+            <div class = "errorHolder" id = "Error FNEmailFieladEmpty" onclick = "desableElement('Error FNEmailFieladEmpty', 0)">
+                <p>You cannot leave First Name and/or Email fields empty. Also, First and Last names cannot exceed 15 characters.</p>
+            </div>
+        </div>
+
+        <h1 class = "signAccountTitle">Welcome to REUSE</h1>
+        <div class = "signAccountBox">
+            <h2 class = "signAccountBoxTitle"><text style = "color: #81b214;">Sign in</text> to REUSE</h2>
+            
+            <div class = "signAccountBoxInputField">
+                <p class = "signAccountBoxInputFieldTitle" id = "FNInputFieldTitle">First name</p>
+                <input type = "text" placeholder = "First name" class = "signAccountBoxInputFieldText" id = "signInFNInputField">
+                <i class = "fas fa-signature" id = "FNInputFieldIcon"></i>
+            </div>
+            <div class = "signAccountBoxInputField">
+                <p class = "signAccountBoxInputFieldTitle" id = "emailInputFieldTitle">Email address</p>
+                <input type = "email" placeholder = "Email address" class = "signAccountBoxInputFieldText" id = "signInEmailInputField">
+                <i class = "fas fa-envelope" id = "emailInputFieldIcon"></i>
+            </div>
+            <div class = "signAccountBoxInputField">
+                <p class = "signAccountBoxInputFieldTitle" id = "passwordInputFieldTitle">Password</p>
+                <input type = "password" placeholder = "Password" class = "signAccountBoxInputFieldText" id = "signInPasswordInputField">
+                <i class = "fas fa-key" id = "passwordInputFieldIcon"></i>
+            </div>
+
+            <h3 onclick = "signIn()" class = "signAccountBoxButton">Sign in</h3>
+            <p class = "signAccountBoxText">
+                Already have an account? <text onclick = "goTo('logIn.html')" style = "color: #81b214; font-weight: bold; cursor: pointer;">Log in</text>
+            </p>
+        </div>
+
+        <svg viewBox = "0 0 200 200" class = "signAccountDecoration" id = "signAccountDecoration1">
+            <path fill = "#70a103" d = "M26.4,-41.4C35.9,-35.1,46.2,-30.4,56.9,-21.7C67.6,-12.9,78.7,0,79,12.8C79.4,25.5,69,38.2,56.7,45.3C44.5,52.4,30.4,54,16,61.5C1.6,68.9,-13.2,82.1,-22.5,78.5C-31.8,74.9,-35.6,54.5,-45.4,40.7C-55.3,26.9,-71.2,19.7,-72.2,10.6C-73.1,1.5,-59.1,-9.5,-52.5,-24C-46,-38.5,-46.9,-56.5,-39.4,-63.7C-31.9,-70.9,-15.9,-67.5,-3.7,-61.7C8.5,-55.9,17,-47.8,26.4,-41.4Z" transform="translate(100 100)" />
+        </svg>
+
+        <svg viewBox = "0 0 200 200" class = "signAccountDecoration" id = "signAccountDecoration2">
+            <path fill = "#70a103" d = "M44.2,-67.8C55.1,-61.9,60,-45.8,65.4,-30.8C70.9,-15.8,76.8,-2,78.1,13.5C79.4,29,76.1,46,64.3,50.7C52.4,55.3,32.1,47.5,18.1,43.1C4.2,38.6,-3.2,37.5,-11.7,36.5C-20.1,35.5,-29.6,34.6,-38.4,30.1C-47.3,25.6,-55.5,17.4,-61.7,5.9C-67.9,-5.5,-72.1,-20.2,-69.8,-34.7C-67.5,-49.2,-58.8,-63.5,-46,-68.5C-33.3,-73.5,-16.7,-69.2,0,-69.3C16.7,-69.3,33.4,-73.7,44.2,-67.8Z" transform="translate(100 100)" />
+        </svg>
+
+        <svg viewBox = "0 0 200 200" class = "signAccountDecoration" id = "signAccountDecoration3">
+            <path fill = "#609002" d = "M16.6,-32.3C21.7,-22.5,26.3,-18.3,32.9,-12.5C39.4,-6.7,47.9,0.7,53.4,12.3C59,23.9,61.5,39.7,54.1,45.1C46.7,50.5,29.3,45.6,15.3,47.8C1.2,50,-9.5,59.4,-14.9,55.6C-20.2,51.7,-20.2,34.6,-21,23.7C-21.7,12.8,-23.3,8.2,-27.7,1.7C-32.1,-4.7,-39.4,-13,-43,-25.7C-46.6,-38.3,-46.6,-55.4,-38.8,-64C-31,-72.6,-15.5,-72.9,-4.9,-65.3C5.7,-57.6,11.4,-42.1,16.6,-32.3Z" transform="translate(100 100)" />
+        </svg>
+
+        <svg viewBox = "0 0 200 200" class = "signAccountDecoration" id = "signAccountDecoration4">
+            <path fill = "#70a103" d = "M21.9,-29.8C31.7,-27.8,45.3,-27.3,48.2,-21.8C51,-16.3,43.1,-5.6,37.4,2.5C31.8,10.6,28.4,16.1,24.7,22.6C21,29,16.9,36.4,11.1,38.4C5.3,40.3,-2.3,36.9,-9.1,33.7C-15.9,30.4,-21.9,27.3,-33.3,23.6C-44.7,19.8,-61.4,15.5,-66.8,6.9C-72.2,-1.7,-66.2,-14.6,-61.4,-29.3C-56.6,-43.9,-52.9,-60.3,-42.9,-62.2C-32.9,-64.1,-16.4,-51.5,-5.2,-43.5C6,-35.4,12.1,-31.8,21.9,-29.8Z" transform="translate(100 100)" />
+        </svg>
+    </body>
+</html>
+
+<!--
+    <div class = "textBox" id = "">
+        <h1 class = "textBoxTitle">Title</h1>
+        <p class = "textBoxText">
+            Text
+        </p>
+        <img src = "#" class = "textBoxImage" id = "">
+        <p onclick = "goTo('')" class = "textBoxButton Main">Button</p>
+    </div>
+-->

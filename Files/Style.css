@@ -1,0 +1,2157 @@
+/*The CSS code is property to Mr. You (Kristiyan Valchev) and can only be viewed*/
+/*If you want to use part of the code, please first contact me: mr.youdevelopment@gmail.com*/
+
+html
+{
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body
+{
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    background-color: #f8f8f8; /* b6bac0 */
+    overflow-x: hidden;
+}
+
+body.signAccount
+{
+    display: grid;
+    background-image: linear-gradient(to bottom right, #97d04f, #81b214);
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+}
+
+/* Colors */
+.Colors
+{
+    color: #206a5d;
+    color: #81b214;
+    color: #97d04f;
+    color: #f6d743;
+    color: #f4a33a;
+}
+
+/*#region Scrow bar */
+::-webkit-scrollbar
+{
+	width: 10px;
+}
+
+::-webkit-scrollbar-track
+{
+    background-color: #f8f8f8;
+    border-radius: 70px;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background: #97d04f; 
+	border-radius: 70px;
+}
+
+::-webkit-scrollbar-thumb:hover
+{
+	background: #81b214; 
+}
+/*#endregion Scrow bar */
+
+/*#region Tool bar */
+.toolBar
+{
+    position: fixed;
+    width: 80px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #81b214;
+
+    z-index: 1;
+
+    animation: toolBarAnimation .3s ease-out forwards;
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.toolBar .toolBarLogo
+{
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 30;
+    left: 10;
+    background-color: #111111;
+    border-radius: 999px;
+    overflow: hidden;
+
+    animation: fadeIn .5s ease-out forwards .3s;
+    opacity: 0;
+}
+
+.toolBar .toolBarLogo img
+{
+    position: absolute;
+    width: calc(100% - 25px);
+    height: calc(100% - 25px);
+    top: 13;
+    left: 15;
+}
+
+.toolBar .toolBarToolsHolder
+{
+    display: grid;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 260px);
+    top: 130px;
+    left: 0;
+    grid-template-columns: calc(100% - 30px);
+    grid-template-rows: auto;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+}
+
+/*#region Active tumb */
+.toolBar .toolBarToolsHolder .activeTumb
+{
+    float: right;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    top: -34;
+    right: 5;
+    background-color: #f8f8f8;
+    border-radius: 999px;
+
+    z-index: -1;
+}
+
+.toolBar .toolBarToolsHolder .activeTumb::after
+{
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 50px;
+    top: 0;
+    left: 25;
+    background-color: #f8f8f8;
+}
+
+.toolBar .toolBarToolsHolder .activeTumb .Hidders
+{
+    float: right;
+    position: absolute;
+    width: 15px;
+    height: 80px;
+    top: -15;
+    right: -20;
+    background-color: #f8f8f8;
+}
+
+.toolBar .toolBarToolsHolder .activeTumb .Hidders::before
+{
+    float: right;
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: -15;
+    right: 0;
+    background-color: #81b214;
+    border-radius: 999px;
+}
+
+.toolBar .toolBarToolsHolder .activeTumb .Hidders::after
+{
+    float: right;
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    bottom: -15;
+    right: 0;
+    background-color: #81b214;
+    border-radius: 999px;
+}
+/*#endregion Active tumb */
+
+.toolBar .toolBarToolsHolder i
+{
+    width: 100%;
+    font-size: 22px;
+    line-height: 22px;
+    text-align: center;
+    color: #f8f8f8;
+
+    z-index: 1;
+
+    animation: fadeIn .5s ease-out forwards .4s;
+    opacity: 0;
+}
+
+.toolBar .toolBarToolsHolder i:hover
+{
+    color: #d8d8d8;
+}
+
+.toolBar .toolBarToolsHolder i.Active
+{
+    color: #000000;
+}
+
+.toolBar .toolBarToolsHolder i.Active:hover
+{
+    color: #81b214;
+}
+/*#endregion Tool bar */
+
+/*#region Page content */
+.pageTitle
+{
+    display: none;
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 0;
+    left: 15;
+    text-align: center;
+    line-height: 100px;
+    color: #fefefe;
+
+    animation: dropDown .5s ease-out forwards;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.pageHolder
+{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+}
+
+.mobileExpander
+{
+    display: none;
+    position: relative;
+    width: 100%;
+    height: 90px;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+}
+
+.freeTitle
+{
+    position: relative;
+    width: calc(100% - 110px - 30px);
+    top: 0;
+    left: 110;
+    color: #111111;
+    margin-bottom: 15px;
+
+    animation: dropDown .5s ease-out forwards .1s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+h1.freeTitle
+{
+    margin-top: 60px;
+}
+
+.freeTitle a
+{
+    float: right;
+    font-size: 20px;
+    color: #81b214;
+}
+
+.freeTitle a:hover
+{
+    filter: brightness(.9);
+}
+
+underlined
+{
+    border-bottom: 3px solid currentColor;
+}
+
+.redirectionBox
+{
+    position: fixed;
+    width: 100%;
+    height: 0%;
+    top: 0;
+    left: 0;
+
+    z-index: 90;
+}
+
+.redirectionBox.a1
+{
+    background-color: #81b214;
+}
+
+.redirectionBox.a2
+{
+    background-color: #f8f8f8;
+}
+
+.redirectionBox.a3
+{
+    background-color: #81b214;
+}
+/*#endregion Page content */
+
+/*#region Text box */
+/* Text box */
+.textBox
+{
+    position: relative;
+    width: calc(100% - 110px - 30px);
+    height: auto;
+    top: 0;
+    left: 110;
+    background-color: #ffffff;
+    border-radius: 30px;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    padding: 26px 0px;
+    overflow: hidden;
+
+    animation: dropDown .5s ease-out forwards .1s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.textBox.Big
+{
+    /*width: calc(100% - 80px);
+    left: 80;
+    border-radius: 0px;*/
+    padding: 60px 0px;
+}
+
+.textBox.Medium
+{
+    width: calc(100% - 110px - 30px);
+}
+
+.textBox.Small
+{
+    display: inline-block;
+    width: calc(50% - 55px - 30px);
+    margin-right: 30px;
+}
+
+.textBox.Tall
+{
+    padding: 60px 0px;
+    margin-bottom: 180px;
+}
+
+.textBox.UltraTall
+{
+    padding: 100px 0px;
+    margin-bottom: 180px;
+}
+
+.textBox#mainBox
+{
+    background-color: transparent;
+    padding: 160px 0px;
+    overflow: unset;
+    margin-bottom: 180px;
+}
+
+.textBox#informationBox
+{
+    background-image: linear-gradient(to bottom right, #206a5d, #00483b);
+    overflow: unset;
+}
+
+/* Title */
+.textBox .textBoxTitle
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    color: #111111;
+    margin-bottom: 15px;
+
+    animation: fadeIn .5s ease-out forwards .4s;
+    opacity: 0;
+}
+
+.textBox.Big .textBoxTitle
+{
+    width: calc(100% - 120px - 30px);
+    left: 120;
+}
+
+.textBox.Small .textBoxTitle
+{
+    width: calc(100% - 60px);
+}
+
+.textBox#mainBox .textBoxTitle
+{
+    font-size: 120px;
+    line-height: 124px;
+    font-weight: 800;
+}
+
+.textBox#informationBox .textBoxTitle
+{
+    color: #f8f8f8;
+}
+
+/* Text */
+.textBox .textBoxText
+{
+    position: relative;
+    width: 600px;
+    top: 0;
+    left: 30;
+    color: #111111a0;
+
+    animation: fadeIn .5s ease-out forwards .5s;
+    opacity: 0;
+}
+
+.textBox.Big .textBoxText
+{
+    width: 510px;
+    left: 120;
+}
+
+.textBox.Small .textBoxText
+{
+    width: calc(100% - 60px);
+}
+
+.textBox#informationBox .textBoxText
+{
+    color: #f8f8f8a0;
+}
+
+/* Image */
+.textBox .textBoxImage
+{
+    float: right;
+    position: absolute;
+    max-width: 200px;
+    max-height: 100%;
+    top: 0;
+    right: 30;
+
+    animation: fadeIn .5s ease-out forwards .8s;
+    opacity: 0;
+}
+
+.textBox .textBoxImage#informationImage
+{
+    max-width: 600px;
+    top: auto;
+    bottom: -70;
+}
+
+/* Buttons */
+.textBox .textBoxButton
+{
+    display: inline-block;
+    position: relative;
+    width: fit-content;
+    top: 0;
+    left: 30;
+    font-weight: bold;
+    color: #f8f8f8;
+    background-color: #81b214;
+    border-radius: 30px;
+    margin-top: 30px;
+    margin-right: 15px;
+    padding: 8px 30px;
+}
+
+.textBox.Big .textBoxButton
+{
+    left: 120;
+}
+
+.textBox .textBoxButton.Main
+{
+    background-color: #81b214;
+
+    animation: fadeIn .5s ease-out forwards .6s;
+    opacity: 0;
+}
+
+.textBox .textBoxButton.Main:hover
+{
+    filter: brightness(.9);
+}
+
+.textBox#informationBox .textBoxButton.Main
+{
+    background-color: #f8f8f8;
+    color: #111111;
+}
+
+.textBox .textBoxButton.Secondory
+{
+    background-color: transparent;
+    color: #111111;
+
+    animation: fadeIn .5s ease-out forwards .7s;
+    opacity: 0;
+}
+
+.textBox .textBoxButton.Secondory:hover
+{
+    background-color: #11111110;
+}
+
+/*#region Decorations */
+.textBoxDecorationText
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 230px;
+    font-weight: 900;
+    color: #11111109;
+
+    animation: fadeIn .5s ease-out forwards 2s;
+    opacity: 0;
+}
+
+.textBoxDecorationText#a2
+{
+    top: auto;
+    bottom: -200;
+    left: 400;
+    font-size: 400px;
+    color: #1111110b;
+}
+
+.textBoxTitleLines
+{
+    position: absolute;
+    width: calc(100% - 286px);
+    height: 100%;
+    top: 0;
+    left: 286;
+    background-color: transparent;
+
+    animation: fadeIn .5s ease-out forwards .4s;
+    opacity: 0;
+}
+
+.textBoxTitleLines:hover .textBoxTitleLinesArrow
+{
+    transform: scale(1.1, 1.1);
+}
+
+.textBoxTitleLines .textBoxTitleLine1
+{
+    position: absolute;
+    width: 24px;
+    height: 300px;
+    top: 181;
+    left: 0;
+    background-color: #f4a33a;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+
+    animation: textBoxTitleLine1Animation .3s ease-out forwards .6s;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    opacity: 0;
+}
+
+.textBoxTitleLines .textBoxTitleLine2
+{
+    position: absolute;
+    width: 100%;
+    height: 24px;
+    top: calc(181px + 300px - 24px);
+    left: 0;
+    background-color: #f6d743;
+    border-radius: 30px;
+
+    animation: textBoxTitleLine2Animation .3s ease-out forwards .9s;
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    opacity: 0;
+}
+
+.textBoxTitleLines .textBoxTitleLinesCircle
+{
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: calc(181px + 300px - 24px);
+    left: 0;
+    background-color: #f5c043;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;
+
+    animation: fadeIn .5s ease-out forwards .9s;
+    opacity: 0;
+}
+
+.textBoxTitleLines .textBoxTitleLinesArrow
+{
+    float: right;
+    position: absolute;
+    width: calc(24px * 5);
+    height: calc(24px * 5);
+    top: calc(181px + 300px - 24px * 3);
+    right: 0;
+    background-color: transparent;
+}
+
+.textBoxTitleLines .textBoxTitleLinesArrow::before
+{
+    content: "";
+    float: right;
+    position: absolute;
+    width: 100%;
+    height: 24px;
+    top: calc(50% - 12px);
+    right: 0;
+    background-color: #f4a33a;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    transform-origin: calc(100% - 12px) 50%;
+    transform: rotate(45deg);
+
+    animation: textBoxTitleLinesArrowAnimation .3s ease-out forwards 1.5s;
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    -webkit-clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    opacity: 0;
+}
+
+.textBoxTitleLines .textBoxTitleLinesArrow::after
+{
+    content: "";
+    float: right;
+    position: absolute;
+    width: 100%;
+    height: 24px;
+    top: calc(50% - 12px);
+    right: 0;
+    background-color: #f6d743;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    transform-origin: calc(100% - 12px) 50%;
+    transform: rotate(-45deg);
+
+    animation: textBoxTitleLinesArrowAnimation .3s ease-out forwards 1.2s;
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    -webkit-clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    opacity: 0;
+}
+
+.textBoxTitleLines .textBoxTitleLinesArrow .textBoxTitleLinesArrowCircle
+{
+    float: right;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: calc(50% - 12px);
+    right: 0;
+    background-color: #f5c043;
+    transform: rotate(-45deg);
+    z-index: 1;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+
+    animation: fadeIn .5s ease-out forwards 1.5s;
+    opacity: 0;
+}
+/*#endregion Decorations */
+
+/*#endregion Text box */
+
+/*#region Sign account box */
+.signAccountTitle
+{
+    width: calc(100% - 120px);
+    top: 50;
+    left: 60;
+    font-size: 66px;
+    font-weight: bolder;
+    text-align: center;
+    line-height: 70px;
+    color: #f8f8f8;
+
+    animation: dropDown .5s ease-out forwards .1s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.signAccountBox
+{
+    width: 600px;
+    height: auto;
+    top: 0;
+    left: 0;
+    background-color: #f8f8f8;
+    border-radius: 30px;
+
+    animation: dropDown .5s ease-out forwards .2s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.signAccountBox .signAccountBoxTitle
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+
+    animation: fadeIn .5s ease-out forwards .5s;
+    opacity: 0;
+}
+
+.signAccountBox .signAccountBoxInputField
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    font-size: 20px;
+    margin-bottom: 20px;
+
+    animation: fadeIn .5s ease-out forwards .6s;
+    opacity: 0;
+}
+
+.signAccountBox .signAccountBoxInputFieldTitle
+{
+    width: 100%;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #11111180;
+    margin-bottom: 10px;
+}
+
+.signAccountBox .signAccountBoxInputField .signAccountBoxInputFieldText
+{
+    width: 100%;
+    font-size: 22px;
+    color: #111111a0;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    padding: 10px 10px 10px 70px;
+}
+
+.signAccountBox .signAccountBoxInputField .signAccountBoxInputFieldText::placeholder
+{
+    color: #11111120;
+}
+
+.signAccountBox .signAccountBoxInputField .signAccountBoxInputFieldText:focus
+{
+    color: #111111;
+}
+
+.signAccountBox .signAccountBoxInputField .signAccountBoxInputFieldText:focus ~ i
+{
+    filter: brightness(.8);
+}
+
+.signAccountBox .signAccountBoxInputField i
+{
+    position: absolute;
+    top: 42;
+    left: 20;
+    color: #81b214;
+}
+
+.signAccountBox .signAccountBoxInputField i::after
+{
+    content: "";
+    float: right;
+    position: absolute;
+    width: 2px;
+    height: 30px;
+    top: calc(50% - 15px);
+    right: -15;
+    background-color: #11111120;
+    border-radius: 999px;
+}
+
+.signAccountBox .signAccountBoxButton
+{
+    position: relative;
+    width: calc(100% - 120px);
+    top: 0;
+    left: 60;
+    text-align: center;
+    color: #f8f8f8;
+    background-color: #81b214;
+    border-radius: 30px;
+    margin-top: 30px;
+    padding: 8px 0px;
+
+    animation: fadeIn .5s ease-out forwards .7s;
+    opacity: 0;
+}
+
+.signAccountBox .signAccountBoxButton:hover
+{
+    filter: brightness(.9);
+}
+
+.signAccountBox .signAccountBoxText
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    animation: fadeIn .5s ease-out forwards .8s;
+    opacity: 0;
+}
+
+.signAccountDecoration
+{
+    position: absolute;
+    z-index: -1;
+
+    animation: fadeIn .5s ease-out forwards .3s;
+    opacity: 0;
+}
+
+#signAccountDecoration1
+{
+    float: right;
+    width: 300px;
+    bottom: -100;
+    right: 100;
+}
+
+#signAccountDecoration2
+{
+    width: 600px;
+    top: -200;
+    left: -190;
+}
+
+#signAccountDecoration3
+{
+    width: 300px;
+    top: 130;
+    left: 200;
+}
+
+#signAccountDecoration4
+{
+    float: right;
+    width: 500px;
+    top: -10;
+    right: 100;
+}
+/*#endregion Sign account box */
+
+/*#region Scroller */
+/* Body */
+.Scroller
+{
+    position: relative;
+    width: calc(100% - 80px);
+    height: auto;
+    top: 0;
+    left: 80;
+    background-color: transparent;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin-bottom: 30px;
+
+    animation: dropDown .5s ease-out forwards .2s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.Scroller.Icons
+{
+    height: 90px;
+}
+
+.Scroller.Items
+{
+    height: auto;
+    padding-bottom: 10px;
+    /*
+    display: flex;
+    align-items: flex-start;
+    */
+}
+
+.Scroller::-webkit-scrollbar
+{
+    height: 5px;
+}
+
+.Scroller::-webkit-scrollbar-thumb
+{
+    border-radius: 999px;
+}
+
+/* Item */
+.Scroller .scrollerItem
+{
+    display: inline-block;
+    position: relative;
+    width: 70px;
+    height: 70px;
+    top: 0;
+    left: 30;
+    background-color: #ffffff;
+    border-radius: 20px;
+    white-space: normal;
+    margin-right: 15px;
+    overflow: hidden;
+
+    animation: fadeIn .5s ease-out forwards .5s;
+    opacity: 0;
+}
+
+/*#region Scroller item animation */
+.Scroller .scrollerItem:nth-child(2) { animation-delay: .5s; }
+.Scroller .scrollerItem:nth-child(3) { animation-delay: .6s; }
+.Scroller .scrollerItem:nth-child(4) { animation-delay: .7s; }
+.Scroller .scrollerItem:nth-child(5) { animation-delay: .8s; }
+.Scroller .scrollerItem:nth-child(6) { animation-delay: .9s; }
+.Scroller .scrollerItem:nth-child(7) { animation-delay: 1s; }
+.Scroller .scrollerItem:nth-child(8) { animation-delay: 1.1s; }
+.Scroller .scrollerItem:nth-child(9) { animation-delay: 1.2s; }
+.Scroller .scrollerItem:nth-child(10) { animation-delay: 1.3s; }
+.Scroller .scrollerItem:nth-child(11) { animation-delay: 1.4s; }
+.Scroller .scrollerItem:nth-child(12) { animation-delay: 1.5s; }
+.Scroller .scrollerItem:nth-child(13) { animation-delay: 1.6s; }
+.Scroller .scrollerItem:nth-child(14) { animation-delay: 1.7s; }
+.Scroller .scrollerItem:nth-child(15) { animation-delay: 1.8s; }
+.Scroller .scrollerItem:nth-child(16) { animation-delay: 1.9s; }
+.Scroller .scrollerItem:nth-child(17) { animation-delay: 2s; }
+.Scroller .scrollerItem:nth-child(18) { animation-delay: 2.1s; }
+.Scroller .scrollerItem:nth-child(19) { animation-delay: 2.2s; }
+.Scroller .scrollerItem:nth-child(20) { animation-delay: 2.3s; }
+/*#endregion Scroller item animation */
+
+.Scroller.Items .scrollerItem
+{
+    width: 280px; /* 280px */
+    min-height: 408px;
+    height: auto;
+}
+
+.Scroller .scrollerItem:last-child
+{
+    margin-right: 60px;
+}
+
+.Scroller.Icons .scrollerItem:hover
+{
+    filter: brightness(.9);
+}
+
+.Scroller .scrollerItem.Active
+{
+    background-color: #81b214;
+}
+
+.Scroller.Icons .scrollerItem i
+{
+    position: absolute;
+    width: 100%;
+    top: calc(50% - 15px);
+    left: 0;
+    font-size: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: #111111a0;
+}
+
+.Scroller.Icons .scrollerItem.Active i
+{
+    color: #f8f8f8;
+}
+
+.Scroller.Items .scrollerItem .scrollerItemTopBar
+{
+    position: relative;
+    width: 100%;
+    height: 46px;
+    top: 0;
+    left: 0;
+    background-color: #f6d743;
+}
+
+.Scroller.Items .scrollerItem .scrollerItemTopBar i
+{
+    position: relative;
+    top: calc(50% - 10px);
+    left: 15;
+    font-size: 20px;
+    line-height: 20px;
+    color: #111111a0;
+    margin-right: 10px;
+}
+
+.Scroller.Items .scrollerItem .scrollerItemTopBar i:hover
+{
+    color: #111111;
+}
+
+.Scroller.Items .scrollerItem .scrollerItemImage
+{
+    position: relative;
+    max-width: calc(100% - 30px);
+    max-height: 260px;
+    top: 0;
+    left: 15;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.Scroller.Items .scrollerItem .scrollerItemTitle
+{
+    position: relative;
+    width: calc(100% - 30px);
+    top: 0;
+    left: 15;
+    color: #111111;
+    margin-bottom: 10px;
+}
+
+.Scroller.Items .scrollerItem .scrollerItemText
+{
+    position: relative;
+    width: calc(100% - 30px);
+    top: 0;
+    left: 15;
+    font-weight: normal;
+    color: #81b214;
+    margin-bottom: 30px;
+}
+
+.Scroller.Items .scrollerItem .scrollerItemButton
+{
+    float: right;
+    position: absolute; /* Might need change */
+    width: 40px;
+    height: 40px;
+    bottom: 15;
+    right: 15;
+    background-color: #206a5d;
+    border-radius: 10px;
+}
+
+.Scroller.Items .scrollerItem .scrollerItemButton:hover
+{
+    filter: brightness(.9);
+}
+
+.Scroller.Items .scrollerItem .scrollerItemButton i
+{
+    position: absolute;
+    width: 100%;
+    top: calc(50% - 10px);
+    left: 0;
+    font-size: 20px;
+    text-align: center;
+    line-height: 20px;
+    color: #f8f8f8;
+}
+/*#endregion Scroller */
+
+/*#region SlideShow */
+.slideShowBox
+{
+    position: relative;
+    width: calc(100% - 110px - 30px);
+    height: 300px;
+    top: 0;
+    left: 110;
+    background-color: transparent;
+    border-radius: 30px;
+    margin-bottom: 100px;
+    overflow: hidden;
+
+    animation: dropDown .5s ease-out forwards .1s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.slideShowBox .slideShowItem
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+/*#region Ads */
+#ad1
+{
+    background-color: #2f2f2f;
+}
+
+#ad1 .label1
+{
+    position: relative;
+    width: 400px;
+    top: 0;
+    left: calc(50% - 200px);
+    font-size: 46px;
+    font-weight: bolder;
+    line-height: 60px;
+    text-align: center;
+    color: #f8f8f8;
+    background-color: #f6d743;
+    margin-top: 30px;
+
+    z-index: 1;
+
+    clip-path: polygon(40px 0%, 100% 0, calc(100% - 40px) 100%, 0% 100%);
+    -webkit-clip-path: polygon(40px 0%, 100% 0, calc(100% - 40px) 100%, 0% 100%);
+}
+
+#ad1 .label2
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    font-size: 36px;
+    text-align: center;
+    color: #f8f8f8;
+    margin-top: 40px;
+
+    z-index: 1;
+}
+
+#ad1 #Blob01
+{
+    position: absolute;
+    width: 600px;
+    top: -200;
+    left: -190;
+}
+
+#ad1 #Blob02
+{
+    float: right;
+    position: absolute;
+    width: 300px;
+    bottom: -100;
+    right: 100;
+}
+
+#ad2
+{
+    display: grid;
+    background-color: #81b214;
+}
+
+#ad2 img
+{
+    position: absolute;
+    width: 300px;
+    top: 50;
+    left: calc(50% - 150px);
+    z-index: 1;
+}
+
+#ad2 #Blob01
+{
+    position: absolute;
+    width: 600px;
+    top: -200;
+    left: -190;
+    z-index: 0;
+}
+
+#ad2 #Blob02
+{
+    position: absolute;
+    width: 300px;
+    top: 0;
+    left: 200;
+}
+
+#ad2 #Blob03
+{
+    position: absolute;
+    width: 500px;
+    top: 10;
+    left: 700;
+}
+
+#ad2 #Blob04
+{
+    float: right;
+    position: absolute;
+    width: 600px;
+    top: -200;
+    right: -190;
+    z-index: 0;
+}
+/*#endregion Ads */
+
+/*#endregion SlideShow */
+
+/*#region Messages */
+.messageHolder
+{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+
+    z-index: 5;
+}
+
+.messageHolder .errorHolder, .messageHolder .correctnessHolder
+{
+    display: none;
+    position: relative;
+    width: calc(100% - 30px);
+    height: auto;
+    top: 0;
+    left: 15;
+    border-radius: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    animation: dropDown .5s ease-out forwards;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.messageHolder .errorHolder
+{
+    background-color: red;
+}
+
+.messageHolder .correctnessHolder
+{
+    background-color: green;
+}
+
+.messageHolder .errorHolder p, .messageHolder .correctnessHolder p
+{
+    position: relative;
+    width: calc(100% - 30px);
+    height: auto;
+    top: 0;
+    left: 15;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+    line-height: 20px;
+    color: #fefefe;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+/*#endregion Messages */
+
+/*#region Bottom bar */
+.bottomBar
+{
+    position: relative;
+    width: 100%;
+    height: 180px;
+    top: 0;
+    left: 0;
+    background-color: #206a5d;
+    margin-top: 160px;
+}
+
+.bottomBar .bottomBarLinkHolder
+{
+    display: grid;
+    position: relative;
+    width: calc(100% - 110px - 30px);
+    top: 60;
+    left: 110;
+    background-color: transparent;
+    grid-template-columns: auto auto auto;
+}
+
+.bottomBar .bottomBarLinkHolder .bottomBarLinks
+{
+    width: 100%;
+    text-align: center;
+    color: #f8f8f8a0;
+}
+
+.bottomBar .bottomBarLinkHolder .bottomBarLinks:hover
+{
+    color: #f8f8f8;
+}
+
+.bottomBar .bottomBarLinkHolder .bottomBarLinks.Active
+{
+    font-weight: bold;
+}
+
+.bottomBar .Credits
+{
+    position: absolute;
+    width: 100%;
+    top: auto;
+    bottom: 10;
+    text-align: center;
+    color: #00000080;
+}
+
+.bottomBar .Credits powerd:hover company
+{
+    color: #61da7d;
+    transition: ease .3s;
+}
+
+.bottomBar .Credits managed:hover my
+{
+    color: #028bc2;
+    transition: ease .3s;
+}
+/*#endregion Bottom bar */
+
+img
+{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+}
+
+a
+{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    transition: ease .3s;
+}
+
+p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
+{
+    padding: 0;
+    margin: 0;
+    transition: ease .3s;
+}
+
+/*#region Animations */
+@keyframes textBoxTitleLine1Animation
+{
+    0%
+    {
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        opacity: 0;
+    }
+    100%
+    {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        opacity: 1;
+    }
+}
+
+@keyframes textBoxTitleLine2Animation
+{
+    0%
+    {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+        -webkit-clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+        opacity: 0;
+    }
+    100%
+    {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        opacity: 1;
+    }
+}
+
+@keyframes textBoxTitleLinesArrowAnimation
+{
+    0%
+    {
+        clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+        -webkit-clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+        opacity: 0;
+    }
+    100%
+    {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        opacity: 1;
+    }
+}
+
+@keyframes toolBarAnimation
+{
+    0%
+    {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    100%
+    {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes popUp
+{
+    0%
+    {
+        transform: translateY(7);
+        opacity: 0;
+    }
+
+    100%
+    {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes signAccountBoxAnimation
+{
+    0%
+    {
+        transform: translateY(-7);
+        opacity: 0;
+    }
+
+    100%
+    {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes dropDown
+{
+    0%
+    {
+        transform: translateY(-7);
+        opacity: 0;
+    }
+
+    100%
+    {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn
+{
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut
+{
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes defaultAnimation
+{
+    0%
+    {
+
+    }
+
+    100%
+    {
+
+    }
+}
+/*#endregion Animations */
+
+/*#region Media 1300-1000 */
+@media screen and (max-width: 1300px)
+{
+    .textBox .textBoxImage#mainImage,
+    .textBox .textBoxImage#informationImage
+    {
+        max-width: 400px;
+    }
+}
+
+@media screen and (max-width: 1200px)
+{
+
+}
+
+@media screen and (max-width: 1100px)
+{
+
+}
+
+@media screen and (max-width: 1000px)
+{
+    .textBox.Big .textBoxTitle
+    {
+        width: calc(100% - 60px);
+        left: 30;
+    }
+
+    .textBox.Big .textBoxText
+    {
+        width: 600;
+        left: 30;
+    }
+
+    .textBox .textBoxImage#informationImage
+    {
+        max-width: 300px;
+        bottom: -130;
+    }
+
+    .textBox#informationBox
+    {
+        margin-bottom: 220px;
+    }
+
+    .textBox.Big .textBoxButton
+    {
+        left: 30;
+    }
+}
+/*#endregion Media 1300-1000 */
+
+/*#region Media 900-800 */
+@media screen and (max-width: 900px)
+{
+    body
+    {
+        background-color: #81b214;
+    }
+
+    /*#region Tool Bar */
+    .toolBar
+    {
+        width: calc(100% - 30px);
+        height: 60px;
+        top: auto;
+        bottom: 15;
+        left: 15;
+        background-color: #ffffff;
+        border-radius: 30px;
+
+        z-index: 10;
+
+        animation: popUp .5s ease-out forwards;
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    .toolBar .toolBarLogo,
+    .toolBar .toolBarToolsHolder .activeTumb
+    {
+        display: none;
+    }
+
+    .toolBar .toolBarToolsHolder
+    {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        grid-template-columns: auto auto auto auto;
+    }
+
+    .toolBar .toolBarToolsHolder i
+    {
+        color: #11111160;
+    }
+
+    .toolBar .toolBarToolsHolder i:hover
+    {
+        color: #11111180;
+    }
+
+    .toolBar .toolBarToolsHolder i.Active
+    {
+        color: #81b214;
+    }
+
+    .toolBar .toolBarToolsHolder i.Active:hover
+    {
+        filter: brightness(.9);
+    }
+    /*#endregion Tool Bar */
+
+    /*#region Page content */
+    .pageHolder
+    {
+        top: 80;
+        background-color: #f8f8f8;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+    }
+
+    .pageTitle
+    {
+        display: unset;
+    }
+
+    .mobileExpander
+    {
+        display: block;
+    }
+
+    .freeTitle
+    {
+        width: calc(100% - 30px);
+        left: 15;
+    }
+    /*#endregion Page content */
+
+    /*#region Text box */
+    .textBox
+    {
+        position: relative;
+        width: calc(100% - 30px);
+        left: 15;
+        margin-top: 0;
+    }
+
+    .textBox.Big
+    {
+        width: 100%;
+        left: 0;
+        border-radius: unset;
+    }
+
+    .textBox.Medium
+    {
+        width: calc(100% - 30px);
+    }
+
+    .textBox.Small
+    {
+        width: calc(50% - 30px);
+    }
+
+    .textBox#mainBox .textBoxTitle
+    {
+        font-size: 32px;
+        line-height: 0;
+        text-indent: -999999px;
+    }
+
+    .textBox#mainBox .textBoxTitle::after
+    {
+        display: block;
+        content: "Wel come";
+        text-indent: 0px;
+        line-height: 36px;
+    }
+
+    .textBox .textBoxText,
+    .textBox.Big .textBoxText
+    {
+        width: calc(100% - 60px);
+    }
+
+    .textBox .textBoxImage#mainImage
+    {
+        max-width: 350px;
+        bottom: -80;
+    }
+
+    /*#region Decorations */
+    .textBoxTitleLines
+    {
+        width: calc(100% - 94px);
+        left: 94;
+    }
+
+    .textBoxTitleLines .textBoxTitleLine1
+    {
+        width: 7px;
+        height: 200px;
+        top: 165.2;
+    }
+
+    .textBoxTitleLines .textBoxTitleLine2
+    {
+        height: 7px;
+        top: calc(165.2px + 200px - 7px);
+    }
+
+    .textBoxTitleLines .textBoxTitleLinesCircle
+    {
+        width: 7px;
+        height: 7px;
+        top: calc(165.2px + 200px - 7px);
+    }
+
+    .textBoxTitleLines .textBoxTitleLinesArrow
+    {
+        width: calc(7px * 5);
+        height: calc(7px * 5);
+        top: calc(165.2px + 200px - 7px * 3);
+    }
+
+    .textBoxTitleLines .textBoxTitleLinesArrow::before
+    {
+        height: 7px;
+        top: calc(50% - 3.5px);
+        transform-origin: calc(100% - 3.5px) 50%;
+    }
+
+    .textBoxTitleLines .textBoxTitleLinesArrow::after
+    {
+        height: 7px;
+        top: calc(50% - 3.5px);
+        transform-origin: calc(100% - 3.5px) 50%;
+    }
+
+    .textBoxTitleLines .textBoxTitleLinesArrow .textBoxTitleLinesArrowCircle
+    {
+        width: 7px;
+        height: 7px;
+        top: calc(50% - 3.5px);
+    }
+    /*#endregion Decorations */
+    /*#endregion Text box */
+
+    /*#region Scroller */
+    .Scroller
+    {
+        width: 100%;
+        left: 0;
+    }
+
+    .Scroller .scrollerItem
+    {
+        left: 15;
+    }
+
+    .Scroller .scrollerItem:last-child
+    {
+        margin-right: 30px;
+    }
+    /*#endregion Scroller */
+
+    /*#region SlideShow */
+    .slideShowBox
+    {
+        width: calc(100% - 30px);
+        left: 15;
+    }
+    /*#endregion SlideShow */
+
+    .bottomBar
+    {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 800px)
+{
+
+
+    /*#region Sign account box */
+    body.signAccount
+    {
+        display: unset;
+    }
+
+    .signAccountTitle
+    {
+        position: absolute;
+        width: calc(100% - 60px);
+        top: 100;
+        left: 30;
+        font-size: 32px;
+        line-height: 32px;
+    }
+
+    .signAccountBox
+    {
+        position: absolute;
+        width: 100%;
+        top: auto;
+        bottom: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        animation: popUp .5s ease-out forwards .2s;
+        transform: translateY(50px);
+    }
+
+    #signAccountDecoration4
+    {
+        width: 400px;
+        top: calc(50% - 200px);
+        right: -160;
+    }
+    /*#endregion Sign account box */
+}
+/*#endregion Media 900-800 */
+
+/*#region Media 700-600 */
+@media screen and (max-width: 700px)
+{
+
+}
+
+@media screen and (max-width: 600px)
+{
+    .textBoxDecorationText
+    {
+        left: -50;
+        font-size: 180px;
+    }
+
+    .textBoxDecorationText#a2
+    {
+        bottom: -100;
+        left: 100;
+        font-size: 300px;
+    }
+
+    /*#region Scroller */
+    .Scroller.Icons
+    {
+        height: 70px;
+    }
+
+    .Scroller .scrollerItem
+    {
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        margin-right: 5px;
+    }
+
+    .Scroller.Icons .scrollerItem i
+    {
+        top: calc(50% - 9px);
+        font-size: 18px;
+        line-height: 18px;
+    }
+
+    .Scroller.Items .scrollerItem
+    {
+        width: 200px;
+        min-height: 326px;
+    }
+
+    .Scroller.Items .scrollerItem .scrollerItemTopBar
+    {
+        height: 44px;
+    }
+
+    .Scroller.Items .scrollerItem .scrollerItemTopBar i
+    {
+        top: calc(50% - 9px);
+        font-size: 18px;
+        line-height: 18px;
+        margin-right: 8px;
+    }
+    /*#endregion Scroller */
+}
+/*#endregion Media 700-600 */
+
+/*#region Media 500-400 */
+@media screen and (max-width: 500px)
+{
+
+
+    /*#region Text box */
+    .textBox#mainBox
+    {
+        padding: 80px 0px;
+        margin-bottom: 180px;
+    }
+
+    .textBox .textBoxTitle,
+    .textBox.Big .textBoxTitle
+    {
+        width: calc(100% - 30px);
+        left: 15;
+    }
+
+    .textBox .textBoxText,
+    .textBox.Big .textBoxText
+    {
+        width: calc(100% - 30px);
+        left: 15;
+    }
+
+    .textBox#mainBox .textBoxTitle,
+    .textBox#mainBox .textBoxText
+    {
+        width: 100%;
+        left: 0;
+    }
+
+    .textBox .textBoxImage#informationImage
+    {
+        max-width: 200px;
+        bottom: -70;
+        right: 0;
+    }
+
+    .textBox .textBoxButton
+    {
+        left: 0;
+        margin-right: 5px;
+        padding: 6px 26px;
+    }
+
+    /*#region Decorations */
+    .textBoxTitleLines
+    {
+        width: calc(100% - 64px);
+        left: 64;
+    }
+
+    .textBoxTitleLines .textBoxTitleLine1
+    {
+        top: 85.6;
+    }
+
+    .textBoxTitleLines .textBoxTitleLine2
+    {
+        top: calc(85.6px + 200px - 7px);
+    }
+
+    .textBoxTitleLines .textBoxTitleLinesCircle
+    {
+        top: calc(85.6px + 200px - 7px);
+    }
+
+    .textBoxTitleLines .textBoxTitleLinesArrow
+    {
+        top: calc(85.6px + 200px - 7px * 3);
+    }
+    /*#endregion Decorations */
+    /*#endregion Text box */
+
+    /*#region Sign account box */
+    .signAccountTitle
+    {
+        top: 70;
+        font-size: 26px;
+        line-height: 30px;
+    }
+
+    .signAccountBox
+    {
+        height: calc(100% - 140px);
+    }
+
+    .signAccountBox .signAccountBoxTitle
+    {
+        width: calc(100% - 60px);
+        font-size: 20px;
+        line-height: 24px;
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
+
+    .signAccountBox .signAccountBoxInputFieldTitle
+    {
+        font-size: 14px;
+    }
+
+    .signAccountBox .signAccountBoxInputField .signAccountBoxInputFieldText
+    {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px 10px 10px 50px;
+    }
+
+    .signAccountBox .signAccountBoxInputField i
+    {
+        top: 38;
+        left: 15;
+        font-size: 16px;
+    }
+
+    .signAccountBox .signAccountBoxInputField i::after
+    {
+        width: 1px;
+        height: 24px;
+        top: calc(50% - 12px);
+        right: -10;
+    }
+
+    .signAccountBox .signAccountBoxButton
+    {
+        font-size: 16px;
+        padding: 8px 0px;
+    }
+
+    .signAccountBox .signAccountBoxText
+    {
+        font-size: 14px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    #signAccountDecoration2
+    {
+        width: 300px;
+        top: -100;
+        left: -100;
+    }
+
+    #signAccountDecoration3
+    {
+        float: right;
+        width: 160px;
+        top: 60;
+        left: auto;
+        right: -50;
+    }
+    /*#endregion Sign account box */
+
+    /*#region SlideShow */
+    .slideShowBox
+    {
+        height: 220px;
+    }
+
+    /*#region Ads */
+    #ad1 .label1
+    {
+        width: calc(100% - 60px);
+        left: 30;
+        font-size: 32px;
+        line-height: 40px;
+        margin-top: 40px;
+    }
+
+    #ad1 .label2
+    {
+        font-size: 20px;
+        margin-top: 30px;
+    }
+
+    #ad1 #Blob01
+    {
+        width: 400px;
+        top: -160;
+        left: -220;
+    }
+
+    #ad1 #Blob02
+    {
+        width: 200px;
+        bottom: -80;
+        right: 0;
+    }
+
+    #ad2 img
+    {
+        width: 200px;
+        top: 40;
+        left: calc(50% - 100px);
+    }
+
+    #ad2 #Blob01
+    {
+        width: 300px;
+        top: -100;
+        left: -85;
+    }
+
+    #ad2 #Blob02
+    {
+        width: 150px;
+        top: 140;
+        left: 100;
+    }
+
+    #ad2 #Blob03
+    {
+        width: 250px;
+        top: 50;
+        left: 350;
+    }
+
+    #ad2 #Blob04
+    {
+        width: 200px;
+        top: -100;
+        right: -85;
+    }
+    /*#endregion Ads */
+    /*#endregion SlideShow */
+}
+
+@media screen and (max-width: 400px)
+{
+
+}
+/*#endregion Media 500-400 */
+
+/*#region Media 350 */
+@media screen and (max-width: 350px)
+{
+
+
+    /*#region Sign account box */
+    .signAccountTitle
+    {
+        top: 40;
+    }
+
+    .signAccountBox
+    {
+        height: calc(100% - 100px);
+    }
+    /*#endregion Sign account box */
+}
+/*#endregion Media 350 */
