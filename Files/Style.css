@@ -1368,6 +1368,7 @@ underlined
 
 .accountBox .accountImageHolder
 {
+    display: grid;
     position: relative;
     width: 200px;
     height: 200px;
@@ -1375,16 +1376,18 @@ underlined
     left: calc(50% - 100px);
     background-color: #ffffff;
     border-radius: 999px;
+    grid-template-columns: 100%;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
     overflow: hidden;
     margin-bottom: 5px;
 }
 
 .accountBox .accountImageHolder img
 {
-    position: absolute;
     width: 100%;
-    top: 0;
-    left: 0;
 }
 
 .accountBox .accountName
@@ -1498,6 +1501,235 @@ underlined
     text-align: center;
     color: #11111140;
 }
+
+/*#region Edit */
+.accountEditBoxHolder
+{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #111111e0;
+
+    z-index: 10;
+
+    animation: fadeIn .5s ease-out forwards .1s;
+    opacity: 0;
+}
+
+.accountEditBoxHolder .accountEditBox
+{
+    position: absolute;
+    width: calc(100% - 110px - 30px);
+    height: auto;
+    top: 30;
+    left: 110;
+    background-color: #f8f8f8;
+    border-radius: 30px;
+
+    animation: dropDown .5s ease-out forwards .2s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton
+{
+    float: right;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 15;
+    right: 15;
+    background-color: transparent;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton::before
+{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    top: calc(50% - 1.5px);
+    left: 0;
+    background-color: #888888;
+    transform: rotate(45deg);
+    transition: ease .3s;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton::after
+{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    top: calc(50% - 1.5px);
+    left: 0;
+    background-color: #888888;
+    transform: rotate(-45deg);
+    transition: ease .3s;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton:hover::before,
+.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton:hover::after
+{
+    width: calc(100% + 5px);
+    left: -2.5;
+    background-color: #81b214;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxImageHolder
+{
+    display: grid;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    top: 0;
+    left: calc(50% - 100px);
+    background-color: #ffffff;
+    border-radius: 999px;
+    grid-template-columns: 100%;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+    overflow: hidden;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    animation: fadeIn .5s ease-out forwards .7s;
+    opacity: 0;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxImageHolder img
+{
+    width: 100%;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxImageHolder i
+{
+    position: absolute;
+    width: 30px;
+    bottom: 5;
+    left: calc(50% - 15px);
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+    color: #111111;
+    background-color: #f8f8f8;
+    border-radius: 999px;
+
+    animation: fadeIn .5s ease-out forwards .9s;
+    opacity: 0;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxImageHolder i:hover
+{
+    filter:  brightness(.9);
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxInputField
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    font-size: 20px;
+    margin-bottom: 20px;
+
+    animation: fadeIn .5s ease-out forwards .8s;
+    opacity: 0;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxInputFieldTitle
+{
+    width: 100%;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #11111180;
+    margin-bottom: 10px;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxInputField .accountEditBoxInputFieldText
+{
+    width: 100%;
+    font-size: 22px;
+    color: #111111a0;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    padding: 10px 10px 10px 70px;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxInputField .accountEditBoxInputFieldText:disabled
+{
+    background-color: #d8d8d8;
+}
+
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxInputField .accountEditBoxInputFieldText::placeholder
+{
+    color: #11111120;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxInputField .accountEditBoxInputFieldText:focus
+{
+    color: #111111;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxInputField .accountEditBoxInputFieldText:focus ~ i
+{
+    filter: brightness(.8);
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxInputField i
+{
+    position: absolute;
+    top: 42;
+    left: 20;
+    color: #81b214;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxInputField i::after
+{
+    content: "";
+    float: right;
+    position: absolute;
+    width: 2px;
+    height: 30px;
+    top: calc(50% - 15px);
+    right: -15;
+    background-color: #11111120;
+    border-radius: 999px;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxButton
+{
+    position: relative;
+    width: fit-content;
+    top: 0;
+    left: calc(50% - 50px);
+    font-weight: bold;
+    color: #f8f8f8;
+    background-color: #81b214;
+    border-radius: 30px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    padding: 8px 30px;
+
+    animation: fadeIn .5s ease-out forwards .9s;
+    opacity: 0;
+}
+
+.accountEditBoxHolder .accountEditBox .accountEditBoxButton:hover
+{
+    filter: brightness(.9);
+}
+/*#endregion Edit */
+
 /*#endregion Account */
 
 /*#region Messages */
@@ -2062,6 +2294,15 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
         left: 0;
         font-size: 10px;
     }
+
+    /*#region Edit */
+    .accountEditBoxHolder .accountEditBox
+    {
+        width: calc(100% - 30px);
+        top: 15;
+        left: 15;
+    }
+    /*#endregion Edit */
     /*#endregion Account */
 
     .bottomBar
@@ -2392,6 +2633,64 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
         height: 120px;
         left: calc(50% - 60px);
     }
+
+    /*#region Edit */
+    .accountEditBoxHolder .accountEditBox .accountEditBoxImageHolder
+    {
+        width: 120px;
+        height: 120px;
+        left: calc(50% - 60px);
+    }
+
+    .accountEditBoxHolder .accountEditBox .accountEditBoxImageHolder i
+    {
+        width: 22px;
+        left: calc(50% - 11px);
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    .accountEditBoxHolder .accountEditBox .accountEditBoxInputField
+    {
+        width: calc(100% - 30px);
+        left: 15;
+    }
+
+    .accountEditBoxHolder .accountEditBox .accountEditBoxInputField .accountEditBoxInputFieldTitle
+    {
+        font-size: 14px;
+    }
+
+    .accountEditBoxHolder .accountEditBox .accountEditBoxInputField .accountEditBoxInputFieldText
+    {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px 10px 10px 50px;
+    }
+
+    .accountEditBoxHolder .accountEditBox .accountEditBoxInputField i
+    {
+        top: 38;
+        left: 15;
+        font-size: 16px;
+    }
+
+    .accountEditBoxHolder .accountEditBox .accountEditBoxInputField i::after
+    {
+        width: 1px;
+        height: 24px;
+        top: calc(50% - 12px);
+        right: -10;
+    }
+
+    .accountEditBoxHolder .accountEditBox .accountEditBoxButton
+    {
+        left: calc(50% - 46px);
+        margin-top: 30px;
+        margin-bottom: 15px;
+        padding: 6px 26px;
+    }
+    /*#endregion Edit */
     /*#endregion Account */
 
 }

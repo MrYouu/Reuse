@@ -46,13 +46,14 @@ function loadUserdata()
             }
             else if (document.getElementById("Title").innerHTML == "my account")
             {
-                var userFN, announcementsCount, Point;
+                var userFN, userEmail, announcementsCount, Point, userImage;
                 cloudData.doc("users/" + user.uid).get().then(function(doc)
                 {
                     if (doc && doc.exists)
                     {
                         const userData = doc.data();
                         userFN = userData.firstName;
+                        userEmail = userData.Email;
                         announcementsCount = parseInt(userData.announcementsCount);
                         Point = parseInt(userData.Point);
 
@@ -60,6 +61,37 @@ function loadUserdata()
                         document.getElementById("accountName").innerHTML = userFN;
                         document.getElementById("accountFastInfoDataAnnouncements").innerHTML = announcementsCount.toString();
                         document.getElementById("accountFastInfoDataPoint").innerHTML = Point.toString();
+
+                        document.getElementById("accountEditFNInputField").value = userFN;
+                        document.getElementById("accountEditEmailInputField").value = userEmail;
+
+                        var pathReference = databaseStorage.ref("/users/" + Auth.currentUser.uid + ".jpg");
+                        pathReference.getDownloadURL().then(function(url)
+                        {
+                            userImage = url;
+                            document.getElementById('accountImage').src = userImage;
+                            document.getElementById('accountEditImage').src = userImage;
+                        }).catch(function(error)
+                        {
+                            document.getElementById('accountImage').src = "../Images/defaultProfileImage.jpg";
+                            document.getElementById('accountEditImage').src = "../Images/defaultProfileImage.jpg";
+
+                            switch (error.code)
+                            {
+                                case 'storage/object-not-found':
+                                    console.log("Got an Error: File doesn't exist");
+                                    break;
+                                case 'storage/unauthorized':
+                                    console.log("Got an Error: User doesn't have permission to access the object");
+                                    break;
+                                case 'storage/canceled':
+                                    console.log("Got an Error: User canceled the upload");
+                                    break;
+                                case 'storage/unknown':
+                                    console.log("Got an Error: Unknown error occurred, inspect the server response");
+                                    break;
+                            }
+                        });
                     }
                 }).catch(function(error)
                 {
@@ -123,6 +155,7 @@ function signIn()
             {
                 firstName: firstNameText,
                 Email: emailField.value,
+                Residence: "",
                 announcementsCount: parseInt(0),
                 Point: parseInt(0)
             }).catch(function(error)
@@ -143,8 +176,8 @@ function signIn()
             desableElement("correctness userSighedIn", 2.5);
 
             Auth.signInWithEmailAndPassword(emailField.value, passwordField.value).then(function()
-            {
-                location.replace("../index.html");
+            {   
+                location.replace("../me.html");
             });
 
         }).catch(function(error)
@@ -277,6 +310,52 @@ function logOut()
         desableElement("correctness userSighedOut", 2.5);
         location.replace("../index.html");
     });
+}
+
+function updateUserData()
+{
+    var canSaveInformation;
+    var firstNameField = document.getElementById("accountEditFNInputField");
+    var firstNameText = firstNameField.value;
+    var ResidenceField = document.getElementById("accountEditResidenceInputField");
+    var ResidenceText = ResidenceField.value;
+
+    if (firstNameText && firstNameText.length >= 2 && firstNameText.indexOf(' ') <= 0)
+    {
+        document.getElementById("FNInputFieldTitle").style.color = "#11111180";
+        document.getElementById("FNInputFieldIcon").style.color = "#81b214";
+        document.getElementById("Error invalidFN").style.display = "none";
+        canSaveInformation = true;
+    }
+    else
+    {
+        document.getElementById("FNInputFieldTitle").style.color = "red";
+        document.getElementById("FNInputFieldIcon").style.color = "red";
+        document.getElementById("Error invalidFN").style.display = "block";
+        canSaveInformation = false;
+    }
+
+    if (canSaveInformation)
+    {
+        cloudData.doc("users/" + Auth.currentUser.uid).update(
+        {
+            firstName: firstNameText,
+            Residence: ResidenceText
+        }).catch(function(error)
+        {
+            console.log("Got an Error: " + error);
+        })
+
+        try
+        {
+            var storageRef = databaseStorage.ref("/users/" + Auth.currentUser.uid + ".jpg");
+            var uploadTask = storageRef.put(document.getElementById("accountImageUploadButton").files[0]);
+        } catch {}
+    
+        document.getElementById("correctness dataSuccessfullySaved").style.display = "block";
+        desableElement("correctness dataSuccessfullySaved", 2.5);
+        openCloseAccountEditBox();
+    }
 }
 
 function deleteAccount()
@@ -486,4 +565,59 @@ function noActionYet()
             Item.style.display = "none";
         }
     }, 2.5 * 1000);
+}
+
+var isOpenedAccountEditBox = false;
+function openCloseAccountEditBox()
+{
+    if (isOpenedAccountEditBox)
+    {
+        document.getElementById("accountEditBoxHolder").style.animation = "fadeOut .3s ease-out forwards";
+        document.getElementById("pageTitle").innerHTML = "My account";
+
+        setTimeout(function ()
+        {
+            document.getElementById("accountEditBoxHolder").style.display = "none";
+            isOpenedAccountEditBox = false;
+        }, 500);
+    }
+    else if (!isOpenedAccountEditBox)
+    {
+        document.getElementById("accountEditBoxHolder").style.animation = "fadeIn .5s ease-out forwards .1s";
+        document.getElementById("accountEditBoxHolder").style.display = "unset";
+        document.getElementById("pageTitle").innerHTML = "Edit account";
+
+        var pathReference = databaseStorage.ref("/users/" + Auth.currentUser.uid + ".jpg");
+        pathReference.getDownloadURL().then(function(url)
+        {
+            userImage = url;
+            document.getElementById('accountEditImage').src = userImage;
+        }).catch(function(error)
+        {
+            document.getElementById('accountEditImage').src = "../Images/defaultProfileImage.jpg";
+
+            switch (error.code)
+            {
+                case 'storage/object-not-found':
+                    console.log("Got an Error: File doesn't exist");
+                    break;
+                case 'storage/unauthorized':
+                    console.log("Got an Error: User doesn't have permission to access the object");
+                    break;
+                case 'storage/canceled':
+                    console.log("Got an Error: User canceled the upload");
+                    break;
+                case 'storage/unknown':
+                    console.log("Got an Error: Unknown error occurred, inspect the server response");
+                    break;
+            }
+        });
+
+        isOpenedAccountEditBox = true;
+    }
+}
+
+function updateAccountImagePriview()
+{
+    document.getElementById("accountEditImage").src = URL.createObjectURL(document.getElementById("accountImageUploadButton").files[0]);
 }

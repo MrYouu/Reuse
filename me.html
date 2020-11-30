@@ -17,7 +17,6 @@
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
-        <script src = "https://github.com/ryanve/edit-file.git"></script>
         <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
         <script type = "text/javascript" src = "Files/Functions.js"></script>
 
@@ -44,6 +43,9 @@
 
         <div class = "messageHolder">
             <!-- Correctnesses -->
+            <div class = "correctnessHolder" id = "correctness dataSuccessfullySaved">
+                <p>Data successfully saved!</p>
+            </div>
             <div class = "correctnessHolder" id = "correctness userLoggedOut">
                 <p>User Logged Out.</p>
             </div>
@@ -52,12 +54,15 @@
             <div class = "errorHolder" id = "Error cannotDeleteAccount" onclick = "desableElement('Error cannotDeleteAccount', 0)">
                 <p>Cannot delete account yet.</p>
             </div>
+            <div class = "errorHolder" id = "Error invalidFN" onclick = "desableElement('Error invalidFN', 0)">
+                <p>The First name is invalid.</p>
+            </div>
             <div class = "errorHolder" id = "Error noActionYet" onclick = "desableElement('Error noActionYet', 0)">
                 <p>There is no action yet. Still in development</p>
             </div>
         </div>
 
-        <h1 class = "pageTitle">My account</h1>
+        <h1 class = "pageTitle" id = "pageTitle">My account</h1>
 
         <div class = "pageHolder">
             <div class = "toolBar">
@@ -71,13 +76,13 @@
             </div>
 
             <div class = "accountBox">
-                <div class = "accountImageHolder"><img src = "Images/defaultProfileImage.svg" class = "accountImage"></div>
+                <div class = "accountImageHolder"><img src = "Images/defaultProfileImage.jpg" class = "accountImage" id = "accountImage"></div>
                 <h1 class = "accountName" id = "accountName">Name</h1>
                 <div class = "accountActionButtons">
-                    <p onclick = "noActionYet()" class = "accountActionButton"><i class="fas fa-pen"></i></p>
-                    <p onclick = "noActionYet()" class = "accountActionButton"><i class="fas fa-pen"></i></p>
-                    <p onclick = "noActionYet()" class = "accountActionButton"><i class="fas fa-pen"></i></p>
-                    <p onclick = "noActionYet()" class = "accountActionButton"><i class="fas fa-pen"></i></p>
+                    <p onclick = "noActionYet()" class = "accountActionButton"><i class = "fas fa-"></i></p>
+                    <p onclick = "noActionYet()" class = "accountActionButton"><i class = "fas fa-"></i></p>
+                    <p onclick = "noActionYet()" class = "accountActionButton"><i class = "fas fa-"></i></p>
+                    <p onclick = "openCloseAccountEditBox()" class = "accountActionButton"><i class = "fas fa-pen"></i></p>
                 </div>
                 <div class = "accountFastInfoHolder">
                     <div class = "accountFastInfo">
@@ -92,6 +97,37 @@
                         <h1 class = "accountFastInfoData">0</h1>
                         <h5 class = "accountFastInfoName">Other info</h5>
                     </div>
+                </div>
+            </div>
+
+            <div class = "accountEditBoxHolder" id = "accountEditBoxHolder">
+                <div class = "accountEditBox">
+                    <div onclick = "openCloseAccountEditBox()" class = "accountEditBoxCloseButton"></div>
+                    <div class = "accountEditBoxImageHolder">
+                        <img src = "Images/defaultProfileImage.jpg" class = "accountImage" id = "accountEditImage">
+                        <i onclick = "document.getElementById('accountImageUploadButton').click()" class = "fas fa-pen"></i>
+                        <input type = "file" id = "accountImageUploadButton" hidden accept = "image/*" oninput = "updateAccountImagePriview()">
+                    </div>
+
+                    <div class = "accountEditBoxInputField">
+                        <p class = "accountEditBoxInputFieldTitle" id = "FNInputFieldTitle">First name</p>
+                        <input type = "text" placeholder = "First name" class = "accountEditBoxInputFieldText" id = "accountEditFNInputField">
+                        <i class = "fas fa-signature" id = "FNInputFieldIcon"></i>
+                    </div>
+
+                    <div class = "accountEditBoxInputField Disabled">
+                        <p class = "accountEditBoxInputFieldTitle" id = "FNInputFieldTitle">Email address</p>
+                        <input type = "email" placeholder = "Email address" class = "accountEditBoxInputFieldText" id = "accountEditEmailInputField" disabled>
+                        <i class = "fas fa-envelope" id = "emailInputFieldIcon"></i>
+                    </div>
+
+                    <div class = "accountEditBoxInputField Disabled">
+                        <p class = "accountEditBoxInputFieldTitle" id = "residenceInputFieldTitle">Address of residence</p>
+                        <input type = "email" placeholder = "Address of residence" class = "accountEditBoxInputFieldText" id = "accountEditResidenceInputField">
+                        <i class = "fas fa-map-marker-alt" id = "residenceInputFieldIcon"></i>
+                    </div>
+
+                    <p onclick = "updateUserData()" class = "accountEditBoxButton">Save</p>
                 </div>
             </div>
 
