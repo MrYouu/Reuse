@@ -44,6 +44,28 @@ function loadUserdata()
                     console.log("Got an Error: " +  error);
                 });
             }
+            else if (document.getElementById("Title").innerHTML == "my account")
+            {
+                var userFN, announcementsCount, Point;
+                cloudData.doc("users/" + user.uid).get().then(function(doc)
+                {
+                    if (doc && doc.exists)
+                    {
+                        const userData = doc.data();
+                        userFN = userData.firstName;
+                        announcementsCount = parseInt(userData.announcementsCount);
+                        Point = parseInt(userData.Point);
+
+                        document.getElementById("Title").innerHTML = userFN + "'s account";
+                        document.getElementById("accountName").innerHTML = userFN;
+                        document.getElementById("accountFastInfoDataAnnouncements").innerHTML = announcementsCount.toString();
+                        document.getElementById("accountFastInfoDataPoint").innerHTML = Point.toString();
+                    }
+                }).catch(function(error)
+                {
+                    console.log("Got an Error: " +  error);
+                });
+            }
             else
             {
 
@@ -57,6 +79,10 @@ function loadUserdata()
                 document.getElementById("logInButton").style.display = "inline-block";
                 document.getElementById("accountButton").style.display = "none";
                 document.getElementById("logOutButton").style.display = "none";
+            }
+            else if (document.getElementById("Title").innerHTML == "my account")
+            {
+                location.replace("../signIn.html");
             }
             else
             {
@@ -96,7 +122,9 @@ function signIn()
             cloudData.doc("users/" + Auth.currentUser.uid).set(
             {
                 firstName: firstNameText,
-                Email: emailField.value
+                Email: emailField.value,
+                announcementsCount: parseInt(0),
+                Point: parseInt(0)
             }).catch(function(error)
             {
                 console.log("Got an Error: " + error);
@@ -180,7 +208,7 @@ function logIn()
 
         errorDefault();
 
-        location.replace("../index.html");
+        location.replace("../me.html");
     }).catch(function(error)
     {
         if (error)
@@ -251,6 +279,20 @@ function logOut()
     });
 }
 
+function deleteAccount()
+{
+    document.getElementById("Error cannotDeleteAccount").style.display = "block";
+    desableElement("Error cannotDeleteAccount", 2.5);
+
+    //Auth.deleteUser(uid).then(() =>
+    //{
+    //    console.log('Successfully deleted user');
+    //}).catch((error) =>
+    //{
+    //    console.log('Error deleting user:', error);
+    //});
+}
+
 function errorDefault()
 {
     document.getElementById("Error invalidFN").style.display = "none";
@@ -298,4 +340,150 @@ function toPageAnimation()
     {
         document.getElementById("redirectionBox3").style.height = "100%";
     }, 200);
+}
+
+function printAnnouncements(announcementsCategory)
+{
+    var announcementsHolder = document.getElementById("announcementsHolder");
+    announcementsHolder.innerHTML = "";
+    var announcementsHolderTitle = document.getElementById("announcementsHolderTitle");
+    
+    if (announcementsCategory != "AALast")
+    {
+        if (announcementsCategory == "bath") announcementsHolderTitle.innerHTML = "Baths";
+        else if (announcementsCategory == "blender") announcementsHolderTitle.innerHTML = "Blenders";
+        else if (announcementsCategory == "camera") announcementsHolderTitle.innerHTML = "Cameras";
+        else if (announcementsCategory == "chair") announcementsHolderTitle.innerHTML = "Chairs";
+        else if (announcementsCategory == "couch") announcementsHolderTitle.innerHTML = "Couches";
+        else if (announcementsCategory == "desktop") announcementsHolderTitle.innerHTML = "Displays";
+        else if (announcementsCategory == "laptop") announcementsHolderTitle.innerHTML = "Laptops";
+        else if (announcementsCategory == "sink") announcementsHolderTitle.innerHTML = "Sinks";
+        else if (announcementsCategory == "toilet") announcementsHolderTitle.innerHTML = "Toilets";
+        else if (announcementsCategory == "tv") announcementsHolderTitle.innerHTML = "Televisions";
+        else if (announcementsCategory == "volume-up") announcementsHolderTitle.innerHTML = "Speakers";
+
+        cloudData.doc("announcements/" + announcementsCategory).get().then(function(doc)
+        {
+            var Size;
+            if (doc && doc.exists)
+            {
+                const userData = doc.data();
+                Size = userData.Size;
+
+                if (Size == 0)
+                {
+                    announcementsHolder.innerHTML = '<div class = "Announcement No"><h3 class = "announcementTitle">No items yet</h3></div>';
+                }
+                else
+                {
+                    for (let index = 1; index < 6 + 1; index++)
+                    {
+                        cloudData.doc("announcements/" + announcementsCategory + ("/announcement" + index) + "/Data").get().then(function(doc)
+                        {
+                            var announcementImage, announcementTitle, announcementPrice, announcementStatus;
+                            if (doc && doc.exists)
+                            {
+                                const userData = doc.data();
+                                announcementTitle = userData.Title;
+                                announcementPrice = userData.Price;
+                                announcementStatus = userData.Status;
+        
+                                var pathReference = databaseStorage.ref("/Announcements/" + announcementsCategory + "/announcement" + index.toString() + ".jpg");
+                                pathReference.getDownloadURL().then(function(url)
+                                {
+                                    announcementImage = url;
+        
+                                    if (announcementStatus == "Online")
+                                    {
+                                        var newAnnouncement = "";
+                                        newAnnouncement += '<div class = "Announcement"><img src = "';
+                                        newAnnouncement += announcementImage;
+                                        newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
+                                        newAnnouncement += announcementTitle
+                                        newAnnouncement += '</h3><p class = "announcementText">';
+                                        newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
+        
+                                        announcementsHolder.innerHTML += newAnnouncement;
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+    else
+    {
+        cloudData.doc("announcements/" + announcementsCategory).get().then(function(doc)
+        {
+            announcementsHolderTitle.innerHTML = "Newest Items";
+            var lastAnnouncements;
+            if (doc && doc.exists)
+            {
+                const userData = doc.data();
+                lastAnnouncementsList = userData.lastAnnouncements;
+    
+                for (let index = 0; index < lastAnnouncementsList.length; index++)
+                {
+                    cloudData.doc("announcements/" + lastAnnouncementsList[index]).get().then(function(doc)
+                    {
+                        var announcementImage, announcementTitle, announcementPrice, announcementStatus;
+                        if (doc && doc.exists)
+                        {
+                            const userData = doc.data();
+                            announcementTitle = userData.Title;
+                            announcementPrice = userData.Price;
+                            announcementStatus = userData.Status;
+
+                            var lastAnnouncementsListWords = new Array("", "", "");
+                            var lastAnnouncementsListWordsIndex = 0;
+
+                            for (let charIndex = 0; charIndex < lastAnnouncementsList[index].length; charIndex++)
+                            {
+                                if (lastAnnouncementsList[index][charIndex] != "/")
+                                    lastAnnouncementsListWords[lastAnnouncementsListWordsIndex] += lastAnnouncementsList[index][charIndex];
+                                else lastAnnouncementsListWordsIndex += 1;
+                            }
+
+                            var pathReference = databaseStorage.ref("/Announcements/" + lastAnnouncementsListWords[0] +  "/"+ lastAnnouncementsListWords[1] + ".jpg");
+                            pathReference.getDownloadURL().then(function(url)
+                            {
+                                announcementImage = url;
+    
+                                if (announcementStatus == "Online")
+                                {
+                                    var newAnnouncement = "";
+                                    newAnnouncement += '<div class = "Announcement"><img src = "';
+                                    newAnnouncement += announcementImage;
+                                    newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
+                                    newAnnouncement += announcementTitle
+                                    newAnnouncement += '</h3><p class = "announcementText">';
+                                    newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
+    
+                                    announcementsHolder.innerHTML += newAnnouncement;
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
+}
+
+var Timer;
+function noActionYet()
+{
+    clearTimeout(Timer);
+    document.getElementById("Error noActionYet").style.display = "block";
+
+    Timer = window.setTimeout(function()
+    {
+        var Item = document.getElementById("Error noActionYet");
+        if (Item != null)
+        {
+            Item.style.display = "none";
+        }
+    }, 2.5 * 1000);
 }

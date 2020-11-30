@@ -20,10 +20,10 @@
         <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
         <script type = "text/javascript" src = "Files/Functions.js"></script>
 
-        <title id = "Title">Reuse</title>
+        <title id = "Title">Reuse Shop</title>
     </head>
 
-    <body id = "body" onload = "loadUserdata()">
+    <body id = "body" onload = "loadUserdata(); printAnnouncements('AALast')">
         <!-- #region Default -->
         <img src = "" alt = "Link image" style = "display: none;">
 
@@ -53,49 +53,17 @@
             </div>
         </div>
 
-        <h1 class = "pageTitle">REUSE</h1>
+        <h1 class = "pageTitle">Shop</h1>
 
         <div class = "pageHolder">
             <div class = "toolBar">
                 <div onclick = "goTo('index.html')" class = "toolBarLogo"><img src = "Images/Logo.svg"></div>
                 <div class = "toolBarToolsHolder" id = "toolBarToolsHolder">
-                    <i onclick = "goTo('index.html')" class = "fas fa-home Active" id = "Home"><div class = "activeTumb"><div class = "Hidders"></div></div></i>
-                    <i onclick = "goTo('Shop.html')" class = "fas fa-shopping-cart" id = "Shop"></i>
+                    <i onclick = "goTo('index.html')" class = "fas fa-home" id = "Home"></i>
+                    <i onclick = "goTo('shop.html')" class = "fas fa-shopping-cart Active" id = "Shop"><div class = "activeTumb"><div class = "Hidders"></div></div></i>
                     <i onclick = "goTo('Information.html')" class = "fas fa-info" id = "Info"></i>
                     <i onclick = "goTo('me.html')" class = "fas fa-user-alt" id = "Account"></i>
                 </div>
-            </div>
-    
-            <div class = "textBox Medium" id = "mainBox">
-                <h1 class = "textBoxDecorationText">REUSE</h1>
-                <h1 class = "textBoxDecorationText" id = "a2">REUSE</h1>
-                <div class = "textBoxTitleLines">
-                    <div class = "textBoxTitleLine1"></div>
-                    <div class = "textBoxTitleLine2"></div>
-                    <div class = "textBoxTitleLinesCircle"></div>
-                    <div class = "textBoxTitleLinesArrow"><div class = "textBoxTitleLinesArrowCircle"></div></div>
-                </div>
-                <h1 class = "textBoxTitle">REU SE</h1>
-                <p class = "textBoxText">
-                    Introducing you to the fastest way for you to sell or giveaway your
-                    old household machinery and old furniture.
-                </p>
-                
-                <p onclick = "goTo('signIn.html')" class = "textBoxButton Main" id = "signInButton">Sign In</p>
-                <p onclick = "goTo('logIn.html')" class = "textBoxButton Secondory" id = "logInButton">Log In</p>
-    
-                <p onclick = "goTo('me.html')" class = "textBoxButton Main" id = "accountButton">Name</p>
-                <p onclick = "logOut()" class = "textBoxButton Secondory" id = "logOutButton">Log Out</p>
-            </div>
-    
-            <div class = "textBox Big UltraTall" id = "informationBox">
-                <h1 class = "textBoxTitle">Who are we?</h1>
-                <p class = "textBoxText">
-                    The one who will get rid of your old household machinery and old furniture.
-                    Just follow the steps and see how the procedure will happen.
-                </p>
-                <img src = "Images/whoAreWeImage.png" class = "textBoxImage" id = "informationImage">
-                <p onclick = "goTo('Information.html')" class = "textBoxButton Main">Read more</p>
             </div>
     
             <div class = "slideShowBox" id = "adsSlideShowBox">
@@ -131,27 +99,27 @@
     
             <h1 class = "freeTitle">Shop</h1>
             <div class = "Scroller Icons" id = "categoriesScroller">
-                <div onclick = "goTo('')" class = "scrollerItem Active"><i class = "fas fa-arrow-right"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-sink"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-bath"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-toilet"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-chair"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-couch"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-laptop"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-tv"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-desktop"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-volume-up"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-blender"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-camera"></i></div>
+                <div onclick = "printAnnouncements('AALast')" class = "scrollerItem Active"><i class = "fas fa-arrow-right"></i></div>
+                <div onclick = "printAnnouncements('sink')" class = "scrollerItem"><i class = "fas fa-sink"></i></div>
+                <div onclick = "printAnnouncements('bath')" class = "scrollerItem"><i class = "fas fa-bath"></i></div>
+                <div onclick = "printAnnouncements('toilet')" class = "scrollerItem"><i class = "fas fa-toilet"></i></div>
+                <div onclick = "printAnnouncements('chair')" class = "scrollerItem"><i class = "fas fa-chair"></i></div>
+                <div onclick = "printAnnouncements('couch')" class = "scrollerItem"><i class = "fas fa-couch"></i></div>
+                <div onclick = "printAnnouncements('laptop')" class = "scrollerItem"><i class = "fas fa-laptop"></i></div>
+                <div onclick = "printAnnouncements('tv')" class = "scrollerItem"><i class = "fas fa-tv"></i></div>
+                <div onclick = "printAnnouncements('desktop')" class = "scrollerItem"><i class = "fas fa-desktop"></i></div>
+                <div onclick = "printAnnouncements('volume-up')" class = "scrollerItem"><i class = "fas fa-volume-up"></i></div>
+                <div onclick = "printAnnouncements('blender')" class = "scrollerItem"><i class = "fas fa-blender"></i></div>
+                <div onclick = "printAnnouncements('camera')" class = "scrollerItem"><i class = "fas fa-camera"></i></div>
             </div>
     
-            <h2 class = "freeTitle">Newest Items <a href = "">View all</a></h2>
-            <div class = "Scroller Items" id = "itemsScroller"></div>
+            <h2 class = "freeTitle" id = "announcementsHolderTitle">Newest Items</h2>
+            <div class = "announcementsHolder" id = "announcementsHolder"></div>
     
             <div class = "bottomBar">
                 <div class = "bottomBarLinkHolder">
-                    <a onclick = "goTo('index.html')" class = "bottomBarLinks Active">Home</a>
-                    <a onclick = "goTo('Shop.html')" class = "bottomBarLinks">Shop</a>
+                    <a onclick = "goTo('index.html')" class = "bottomBarLinks">Home</a>
+                    <a onclick = "goTo('Shop.html')" class = "bottomBarLinks Active">Shop</a>
                     <a onclick = "goTo('Information.html')" class = "bottomBarLinks">Information</a>
                 </div>
     

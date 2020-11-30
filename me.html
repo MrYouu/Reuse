@@ -1,0 +1,132 @@
+<!--The HTML code is property to Mr. You (Kristiyan Valchev) and can only be viewed-->
+<!--If you want to use part of the code, please first contact me: mr.youdevelopment@gmail.com-->
+
+<html id = "html">
+    <head>
+        <link href = "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">        <link type = "text/css" rel = "stylesheet" href = "Files/Style.css">
+        <link rel = "icon" href = "Images/Logo.svg" type = "image" sizes = "16x16">
+
+        <meta charset = "utf-8">
+        <meta name = "description" content = "This is a website for ...">
+        <meta name = "keywords" content = "..., ...">
+        <meta name = "author" content = "Kristiyan Valchev">
+        <meta name = "viewport" content = "width = device-width, user-scalable = no, initial-scale = 1">
+        
+        <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
+        <script src = "https://github.com/ryanve/edit-file.git"></script>
+        <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
+        <script type = "text/javascript" src = "Files/Functions.js"></script>
+
+        <title id = "Title">my account</title>
+    </head>
+
+    <body id = "body" onload = "loadUserdata();">
+        <!-- #region Default -->
+        <img src = "" alt = "Link image" style = "display: none;">
+
+        <script>
+            window.scroll(
+            {
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+		</script>
+        <!-- #endregion Default -->
+        
+        <div class = "redirectionBox a1" id = "redirectionBox1"></div>
+        <div class = "redirectionBox a2" id = "redirectionBox2"></div>
+        <div class = "redirectionBox a3" id = "redirectionBox3"></div>
+
+        <div class = "messageHolder">
+            <!-- Correctnesses -->
+            <div class = "correctnessHolder" id = "correctness userLoggedOut">
+                <p>User Logged Out.</p>
+            </div>
+
+            <!-- Errors -->
+            <div class = "errorHolder" id = "Error cannotDeleteAccount" onclick = "desableElement('Error cannotDeleteAccount', 0)">
+                <p>Cannot delete account yet.</p>
+            </div>
+            <div class = "errorHolder" id = "Error noActionYet" onclick = "desableElement('Error noActionYet', 0)">
+                <p>There is no action yet. Still in development</p>
+            </div>
+        </div>
+
+        <h1 class = "pageTitle">My account</h1>
+
+        <div class = "pageHolder">
+            <div class = "toolBar">
+                <div onclick = "goTo('index.html')" class = "toolBarLogo"><img src = "Images/Logo.svg"></div>
+                <div class = "toolBarToolsHolder" id = "toolBarToolsHolder">
+                    <i onclick = "goTo('index.html')" class = "fas fa-home" id = "Home"></i>
+                    <i onclick = "goTo('Shop.html')" class = "fas fa-shopping-cart" id = "Shop"></i>
+                    <i onclick = "goTo('Information.html')" class = "fas fa-info" id = "Info"></i>
+                    <i onclick = "goTo('me.html')" class = "fas fa-user-alt Active" id = "Account"><div class = "activeTumb"><div class = "Hidders"></div></div></i>
+                </div>
+            </div>
+
+            <div class = "accountBox">
+                <div class = "accountImageHolder"><img src = "Images/defaultProfileImage.svg" class = "accountImage"></div>
+                <h1 class = "accountName" id = "accountName">Name</h1>
+                <div class = "accountActionButtons">
+                    <p onclick = "noActionYet()" class = "accountActionButton"><i class="fas fa-pen"></i></p>
+                    <p onclick = "noActionYet()" class = "accountActionButton"><i class="fas fa-pen"></i></p>
+                    <p onclick = "noActionYet()" class = "accountActionButton"><i class="fas fa-pen"></i></p>
+                    <p onclick = "noActionYet()" class = "accountActionButton"><i class="fas fa-pen"></i></p>
+                </div>
+                <div class = "accountFastInfoHolder">
+                    <div class = "accountFastInfo">
+                        <h1 class = "accountFastInfoData" id = "accountFastInfoDataAnnouncements">0</h1>
+                        <h5 class = "accountFastInfoName">Announcements</h5>
+                    </div>
+                    <div class = "accountFastInfo">
+                        <h1 class = "accountFastInfoData" id = "accountFastInfoDataPoint">0</h1>
+                        <h5 class = "accountFastInfoName">Point</h5>
+                    </div>
+                    <div class = "accountFastInfo">
+                        <h1 class = "accountFastInfoData">0</h1>
+                        <h5 class = "accountFastInfoName">Other info</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "textBox" id = "yourAnnouncementsTextBox">
+                <h1 class = "textBoxTitle">My announcements</h1>
+                <p class = "textBoxText">
+                    No announcements yet.
+                </p>
+                <p onclick = "" class = "textBoxButton Main"><i class = "fas fa-plus"></i></p>
+            </div>
+
+            <div class = "textBox" id = "deleteAccountTextBox">
+                <h1 class = "textBoxTitle">Delete my account</h1>
+                <p class = "textBoxText">
+                    If you are not satisfied with our survases and want to remove your
+                    account preseade to this button. Thank you for your engagement with us,
+                    hope you return one day.
+                </p>
+                <p onclick = "deleteAccount()" class = "textBoxButton Main">Delete</p>
+            </div>
+    
+            <div class = "bottomBar">
+                <div class = "bottomBarLinkHolder">
+                    <a onclick = "goTo('index.html')" class = "bottomBarLinks">Home</a>
+                    <a onclick = "goTo('Shop.html')" class = "bottomBarLinks">Shop</a>
+                    <a onclick = "goTo('Information.html')" class = "bottomBarLinks Active">Information</a>
+                </div>
+    
+                <p class = "Credits">
+                    <powerd>Site powered by <company>Mr. You Development</company>.</powerd>
+                    <managed> Managed by <my>Kristiyan Valchecv</my></managed>
+                </p>
+            </div>
+
+            <div class = "mobileExpander"></div>
+        </div>
+    </body>
+</html>
