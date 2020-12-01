@@ -97,7 +97,7 @@
                 </div>
             </div>
     
-            <h1 class = "freeTitle">Shop</h1>
+            <h1 class = "freeTitle">Category</h1>
             <div class = "Scroller Icons" id = "categoriesScroller">
                 <div onclick = "printAnnouncements('AALast')" class = "scrollerItem Active"><i class = "fas fa-arrow-right"></i></div>
                 <div onclick = "printAnnouncements('sink')" class = "scrollerItem"><i class = "fas fa-sink"></i></div>
@@ -114,7 +114,12 @@
             </div>
     
             <h2 class = "freeTitle" id = "announcementsHolderTitle">Newest Items</h2>
-            <div class = "announcementsHolder" id = "announcementsHolder"></div>
+            <div class = "announcementsHolder" id = "announcementsHolder">
+                <div class = "Announcement Empty">
+                    <div class = "Loader01"><div class = "circleBorder"><div class = "circleCore"></div></div></div>
+                    <h3 class = "announcementTitle">Loading...</h3>
+                </div>
+            </div>
     
             <div class = "bottomBar">
                 <div class = "bottomBarLinkHolder">

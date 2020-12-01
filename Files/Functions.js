@@ -424,7 +424,7 @@ function toPageAnimation()
 function printAnnouncements(announcementsCategory)
 {
     var announcementsHolder = document.getElementById("announcementsHolder");
-    announcementsHolder.innerHTML = "";
+    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><div class = "Loader01"><div class = "circleBorder"><div class = "circleCore"></div></div></div><h3 class = "announcementTitle">Loading...</h3></div>'
     var announcementsHolderTitle = document.getElementById("announcementsHolderTitle");
     
     if (announcementsCategory != "AALast")
@@ -451,10 +451,11 @@ function printAnnouncements(announcementsCategory)
 
                 if (Size == 0)
                 {
-                    announcementsHolder.innerHTML = '<div class = "Announcement No"><h3 class = "announcementTitle">No items yet</h3></div>';
+                    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
                 }
                 else
                 {
+                    announcementsHolder.innerHTML = "";
                     for (let index = 1; index < 6 + 1; index++)
                     {
                         cloudData.doc("announcements/" + announcementsCategory + ("/announcement" + index) + "/Data").get().then(function(doc)
@@ -496,55 +497,76 @@ function printAnnouncements(announcementsCategory)
     {
         cloudData.doc("announcements/" + announcementsCategory).get().then(function(doc)
         {
-            announcementsHolderTitle.innerHTML = "Newest Items";
-            var lastAnnouncements;
+            var lastAnnouncementsList;
             if (doc && doc.exists)
             {
                 const userData = doc.data();
                 lastAnnouncementsList = userData.lastAnnouncements;
-    
-                for (let index = 0; index < lastAnnouncementsList.length; index++)
+
+                if (lastAnnouncementsList.length == 0)
                 {
-                    cloudData.doc("announcements/" + lastAnnouncementsList[index]).get().then(function(doc)
+                    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+                }
+                else
+                {
+                    announcementsHolder.innerHTML = "";
+                    for (let index = 0; index < lastAnnouncementsList.length; index++)
                     {
-                        var announcementImage, announcementTitle, announcementPrice, announcementStatus;
-                        if (doc && doc.exists)
+                        cloudData.doc("announcements/" + lastAnnouncementsList[index]).get().then(function(doc)
                         {
-                            const userData = doc.data();
-                            announcementTitle = userData.Title;
-                            announcementPrice = userData.Price;
-                            announcementStatus = userData.Status;
-
-                            var lastAnnouncementsListWords = new Array("", "", "");
-                            var lastAnnouncementsListWordsIndex = 0;
-
-                            for (let charIndex = 0; charIndex < lastAnnouncementsList[index].length; charIndex++)
+                            var announcementImage, announcementTitle, announcementPrice, announcementStatus;
+                            if (doc && doc.exists)
                             {
-                                if (lastAnnouncementsList[index][charIndex] != "/")
-                                    lastAnnouncementsListWords[lastAnnouncementsListWordsIndex] += lastAnnouncementsList[index][charIndex];
-                                else lastAnnouncementsListWordsIndex += 1;
-                            }
+                                const userData = doc.data();
+                                announcementTitle = userData.Title;
+                                announcementPrice = userData.Price;
+                                announcementStatus = userData.Status;
 
-                            var pathReference = databaseStorage.ref("/Announcements/" + lastAnnouncementsListWords[0] +  "/"+ lastAnnouncementsListWords[1] + ".jpg");
-                            pathReference.getDownloadURL().then(function(url)
-                            {
-                                announcementImage = url;
-    
-                                if (announcementStatus == "Online")
+                                var lastAnnouncementsListWords = new Array("", "", "");
+                                var lastAnnouncementsListWordsIndex = 0;
+
+                                for (let charIndex = 0; charIndex < lastAnnouncementsList[index].length; charIndex++)
                                 {
-                                    var newAnnouncement = "";
-                                    newAnnouncement += '<div class = "Announcement"><img src = "';
-                                    newAnnouncement += announcementImage;
-                                    newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
-                                    newAnnouncement += announcementTitle
-                                    newAnnouncement += '</h3><p class = "announcementText">';
-                                    newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
-    
-                                    announcementsHolder.innerHTML += newAnnouncement;
+                                    if (lastAnnouncementsList[index][charIndex] != "/")
+                                        lastAnnouncementsListWords[lastAnnouncementsListWordsIndex] += lastAnnouncementsList[index][charIndex];
+                                    else lastAnnouncementsListWordsIndex += 1;
                                 }
-                            });
-                        }
-                    });
+
+                                var pathReference = databaseStorage.ref("/Announcements/" + lastAnnouncementsListWords[0] +  "/"+ lastAnnouncementsListWords[1] + ".jpg");
+                                pathReference.getDownloadURL().then(function(url)
+                                {
+                                    announcementImage = url;
+        
+                                    if (announcementStatus == "Online")
+                                    {
+                                        var newAnnouncement = "";
+                                        if (document.getElementById("Title").innerHTML == "Reuse Shop")
+                                        {
+                                            announcementsHolderTitle.innerHTML = "Newest Items";
+        
+                                            newAnnouncement += '<div class = "Announcement"><img src = "';
+                                            newAnnouncement += announcementImage;
+                                            newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
+                                            newAnnouncement += announcementTitle
+                                            newAnnouncement += '</h3><p class = "announcementText">';
+                                            newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
+            
+                                        }
+                                        else if (document.getElementById("Title").innerHTML == "Reuse")
+                                        {
+                                            newAnnouncement += '<div class = "scrollerItem"><img src = "';
+                                            newAnnouncement += announcementImage;
+                                            newAnnouncement += '" class = "scrollerItemImage"><h3 class = "scrollerItemTitle">';
+                                            newAnnouncement += announcementTitle
+                                            newAnnouncement += '</h3><p class = "scrollerItemText">';
+                                            newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p><p onclick = "" class = "scrollerItemButton"><i class = "fas fa-plus"></i></p></div>';
+                                        }
+                                        announcementsHolder.innerHTML += newAnnouncement;
+                                    }
+                                });
+                            }
+                        });
+                    }
                 }
             }
         });

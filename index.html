@@ -23,7 +23,7 @@
         <title id = "Title">Reuse</title>
     </head>
 
-    <body id = "body" onload = "loadUserdata()">
+    <body id = "body" onload = "loadUserdata(); printAnnouncements('AALast');">
         <!-- #region Default -->
         <img src = "" alt = "Link image" style = "display: none;">
 
@@ -131,22 +131,22 @@
     
             <h1 class = "freeTitle">Shop</h1>
             <div class = "Scroller Icons" id = "categoriesScroller">
-                <div onclick = "goTo('')" class = "scrollerItem Active"><i class = "fas fa-arrow-right"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-sink"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-bath"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-toilet"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-chair"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-couch"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-laptop"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-tv"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-desktop"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-volume-up"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-blender"></i></div>
-                <div onclick = "goTo('')" class = "scrollerItem"><i class = "fas fa-camera"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem Active"><i class = "fas fa-arrow-right"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-sink"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-bath"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-toilet"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-chair"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-couch"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-laptop"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-tv"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-desktop"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-volume-up"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-blender"></i></div>
+                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-camera"></i></div>
             </div>
     
-            <h2 class = "freeTitle">Newest Items <a href = "">View all</a></h2>
-            <div class = "Scroller Items" id = "itemsScroller"></div>
+            <h2 class = "freeTitle">Newest Items <a onclick = "goTo('Shop.html')" style = "cursor: pointer;">View all</a></h2>
+            <div class = "Scroller Items" id = "announcementsHolder"></div>
     
             <div class = "bottomBar">
                 <div class = "bottomBarLinkHolder">
