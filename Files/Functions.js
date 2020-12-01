@@ -592,6 +592,9 @@ function noActionYet()
 var isOpenedAccountEditBox = false;
 function openCloseAccountEditBox()
 {
+    var changableTextMy = document.getElementById("changableTextMy");
+    var changableTextEdit = document.getElementById("changableTextEdit");
+
     if (isOpenedAccountEditBox)
     {
         document.getElementById("accountEditBoxHolder").style.animation = "fadeOut .3s ease-out forwards";

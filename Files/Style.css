@@ -271,10 +271,9 @@ body.signAccount
 {
     position: absolute;
     width: calc(100% - 30px);
-    top: 0;
+    top: 30;
     left: 15;
     text-align: center;
-    line-height: 100px;
     color: #f8f8f8;
 
     animation: dropDown .5s ease-out forwards;
