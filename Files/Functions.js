@@ -98,6 +98,47 @@ function loadUserdata()
                     console.log("Got an Error: " +  error);
                 });
             }
+            else if (document.getElementById("Title").innerHTML == "Staff - Reuse")
+            {
+                var userFN, userEmail, userType,
+                    staffFN, staffEmail;
+                cloudData.doc("users/" + user.uid).get().then(function(doc)
+                {
+                    if (doc && doc.exists)
+                    {
+                        const userData = doc.data();
+                        userFN = userData.firstName;
+                        userEmail = userData.Email;
+                        userType = userData.userType;
+                        console.log(userType);
+
+                        if (userType == "Normal")
+                        {
+                            location.replace("../staff/logIn.html");
+                        }
+                        else
+                        {
+                            cloudData.doc("staff/" + user.uid).get().then(function(doc)
+                            {
+                                if (doc && doc.exists)
+                                {
+                                    const staffData = doc.data();
+                                    staffFN = staffData.firstName;
+                                    staffEmail = staffData.Email;
+    
+                                    document.getElementById("accountName").innerHTML = staffFN;
+                                }
+                            }).catch(function(error)
+                            {
+                                console.log("Got an Error: " +  error);
+                            });
+                        }
+                    }
+                }).catch(function(error)
+                {
+                    console.log("Got an Error: " +  error);
+                });
+            }
             else
             {
 
@@ -115,6 +156,10 @@ function loadUserdata()
             else if (document.getElementById("Title").innerHTML == "my account")
             {
                 location.replace("../signIn.html");
+            }
+            else if (document.getElementById("Title").innerHTML == "Staff - Reuse")
+            {
+                location.replace("../staff/logIn.html");
             }
             else
             {
@@ -155,6 +200,7 @@ function signIn()
             {
                 firstName: firstNameText,
                 Email: emailField.value,
+                userType: Normal,
                 Residence: "",
                 announcementsCount: parseInt(0),
                 Point: parseInt(0)
@@ -302,12 +348,87 @@ function logIn()
     });
 }
 
+function staffLogIn()
+{
+    var emailField = document.getElementById("logInEmailInputField");
+    var passwordField = document.getElementById("logInPasswordInputField");
+
+    Auth.signInWithEmailAndPassword(emailField.value, passwordField.value).then(function()
+    {
+        document.getElementById("emailInputFieldTitle").style.color = "#11111180";
+        document.getElementById("emailInputFieldIcon").style.color = "#81b214";
+        document.getElementById("passwordInputFieldTitle").style.color = "#11111180";
+        document.getElementById("passwordInputFieldIcon").style.color = "#81b214";
+
+        errorDefault();
+
+        location.replace("index.html");
+    }).catch(function(error)
+    {
+        if (error)
+        {
+            var errorCode = error.code;
+
+            if (errorCode == 'auth/invalid-email')
+            {
+                document.getElementById("emailInputFieldTitle").style.color = "red";
+                document.getElementById("emailInputFieldIcon").style.color = "red";
+                document.getElementById("Error invalidEmail").style.display = "block";
+            }
+            else if (errorCode == 'auth/email-already-in-use')
+            {
+                document.getElementById("emailInputFieldTitle").style.color = "red";
+                document.getElementById("emailInputFieldIcon").style.color = "red";
+                document.getElementById("Error existingEmail").style.display = "block";
+            }
+            else
+            {
+                document.getElementById("emailInputFieldTitle").style.color = "#11111180";
+                document.getElementById("emailInputFieldIcon").style.color = "#81b214";
+                document.getElementById("Error invalidEmail").style.display = "none";
+                document.getElementById("Error nonExistingUser").style.display = "none";
+            }
+
+            if (errorCode == 'auth/wrong-password')
+            {
+                document.getElementById("passwordInputFieldTitle").style.color = "red";
+                document.getElementById("passwordInputFieldIcon").style.color = "red";
+                document.getElementById("Error wrongPassword").style.display = "block";
+            }
+            else if (errorCode == 'auth/user-not-found')
+            {
+                document.getElementById("emailInputFieldTitle").style.color = "red";
+                document.getElementById("emailInputFieldIcon").style.color = "red";
+                document.getElementById("passwordInputFieldTitle").style.color = "red";
+                document.getElementById("passwordInputFieldIcon").style.color = "red";
+                document.getElementById("Error nonExistingUser").style.display = "block";
+            }
+            else
+            {
+                document.getElementById("passwordInputFieldTitle").style.color = "#11111180";
+                document.getElementById("passwordInputFieldIcon").style.color = "#81b214";
+                document.getElementById("Error nonExistingUser").style.display = "none";
+                document.getElementById("Error wrongPassword").style.display = "none";
+            }
+
+            if (errorCode == 'auth/too-many-requests')
+            {
+                errorDefault();
+                document.getElementById("Error toManyRequests").style.display = "block";
+                console.log("too-many-requests");
+            }
+        }
+        else
+            throw error;
+    });
+}
+
 function logOut()
 {
     Auth.signOut().then(function()
     {
-        document.getElementById("correctness userSighedOut").style.display = "block";
-        desableElement("correctness userSighedOut", 2.5);
+        document.getElementById("correctness userLoggedOut").style.display = "block";
+        desableElement("correctness userLoggedOut", 2.5);
         location.replace("../index.html");
     });
 }
@@ -421,13 +542,87 @@ function toPageAnimation()
     }, 200);
 }
 
-function printAnnouncements(announcementsCategory)
+function printAnnouncements(announcementsCategory, categoryButtonID)
 {
     var announcementsHolder = document.getElementById("announcementsHolder");
-    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><div class = "Loader01"><div class = "circleBorder"><div class = "circleCore"></div></div></div><h3 class = "announcementTitle">Loading...</h3></div>'
+    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><div class = "Loader01"><div class = "circleBorder"><div class = "circleCore"></div></div></div><h3 class = "announcementTitle">Loading...</h3></div>';
     var announcementsHolderTitle = document.getElementById("announcementsHolderTitle");
     
-    if (announcementsCategory != "AALast")
+    if (announcementsCategory != "AAWait")
+    {
+        var allCategoryButtons = document.getElementById("categoriesScroller").childNodes;
+
+        for (let index = 0; index < allCategoryButtons.length; index++)
+            allCategoryButtons[index].className = "scrollerItem";
+
+        document.getElementById(categoryButtonID).className += " Active";
+    }
+
+    if (announcementsCategory == "AAWait")
+    {
+        cloudData.doc("announcements/" + announcementsCategory).get().then(function(doc)
+        {
+            var waitAnnouncementsList;
+            if (doc && doc.exists)
+            {
+                const userData = doc.data();
+                waitAnnouncementsList = userData.waitingAnnouncements;
+
+                if (waitAnnouncementsList.length == 0)
+                {
+                    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+                }
+                else
+                {
+                    announcementsHolder.innerHTML = "";
+                    for (let index = 0; index < waitAnnouncementsList.length; index++)
+                    {
+                        cloudData.doc("announcements/" + waitAnnouncementsList[index] + "/Data").get().then(function(doc)
+                        {
+                            var announcementImage, announcementTitle, announcementPrice, announcementCondition, announcementInfo, announcementID, announcementStatus;
+                            if (doc && doc.exists)
+                            {
+                                const userData = doc.data();
+                                announcementTitle = userData.Title;
+                                announcementPrice = userData.Price;
+                                announcementCondition = userData.Condition;
+                                announcementInfo = userData.additionalInformation;
+                                announcementID = userData.ID;
+                                announcementStatus = userData.Status;
+        
+                                var pathReference = databaseStorage.ref("/Announcements/" + waitAnnouncementsList[index] + ".jpg");
+                                pathReference.getDownloadURL().then(function(url)
+                                {
+                                    announcementImage = url;
+        
+                                    if (announcementStatus == "Waiting")
+                                    {
+                                        var newAnnouncement = "";
+                                        newAnnouncement += '<div class = "Announcement" onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" id = "';
+                                        newAnnouncement += "Announcement" + index + '"><img src = "';
+                                        newAnnouncement += announcementImage;
+                                        newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
+                                        newAnnouncement += announcementTitle
+                                        newAnnouncement += '</h3><p class = "announcementText">';
+                                        newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
+                                        newAnnouncement += '<p class = "announcementText Hidden">';
+                                        newAnnouncement +=  announcementCondition + '</p>';
+                                        newAnnouncement += '<p class = "announcementText Hidden">';
+                                        newAnnouncement +=  announcementInfo + '</p>';
+                                        newAnnouncement += '<p class = "announcementText Hidden">';
+                                        newAnnouncement +=  announcementID + '</p><p onclick = "" class = "announcementButton Accept"><i class = "fas fa-check"></i></p><p onclick = "" class = "announcementButton Reject"><i class = "fas fa-times"></i></p>';
+        
+                                        announcementsHolder.innerHTML += newAnnouncement;
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+    else if (announcementsCategory != "AALast")
     {
         if (announcementsCategory == "bath") announcementsHolderTitle.innerHTML = "Baths";
         else if (announcementsCategory == "blender") announcementsHolderTitle.innerHTML = "Blenders";
@@ -460,12 +655,15 @@ function printAnnouncements(announcementsCategory)
                     {
                         cloudData.doc("announcements/" + announcementsCategory + ("/announcement" + index) + "/Data").get().then(function(doc)
                         {
-                            var announcementImage, announcementTitle, announcementPrice, announcementStatus;
+                            var announcementImage, announcementTitle, announcementPrice, announcementCondition, announcementInfo, announcementID, announcementStatus;
                             if (doc && doc.exists)
                             {
                                 const userData = doc.data();
                                 announcementTitle = userData.Title;
                                 announcementPrice = userData.Price;
+                                announcementCondition = userData.Condition;
+                                announcementInfo = userData.additionalInformation;
+                                announcementID = userData.ID;
                                 announcementStatus = userData.Status;
         
                                 var pathReference = databaseStorage.ref("/Announcements/" + announcementsCategory + "/announcement" + index.toString() + ".jpg");
@@ -476,12 +674,19 @@ function printAnnouncements(announcementsCategory)
                                     if (announcementStatus == "Online")
                                     {
                                         var newAnnouncement = "";
-                                        newAnnouncement += '<div class = "Announcement"><img src = "';
+                                        newAnnouncement += '<div class = "Announcement" onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" id = "';
+                                        newAnnouncement += "Announcement" + index + '"><img src = "';
                                         newAnnouncement += announcementImage;
                                         newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
                                         newAnnouncement += announcementTitle
                                         newAnnouncement += '</h3><p class = "announcementText">';
-                                        newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
+                                        newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
+                                        newAnnouncement += '<p class = "announcementText Hidden">';
+                                        newAnnouncement +=  announcementCondition + '</p>';
+                                        newAnnouncement += '<p class = "announcementText Hidden">';
+                                        newAnnouncement +=  announcementInfo + '</p>';
+                                        newAnnouncement += '<p class = "announcementText Hidden">';
+                                        newAnnouncement +=  announcementID + '</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
         
                                         announcementsHolder.innerHTML += newAnnouncement;
                                     }
@@ -514,12 +719,15 @@ function printAnnouncements(announcementsCategory)
                     {
                         cloudData.doc("announcements/" + lastAnnouncementsList[index]).get().then(function(doc)
                         {
-                            var announcementImage, announcementTitle, announcementPrice, announcementStatus;
+                            var announcementImage, announcementTitle, announcementPrice, announcementCondition, announcementInfo, announcementID, announcementStatus;
                             if (doc && doc.exists)
                             {
                                 const userData = doc.data();
                                 announcementTitle = userData.Title;
                                 announcementPrice = userData.Price;
+                                announcementCondition = userData.Condition;
+                                announcementInfo = userData.additionalInformation;
+                                announcementID = userData.ID;
                                 announcementStatus = userData.Status;
 
                                 var lastAnnouncementsListWords = new Array("", "", "");
@@ -544,22 +752,36 @@ function printAnnouncements(announcementsCategory)
                                         {
                                             announcementsHolderTitle.innerHTML = "Newest Items";
         
-                                            newAnnouncement += '<div class = "Announcement"><img src = "';
+                                            newAnnouncement += '<div class = "Announcement"onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" id = "';
+                                            newAnnouncement += "Announcement" + index + '"><img src = "';
                                             newAnnouncement += announcementImage;
                                             newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
                                             newAnnouncement += announcementTitle
                                             newAnnouncement += '</h3><p class = "announcementText">';
-                                            newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
+                                            newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
+                                            newAnnouncement += '<p class = "announcementText Hidden">';
+                                            newAnnouncement +=  announcementCondition + '</p>';
+                                            newAnnouncement += '<p class = "announcementText Hidden">';
+                                            newAnnouncement +=  announcementInfo + '</p>';
+                                            newAnnouncement += '<p class = "announcementText Hidden">';
+                                            newAnnouncement +=  announcementID + '</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
             
                                         }
                                         else if (document.getElementById("Title").innerHTML == "Reuse")
                                         {
-                                            newAnnouncement += '<div class = "scrollerItem"><img src = "';
+                                            newAnnouncement += '<div class = "scrollerItem" onclick = "openCloseAnnouncementPriview(' + "'" + "scrollerItem" + index + "'" + ')" id = "';
+                                            newAnnouncement += "scrollerItem" + index + '"><img src = "';
                                             newAnnouncement += announcementImage;
                                             newAnnouncement += '" class = "scrollerItemImage"><h3 class = "scrollerItemTitle">';
                                             newAnnouncement += announcementTitle
                                             newAnnouncement += '</h3><p class = "scrollerItemText">';
-                                            newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p><p onclick = "" class = "scrollerItemButton"><i class = "fas fa-plus"></i></p></div>';
+                                            newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
+                                            newAnnouncement += '<p class = "scrollerItemText Hidden">';
+                                            newAnnouncement +=  announcementCondition + '</p>';
+                                            newAnnouncement += '<p class = "scrollerItemText Hidden">';
+                                            newAnnouncement +=  announcementInfo + '</p>';
+                                            newAnnouncement += '<p class = "scrollerItemText Hidden">';
+                                            newAnnouncement +=  announcementID + '</p><p onclick = "" class = "scrollerItemButton"><i class = "fas fa-plus"></i></p></div>';
                                         }
                                         announcementsHolder.innerHTML += newAnnouncement;
                                     }
@@ -570,6 +792,19 @@ function printAnnouncements(announcementsCategory)
                 }
             }
         });
+    }
+
+    if (announcementsCategory != "AAWait")
+    {
+        window.setTimeout(function()
+        {
+            console.log("Checking for items");
+            if (announcementsHolder.innerHTML == "")
+            {
+                announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+                console.log("No items");
+            }
+        }, 3 * 1000);
     }
 }
 
@@ -592,9 +827,6 @@ function noActionYet()
 var isOpenedAccountEditBox = false;
 function openCloseAccountEditBox()
 {
-    var changableTextMy = document.getElementById("changableTextMy");
-    var changableTextEdit = document.getElementById("changableTextEdit");
-
     if (isOpenedAccountEditBox)
     {
         document.getElementById("accountEditBoxHolder").style.animation = "fadeOut .3s ease-out forwards";
@@ -639,6 +871,40 @@ function openCloseAccountEditBox()
         });
 
         isOpenedAccountEditBox = true;
+    }
+}
+
+var isOpenedAnnouncementPriview = false;
+function openCloseAnnouncementPriview(announcementID)
+{
+    if (isOpenedAnnouncementPriview)
+    {
+        document.getElementById("announcementPriviewHolder").style.animation = "fadeOut .3s ease-out forwards";
+
+        setTimeout(function ()
+        {
+            document.getElementById("announcementPriviewHolder").style.display = "none";
+            isOpenedAnnouncementPriview = false;
+        }, 500);
+    }
+    else if (!isOpenedAnnouncementPriview)
+    {
+        document.getElementById("announcementPriviewHolder").style.animation = "fadeIn .5s ease-out forwards .1s";
+        document.getElementById("announcementPriviewHolder").style.display = "unset";
+        document.getElementById("announcementPriviewImage").src = document.getElementById(announcementID).childNodes[0].src;
+        document.getElementById("announcementPriviewTitle").innerHTML = document.getElementById(announcementID).childNodes[1].innerHTML;
+        document.getElementById("announcementPriviewPrice").innerHTML = document.getElementById(announcementID).childNodes[2].innerHTML;
+        document.getElementById("announcementPriviewStatus").innerHTML = document.getElementById(announcementID).childNodes[3].innerHTML;
+
+        if (document.getElementById("announcementPriviewStatus").innerHTML == "Working")
+            document.getElementById("announcementPriviewStatus").style.color = "green";
+        else if (document.getElementById("announcementPriviewStatus").innerHTML == "Broken")
+            document.getElementById("announcementPriviewStatus").style.color = "red";
+
+        document.getElementById("announcementPriviewID").innerHTML = document.getElementById(announcementID).childNodes[5].innerHTML;
+        document.getElementById("announcementPriviewInfo").innerHTML = document.getElementById(announcementID).childNodes[4].innerHTML;
+        document.getElementById("announcementPriviewButton").onclick = document.getElementById(announcementID).childNodes[6].onclick;
+        isOpenedAnnouncementPriview = true;
     }
 }
 

@@ -4,8 +4,8 @@
 <html id = "html" style = "overflow: hidden;">
     <head>
         <link href = "https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel = "stylesheet">
-        <link type = "text/css" rel = "stylesheet" href = "Files/Style.css">
-        <link rel = "icon" href = "Images/Logo.png" type = "image" sizes = "16x16">
+        <link type = "text/css" rel = "stylesheet" href = "../Files/Style.css">
+        <link rel = "icon" href = "../Images/Logo.png" type = "image" sizes = "16x16">
 
         <meta charset = "utf-8">
         <meta name = "description" content = "This is a website for ...">
@@ -19,9 +19,9 @@
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
         <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
-        <script type = "text/javascript" src = "Files/Functions.js"></script>
+        <script type = "text/javascript" src = "../Files/Functions.js"></script>
 
-        <title id = "Title">Sign in</title>
+        <title id = "Title">Staff - Log in</title>
     </head>
 
     <body id = "body" class = "signAccount">
@@ -81,30 +81,22 @@
             </div>
         </div>
 
-        <h1 class = "signAccountTitle">Welcome to REUSE</h1>
-        <div class = "signAccountBox">
-            <h2 class = "signAccountBoxTitle"><text style = "color: #81b214;">Sign in</text> to REUSE</h2>
+        <h1 class = "signAccountTitle">Welcome</h1>
+        <div class = "signAccountBox" id = "logInBox">
+            <h2 class = "signAccountBoxTitle"><text style = "color: #81b214;">Log in</text> to your staff accout</h2>
             
             <div class = "signAccountBoxInputField">
-                <p class = "signAccountBoxInputFieldTitle" id = "FNInputFieldTitle">First name</p>
-                <input type = "text" placeholder = "First name" class = "signAccountBoxInputFieldText" id = "signInFNInputField">
-                <i class = "fas fa-signature" id = "FNInputFieldIcon"></i>
-            </div>
-            <div class = "signAccountBoxInputField">
-                <p class = "signAccountBoxInputFieldTitle" id = "emailInputFieldTitle">Email address</p>
-                <input type = "email" placeholder = "Email address" class = "signAccountBoxInputFieldText" id = "signInEmailInputField">
+                <p class = "signAccountBoxInputFieldTitle" id = "emailInputFieldTitle">Staff email address</p>
+                <input type = "email" placeholder = "Staff email address" class = "signAccountBoxInputFieldText" id = "logInEmailInputField">
                 <i class = "fas fa-envelope" id = "emailInputFieldIcon"></i>
             </div>
             <div class = "signAccountBoxInputField">
                 <p class = "signAccountBoxInputFieldTitle" id = "passwordInputFieldTitle">Password</p>
-                <input type = "password" placeholder = "Password" class = "signAccountBoxInputFieldText" id = "signInPasswordInputField">
+                <input type = "password" placeholder = "Password" class = "signAccountBoxInputFieldText" id = "logInPasswordInputField">
                 <i class = "fas fa-key" id = "passwordInputFieldIcon"></i>
             </div>
 
-            <h3 onclick = "signIn()" class = "signAccountBoxButton">Sign in</h3>
-            <p class = "signAccountBoxText">
-                Already have an account? <text onclick = "goTo('logIn.html')" style = "color: #81b214; font-weight: bold; cursor: pointer;">Log in</text>
-            </p>
+            <h3 onclick = "staffLogIn()" class = "signAccountBoxButton" style = "margin-bottom: 15px;">Login</h3>
         </div>
 
         <svg viewBox = "0 0 200 200" class = "signAccountDecoration" id = "signAccountDecoration1">
@@ -124,14 +116,3 @@
         </svg>
     </body>
 </html>
-
-<!--
-    <div class = "textBox" id = "">
-        <h1 class = "textBoxTitle">Title</h1>
-        <p class = "textBoxText">
-            Text
-        </p>
-        <img src = "#" class = "textBoxImage" id = "">
-        <p onclick = "goTo('')" class = "textBoxButton Main">Button</p>
-    </div>
--->

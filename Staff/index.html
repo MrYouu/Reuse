@@ -1,0 +1,107 @@
+<!--The HTML code is property to Mr. You (Kristiyan Valchev) and can only be viewed-->
+<!--If you want to use part of the code, please first contact me: mr.youdevelopment@gmail.com-->
+
+<html id = "html">
+    <head>
+        <link href = "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link type = "text/css" rel = "stylesheet" href = "../Files/Style.css">
+        <link rel = "icon" href = "../Images/Logo.svg" type = "image" sizes = "16x16">
+
+        <meta charset = "utf-8">
+        <meta name = "description" content = "This is a website for ...">
+        <meta name = "keywords" content = "..., ...">
+        <meta name = "author" content = "Kristiyan Valchev">
+        <meta name = "viewport" content = "width = device-width, user-scalable = no, initial-scale = 1">
+        
+        <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
+        <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
+        <script type = "text/javascript" src = "../Files/Functions.js"></script>
+
+        <title id = "Title">Staff - Reuse</title>
+    </head>
+
+    <body id = "body" onload = "loadUserdata(); printAnnouncements('AAWait')">
+        <!-- #region Default -->
+        <img src = "" alt = "Link image" style = "display: none;">
+
+        <script>
+            window.scroll(
+            {
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+		</script>
+        <!-- #endregion Default -->
+        
+        <div class = "redirectionBox a1" id = "redirectionBox1"></div>
+        <div class = "redirectionBox a2" id = "redirectionBox2"></div>
+        <div class = "redirectionBox a3" id = "redirectionBox3"></div>
+
+        <div class = "messageHolder">
+            <!-- Correctnesses -->
+            <div class = "correctnessHolder" id = "correctness userLoggedOut">
+                <p>User Logged Out.</p>
+            </div>
+
+            <!-- Errors -->
+            <div class = "errorHolder" id = "Error ..." onclick = "desableElement('Error ...', 0)">
+                <p>Error</p>
+            </div>
+        </div>
+
+        <div class = "pageTitleHolder"><h1 class = "pageTitle">Staff</h1></div>
+
+        <div class = "pageHolder">
+            <div class = "toolBar Staff">
+                <div class = "toolBarToolsHolder" id = "toolBarToolsHolder">
+                    <i onclick = "goTo('index.html')" class = "fas fa-home Active" id = "Home"><div class = "activeTumb"><div class = "Hidders"></div></div></i>
+                    <i onclick = "goTo('index.html')" class = "fas fa-cog" id = "Settings"></i>
+                </div>
+            </div>
+
+            <div class = "textBox" id = "">
+                <h1 class = "textBoxTitle" id = "accountName">Name</h1>
+                <p onclick = "logOut()" class = "textBoxButton Main"><i class = "fas fa-sign-out-alt"></i></p>
+            </div>
+
+            <h2 class = "freeTitle">Wait list</h2>
+            <div class = "announcementsHolder waitList" id = "announcementsHolder">
+                <div class = "Announcement Empty">
+                    <div class = "Loader01"><div class = "circleBorder"><div class = "circleCore"></div></div></div>
+                    <h3 class = "announcementTitle">Loading...</h3>
+                </div>
+            </div>
+
+            <div class = "mobileExpander"></div>
+        </div>
+
+        <div class = "announcementPriviewHolder" id = "announcementPriviewHolder">
+            <div class = "announcementPriview">
+                <div onclick = "openCloseAnnouncementPriview()" class = "XCloseButton"></div>
+                <img src = "" class = "announcementPriviewImage" id = "announcementPriviewImage">
+                <h1 class = "announcementPriviewTitle" id = "announcementPriviewTitle">Title</h1>
+                <p class = "announcementPriviewText">Price: <text id = "announcementPriviewPrice">0.00lv.</text></p>
+                <p class = "announcementPriviewText">Status: <text id = "announcementPriviewStatus">unknown</text></p>
+                <p class = "announcementPriviewText">ID: <text id = "announcementPriviewID"></text></p>
+                <p class = "announcementPriviewText" style = "margin-bottom: 30px;">Additional information: <text id = "announcementPriviewInfo"></text></p>
+                <p onclick = "" class = "announcementPriviewButton" id = "announcementPriviewButton" style = "display: none;"><i class = "fas fa-plus"></i></p>
+            </div>
+        </div>
+    </body>
+</html>
+
+<!--
+    <div class = "textBox" id = "">
+        <h1 class = "textBoxTitle">Title</h1>
+        <p class = "textBoxText">
+            Text
+        </p>
+        <img src = "#" class = "textBoxImage" id = "">
+        <p onclick = "goTo('')" class = "textBoxButton Main">Button</p>
+    </div>
+-->

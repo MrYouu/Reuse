@@ -363,6 +363,51 @@ underlined
 {
     background-color: #81b214;
 }
+
+.XCloseButton
+{
+    float: right;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 15;
+    right: 15;
+    background-color: transparent;
+}
+
+.XCloseButton::before
+{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    top: calc(50% - 1.5px);
+    left: 0;
+    background-color: #888888;
+    transform: rotate(45deg);
+    transition: ease .3s;
+}
+
+.XCloseButton::after
+{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    top: calc(50% - 1.5px);
+    left: 0;
+    background-color: #888888;
+    transform: rotate(-45deg);
+    transition: ease .3s;
+}
+
+.XCloseButton:hover::before,
+.XCloseButton:hover::after
+{
+    width: calc(100% + 5px);
+    left: -2.5;
+    background-color: #81b214;
+}
 /*#endregion Page content */
 
 /*#region Text box */
@@ -1099,6 +1144,11 @@ underlined
     margin-bottom: 30px;
 }
 
+.Scroller.Items .scrollerItem .scrollerItemText.Hidden
+{
+    display: none;
+}
+
 .Scroller.Items .scrollerItem .scrollerItemButton
 {
     float: right;
@@ -1304,7 +1354,12 @@ underlined
     opacity: 0;
 }
 
-/*#region Scroller item animation */
+.announcementsHolder.waitList .Announcement
+{
+    padding-bottom: 40px;
+}
+
+/*#region announcementsHolder items animation */
 .Scroller .scrollerItem:nth-child(2) { animation-delay: .5s; }
 .Scroller .scrollerItem:nth-child(3) { animation-delay: .6s; }
 .Scroller .scrollerItem:nth-child(4) { animation-delay: .7s; }
@@ -1324,12 +1379,7 @@ underlined
 .Scroller .scrollerItem:nth-child(18) { animation-delay: 2.1s; }
 .Scroller .scrollerItem:nth-child(19) { animation-delay: 2.2s; }
 .Scroller .scrollerItem:nth-child(20) { animation-delay: 2.3s; }
-/*#endregion Scroller item animation */
-
-.announcementsHolder .Announcement:last-child
-{
-    margin-right: 60px;
-}
+/*#endregion announcementsHolder items animation */
 
 .announcementsHolder .Announcement .announcementImage
 {
@@ -1364,6 +1414,11 @@ underlined
     margin-bottom: 30px;
 }
 
+.announcementsHolder .Announcement .announcementText.Hidden
+{
+    display: none;
+}
+
 .announcementsHolder .Announcement .announcementButton
 {
     float: right;
@@ -1374,6 +1429,17 @@ underlined
     right: 15;
     background-color: #206a5d;
     border-radius: 10px;
+}
+
+.announcementsHolder.waitList .Announcement .announcementButton.Accept
+{
+    background-color: green;
+}
+
+.announcementsHolder.waitList .Announcement .announcementButton.Reject
+{
+    right: 70;
+    background-color: red;
 }
 
 .announcementsHolder .Announcement .announcementButton:hover
@@ -1419,6 +1485,117 @@ underlined
     margin-top: 30px;
     margin-bottom: 30px;
 }
+
+/*#region Announcements priview */
+.announcementPriviewHolder
+{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #111111e0;
+
+    z-index: 2;
+
+    animation: fadeIn .5s ease-out forwards .1s;
+    opacity: 0;
+}
+
+.announcementPriviewHolder .announcementPriview
+{
+    position: absolute;
+    width: calc(100% - 60px);
+    height: auto;
+    max-height: calc(100% - 60px);
+    top: 30;
+    left: 30;
+    background-color: #f8f8f8;
+    border-radius: 30px;
+    overflow-y: scroll;
+
+    animation: dropDown .5s ease-out forwards .2s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.announcementPriviewHolder .announcementPriview::-webkit-scrollbar
+{
+    width: 0;
+}
+
+.announcementPriviewHolder .announcementPriview .announcementPriviewImage
+{
+    position: relative;
+    width: 300px;
+    height: auto;
+    top: 0;
+    left: calc(50% - 150px);
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    animation: fadeIn .5s ease-out forwards .7s;
+    opacity: 0;
+}
+
+.announcementPriviewHolder .announcementPriview .announcementPriviewTitle
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    color: #111111;
+    margin-bottom: 15px;
+
+    animation: fadeIn .5s ease-out forwards .8s;
+    opacity: 0;
+}
+
+.announcementPriviewHolder .announcementPriview .announcementPriviewText
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    font-weight: bold;
+    color: #111111a0;
+    margin-bottom: 5px;
+
+    animation: fadeIn .5s ease-out forwards .8s;
+    opacity: 0;
+}
+
+.announcementPriviewHolder .announcementPriview .announcementPriviewText text
+{
+    font-weight: normal;
+}
+
+.announcementPriviewHolder .announcementPriview .announcementPriviewButton
+{
+    position: relative;
+    width: fit-content;
+    top: 0;
+    left: 30;
+    font-weight: bold;
+    color: #f8f8f8;
+    background-color: #81b214;
+    border-radius: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 8px 30px;
+
+    animation: fadeIn .5s ease-out forwards 1s;
+    opacity: 0;
+}
+
+.announcementPriviewHolder .announcementPriview .announcementPriviewButton:hover
+{
+    filter: brightness(.9);
+}
+/*#endregion Announcements priview */
+
 /*#endregion Announcements */
 
 /*#region Account */
@@ -1601,51 +1778,6 @@ underlined
     animation: dropDown .5s ease-out forwards .2s;
     transform: translateY(-50px);
     opacity: 0;
-}
-
-.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton
-{
-    float: right;
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    top: 15;
-    right: 15;
-    background-color: transparent;
-}
-
-.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton::before
-{
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    top: calc(50% - 1.5px);
-    left: 0;
-    background-color: #888888;
-    transform: rotate(45deg);
-    transition: ease .3s;
-}
-
-.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton::after
-{
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    top: calc(50% - 1.5px);
-    left: 0;
-    background-color: #888888;
-    transform: rotate(-45deg);
-    transition: ease .3s;
-}
-
-.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton:hover::before,
-.accountEditBoxHolder .accountEditBox .accountEditBoxCloseButton:hover::after
-{
-    width: calc(100% + 5px);
-    left: -2.5;
-    background-color: #81b214;
 }
 
 .accountEditBoxHolder .accountEditBox .accountEditBoxImageHolder
@@ -2170,6 +2302,11 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
         grid-template-columns: auto auto auto auto;
     }
 
+    .toolBar.Staff .toolBarToolsHolder
+    {
+        grid-template-columns: auto auto;
+    }
+
     .toolBar .toolBarToolsHolder i
     {
         color: #11111160;
@@ -2223,7 +2360,7 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
         position: relative;
         width: calc(100% - 30px);
         left: 15;
-        margin-top: 0;
+        margin-top: 15;
     }
 
     .textBox.Big
@@ -2248,6 +2385,7 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
         font-size: 32px;
         line-height: 0;
         text-indent: -999999px;
+        margin-top: 0;
     }
 
     .textBox#mainBox .textBoxTitle::after
@@ -2313,6 +2451,22 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
         left: 15;
         grid-template-columns: 50% 50%;
     }
+
+    /*#region Announcements priview */
+    .announcementPriviewHolder
+    {
+        z-index: 11;
+    }
+
+    .announcementPriviewHolder .announcementPriview
+    {
+        width: calc(100% - 30px);
+        max-height: calc(100% - 30px);
+        top: 15;
+        left: 15;
+    }
+    /*#endregion Announcements priview */
+    
     /*#endregion Announcements */
 
     /*#region Account */
@@ -2698,6 +2852,11 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
         border-radius: 8px;
     }
 
+    .announcementsHolder.waitList .Announcement .announcementButton.Reject
+    {
+        right: 60;
+    }
+
     .announcementsHolder .Announcement .announcementButton i
     {
         top: calc(50% - 8px);
@@ -2709,6 +2868,36 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
     {
         width: calc(100% - 30px);
     }
+
+    /*#region Announcements priview */
+    .announcementPriviewHolder .announcementPriview .announcementPriviewImage
+    {
+        width: calc(100% - 60px);
+        left: 30;
+        margin-top: 70px;
+    }
+
+    .announcementPriviewHolder .announcementPriview .announcementPriviewTitle
+    {
+        width: calc(100% - 30px);
+        left: 15;
+        font-size: 26px;
+        line-height: 30px;
+    }
+
+    .announcementPriviewHolder .announcementPriview .announcementPriviewText
+    {
+        width: calc(100% - 30px);
+        left: 15;
+    }
+
+    .announcementPriviewHolder .announcementPriview .announcementPriviewButton
+    {
+        left: 15;
+        padding: 6px 26px;
+    }
+    /*#endregion Announcements priview */
+
     /*#endregion Announcements */
 
     /*#region Account */

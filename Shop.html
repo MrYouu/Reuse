@@ -3,7 +3,8 @@
 
 <html id = "html">
     <head>
-        <link href = "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">        <link type = "text/css" rel = "stylesheet" href = "Files/Style.css">
+        <link href = "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link type = "text/css" rel = "stylesheet" href = "Files/Style.css">
         <link rel = "icon" href = "Images/Logo.svg" type = "image" sizes = "16x16">
 
         <meta charset = "utf-8">
@@ -23,7 +24,7 @@
         <title id = "Title">Reuse Shop</title>
     </head>
 
-    <body id = "body" onload = "loadUserdata(); printAnnouncements('AALast')">
+    <body id = "body" onload = "loadUserdata(); printAnnouncements('AALast', 'allAnnouncementsCategory')">
         <!-- #region Default -->
         <img src = "" alt = "Link image" style = "display: none;">
 
@@ -99,18 +100,18 @@
     
             <h1 class = "freeTitle">Category</h1>
             <div class = "Scroller Icons" id = "categoriesScroller">
-                <div onclick = "printAnnouncements('AALast')" class = "scrollerItem Active"><i class = "fas fa-arrow-right"></i></div>
-                <div onclick = "printAnnouncements('sink')" class = "scrollerItem"><i class = "fas fa-sink"></i></div>
-                <div onclick = "printAnnouncements('bath')" class = "scrollerItem"><i class = "fas fa-bath"></i></div>
-                <div onclick = "printAnnouncements('toilet')" class = "scrollerItem"><i class = "fas fa-toilet"></i></div>
-                <div onclick = "printAnnouncements('chair')" class = "scrollerItem"><i class = "fas fa-chair"></i></div>
-                <div onclick = "printAnnouncements('couch')" class = "scrollerItem"><i class = "fas fa-couch"></i></div>
-                <div onclick = "printAnnouncements('laptop')" class = "scrollerItem"><i class = "fas fa-laptop"></i></div>
-                <div onclick = "printAnnouncements('tv')" class = "scrollerItem"><i class = "fas fa-tv"></i></div>
-                <div onclick = "printAnnouncements('desktop')" class = "scrollerItem"><i class = "fas fa-desktop"></i></div>
-                <div onclick = "printAnnouncements('volume-up')" class = "scrollerItem"><i class = "fas fa-volume-up"></i></div>
-                <div onclick = "printAnnouncements('blender')" class = "scrollerItem"><i class = "fas fa-blender"></i></div>
-                <div onclick = "printAnnouncements('camera')" class = "scrollerItem"><i class = "fas fa-camera"></i></div>
+                <div onclick = "printAnnouncements('AALast', 'allAnnouncementsCategory')" class = "scrollerItem Active" id = "allAnnouncementsCategory"><i class = "fas fa-arrow-right"></i></div>
+                <div onclick = "printAnnouncements('sink', 'sinkAnnouncementsCategory')" class = "scrollerItem" id = "sinkAnnouncementsCategory"><i class = "fas fa-sink"></i></div>
+                <div onclick = "printAnnouncements('bath', 'bathAnnouncementsCategory')" class = "scrollerItem" id = "bathAnnouncementsCategory"><i class = "fas fa-bath"></i></div>
+                <div onclick = "printAnnouncements('toilet', 'toiletAnnouncementsCategory')" class = "scrollerItem" id = "toiletAnnouncementsCategory"><i class = "fas fa-toilet"></i></div>
+                <div onclick = "printAnnouncements('chair', 'chairAnnouncementsCategory')" class = "scrollerItem" id = "chairAnnouncementsCategory"><i class = "fas fa-chair"></i></div>
+                <div onclick = "printAnnouncements('couch', 'couchAnnouncementsCategory')" class = "scrollerItem" id = "couchAnnouncementsCategory"><i class = "fas fa-couch"></i></div>
+                <div onclick = "printAnnouncements('laptop', 'laptopAnnouncementsCategory')" class = "scrollerItem" id = "laptopAnnouncementsCategory"><i class = "fas fa-laptop"></i></div>
+                <div onclick = "printAnnouncements('tv', 'tvAnnouncementsCategory')" class = "scrollerItem" id = "tvAnnouncementsCategory"><i class = "fas fa-tv"></i></div>
+                <div onclick = "printAnnouncements('desktop', 'desktopAnnouncementsCategory')" class = "scrollerItem" id = "desktopAnnouncementsCategory"><i class = "fas fa-desktop"></i></div>
+                <div onclick = "printAnnouncements('volume-up', 'volumeUpAnnouncementsCategory')" class = "scrollerItem" id = "volumeUpAnnouncementsCategory"><i class = "fas fa-volume-up"></i></div>
+                <div onclick = "printAnnouncements('blender', 'blenderAnnouncementsCategory')" class = "scrollerItem" id = "blenderAnnouncementsCategory"><i class = "fas fa-blender"></i></div>
+                <div onclick = "printAnnouncements('camera', 'cameraAnnouncementsCategory')" class = "scrollerItem" id = "cameraAnnouncementsCategory"><i class = "fas fa-camera"></i></div>
             </div>
     
             <h2 class = "freeTitle" id = "announcementsHolderTitle">Newest Items</h2>
@@ -135,6 +136,19 @@
             </div>
 
             <div class = "mobileExpander"></div>
+        </div>
+
+        <div class = "announcementPriviewHolder" id = "announcementPriviewHolder">
+            <div class = "announcementPriview">
+                <div onclick = "openCloseAnnouncementPriview()" class = "XCloseButton"></div>
+                <img src = "Images/announcement1.jpg" class = "announcementPriviewImage" id = "announcementPriviewImage">
+                <h1 class = "announcementPriviewTitle" id = "announcementPriviewTitle">Title</h1>
+                <p class = "announcementPriviewText">Price: <text id = "announcementPriviewPrice">0.00lv.</text></p>
+                <p class = "announcementPriviewText">Status: <text id = "announcementPriviewStatus">unknown</text></p>
+                <p class = "announcementPriviewText">ID: <text id = "announcementPriviewID"></text></p>
+                <p class = "announcementPriviewText">Additional information: <text id = "announcementPriviewInfo"></text></p>
+                <p onclick = "" class = "announcementPriviewButton" id = "announcementPriviewButton"><i class = "fas fa-plus"></i></p>
+            </div>
         </div>
 
         <script>

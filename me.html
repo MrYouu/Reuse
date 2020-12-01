@@ -81,8 +81,8 @@
                 <div class = "accountActionButtons">
                     <p onclick = "noActionYet()" class = "accountActionButton"><i class = "fas fa-"></i></p>
                     <p onclick = "noActionYet()" class = "accountActionButton"><i class = "fas fa-"></i></p>
-                    <p onclick = "noActionYet()" class = "accountActionButton"><i class = "fas fa-"></i></p>
                     <p onclick = "openCloseAccountEditBox()" class = "accountActionButton"><i class = "fas fa-pen"></i></p>
+                    <p onclick = "logOut()" class = "accountActionButton"><i class = "fas fa-sign-out-alt"></i></p>
                 </div>
                 <div class = "accountFastInfoHolder">
                     <div class = "accountFastInfo">
@@ -102,7 +102,7 @@
 
             <div class = "accountEditBoxHolder" id = "accountEditBoxHolder">
                 <div class = "accountEditBox">
-                    <div onclick = "openCloseAccountEditBox()" class = "accountEditBoxCloseButton"></div>
+                    <div onclick = "openCloseAccountEditBox()" class = "XCloseButton"></div>
                     <div class = "accountEditBoxImageHolder">
                         <img src = "Images/defaultProfileImage.jpg" class = "accountImage" id = "accountEditImage">
                         <i onclick = "document.getElementById('accountImageUploadButton').click()" class = "fas fa-pen"></i>
@@ -129,6 +129,13 @@
 
                     <p onclick = "updateUserData()" class = "accountEditBoxButton">Save</p>
                 </div>
+            </div>
+
+            <div class = "textBox" id = "yourAnnouncementsTextBox">
+                <h1 class = "textBoxTitle">Saved announcements</h1>
+                <p class = "textBoxText">
+                    No announcements yet.
+                </p>
             </div>
 
             <div class = "textBox" id = "yourAnnouncementsTextBox">
