@@ -17,6 +17,7 @@
         <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
         <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
         <script type = "text/javascript" src = "Files/Functions.js"></script>
@@ -24,7 +25,7 @@
         <title id = "Title">Reuse Shop</title>
     </head>
 
-    <body id = "body" onload = "loadUserdata(); printAnnouncements('AALast', 'allAnnouncementsCategory')">
+    <body id = "body" onload = "loadUserdata(); printAnnouncements('Last', 'allAnnouncementsCategory')">
         <!-- #region Default -->
         <img src = "Images/Thumbnails/Shop.png" alt = "Link image" style = "display: none;">
 
@@ -44,8 +45,8 @@
 
         <div class = "messageHolder">
             <!-- Correctnesses -->
-            <div class = "correctnessHolder" id = "correctness userLoggedOut">
-                <p>User Logged Out.</p>
+            <div class = "correctnessHolder" id = "correctness phoneNumberCopyed">
+                <p>Phone number copyed</p>
             </div>
 
             <!-- Errors -->
@@ -54,7 +55,7 @@
             </div>
         </div>
 
-        <div class = "pageTitleHolder"><h1 class = "pageTitle">Shop</h1></div>
+        <div class = "pageTitleHolder"><h1 class = "pageTitle" id = "pageTitle">Shop</h1></div>
 
         <div class = "pageHolder">
             <div class = "toolBar">
@@ -100,7 +101,7 @@
     
             <h1 class = "freeTitle">Category</h1>
             <div class = "Scroller Icons" id = "categoriesScroller">
-                <div onclick = "printAnnouncements('AALast', 'allAnnouncementsCategory')" class = "scrollerItem Active" id = "allAnnouncementsCategory"><i class = "fas fa-arrow-right"></i></div>
+                <div onclick = "printAnnouncements('Last', 'allAnnouncementsCategory')" class = "scrollerItem Active" id = "allAnnouncementsCategory"><i class = "fas fa-arrow-right"></i></div>
                 <div onclick = "printAnnouncements('sink', 'sinkAnnouncementsCategory')" class = "scrollerItem" id = "sinkAnnouncementsCategory"><i class = "fas fa-sink"></i></div>
                 <div onclick = "printAnnouncements('bath', 'bathAnnouncementsCategory')" class = "scrollerItem" id = "bathAnnouncementsCategory"><i class = "fas fa-bath"></i></div>
                 <div onclick = "printAnnouncements('toilet', 'toiletAnnouncementsCategory')" class = "scrollerItem" id = "toiletAnnouncementsCategory"><i class = "fas fa-toilet"></i></div>
@@ -144,10 +145,10 @@
                 <img src = "" class = "announcementPriviewImage" id = "announcementPriviewImage">
                 <h1 class = "announcementPriviewTitle" id = "announcementPriviewTitle">Title</h1>
                 <p class = "announcementPriviewText">Price: <text id = "announcementPriviewPrice">0.00lv.</text></p>
-                <p class = "announcementPriviewText">Status: <text id = "announcementPriviewStatus">unknown</text></p>
+                <p class = "announcementPriviewText">Condition: <text id = "announcementPriviewStatus">unknown</text></p>
                 <p class = "announcementPriviewText">ID: <text id = "announcementPriviewID"></text></p>
                 <p class = "announcementPriviewText">Additional information: <text id = "announcementPriviewInfo"></text></p>
-                <p onclick = "" class = "announcementPriviewButton" id = "announcementPriviewButton"><i class = "fas fa-plus"></i></p>
+                <p class = "announcementPriviewButton" id = "announcementPriviewButton"><i class = "fas fa-phone-alt"></i></p>
             </div>
         </div>
 

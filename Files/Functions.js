@@ -1,21 +1,27 @@
 //  The JavaScript code is property to Mr. You (Kristiyan Valchev) and can only be viewed
 //  If you want to use part of the code, please first contact me: mr.youdevelopment@gmail.com
 
-const firebaseConfig =
+// Update printng data in shop announsments
+// Update printing data in staff index
+// Print announsments in my profile
+// Make Axept and Reject button in staff index
+// Make place for Admin to ad new staff account
+
+var firebaseConfig =
 {
-    apiKey: "AIzaSyDPe8R-KgSALIqe_p4t6PDgzF_WT6mcnUc",
-    authDomain: "reuse-f9afa.firebaseapp.com",
-    databaseURL: "https://reuse-f9afa.firebaseio.com",
-    projectId: "reuse-f9afa",
-    storageBucket: "reuse-f9afa.appspot.com",
-    messagingSenderId: "563054909730",
-    appId: "1:563054909730:web:999e16e483cf2a6e532d7b",
-    measurementId: "G-DCW10DE8FL"
+    apiKey: "AIzaSyAOdhH4IptHACoDNgbuISRzr2Hx-ucQ9wE",
+    authDomain: "reuseapp-b7b48.firebaseapp.com",
+    databaseURL: "https://reuseapp-b7b48.firebaseio.com",
+    projectId: "reuseapp-b7b48",
+    storageBucket: "reuseapp-b7b48.appspot.com",
+    messagingSenderId: "786660741967",
+    appId: "1:786660741967:web:cecbb48a2b5bae69feab3a"
 };
 
 firebase.initializeApp(firebaseConfig);
 const Auth = firebase.auth();
 const cloudData = firebase.firestore();
+const Database = firebase.database();
 const databaseStorage = firebase.storage();
 
 function loadUserdata()
@@ -26,19 +32,14 @@ function loadUserdata()
         {
             if (document.getElementById("Title").innerHTML == "Reuse")
             {
-                var userFN, accountPlan;
-                cloudData.doc("users/" + user.uid).get().then(function(doc)
+                var userFN;
+                Database.ref("/Users/" + user.uid).once("value").then((snapshot) =>
                 {
-                    if (doc && doc.exists)
-                    {
-                        const userData = doc.data();
-                        userFN = userData.firstName;
-                        accountPlan = userData.accountPlan;
+                    userFN = (snapshot.val() && snapshot.val().firstName) || "Name";
 
-                        document.getElementById("signInButton").style.display = "none";
-                        document.getElementById("logInButton").style.display = "none";
-                        document.getElementById("accountButton").innerHTML = userFN;
-                    }
+                    document.getElementById("accountButton").innerHTML = userFN;
+                    document.getElementById("signInButton").style.display = "none";
+                    document.getElementById("logInButton").style.display = "none";
                 }).catch(function(error)
                 {
                     console.log("Got an Error: " +  error);
@@ -46,52 +47,123 @@ function loadUserdata()
             }
             else if (document.getElementById("Title").innerHTML == "my account")
             {
-                var userFN, userEmail, announcementsCount, Point, userImage;
-                cloudData.doc("users/" + user.uid).get().then(function(doc)
+                var userFN, userEmail, userType, userAnnouncementsCount, userPoint, userResidence, userImage;
+                Database.ref("/Users/" + user.uid).once("value").then((snapshot) =>
                 {
-                    if (doc && doc.exists)
+                    userFN = (snapshot.val() && snapshot.val().firstName) || "undefined";
+                    userEmail = (snapshot.val() && snapshot.val().Email) || "undefined";
+                    userType = (snapshot.val() && snapshot.val().Type) || "undefined";
+                    userAnnouncementsCount = (snapshot.val() && snapshot.val().announcementsCount) || 0;
+                    userPoint = (snapshot.val() && snapshot.val().Point) || 0;
+                    userResidence = (snapshot.val() && snapshot.val().Residence) || 0;
+
+                    document.getElementById("Title").innerHTML = userFN + "'s account";
+                    document.getElementById("accountName").innerHTML = userFN;
+                    document.getElementById("accountEditFNInputField").value = userFN;
+                    document.getElementById("accountEditEmailInputField").value = userEmail;
+                    document.getElementById("accountEditResidenceInputField").value = userResidence;
+                    
+                    var pathReference = databaseStorage.ref("/Users/" + Auth.currentUser.uid + ".jpg");
+                    pathReference.getDownloadURL().then(function(url)
                     {
-                        const userData = doc.data();
-                        userFN = userData.firstName;
-                        userEmail = userData.Email;
-                        announcementsCount = parseInt(userData.announcementsCount);
-                        Point = parseInt(userData.Point);
-
-                        document.getElementById("Title").innerHTML = userFN + "'s account";
-                        document.getElementById("accountName").innerHTML = userFN;
-                        document.getElementById("accountFastInfoDataAnnouncements").innerHTML = announcementsCount.toString();
-                        document.getElementById("accountFastInfoDataPoint").innerHTML = Point.toString();
-
-                        document.getElementById("accountEditFNInputField").value = userFN;
-                        document.getElementById("accountEditEmailInputField").value = userEmail;
-
-                        var pathReference = databaseStorage.ref("/users/" + Auth.currentUser.uid + ".jpg");
-                        pathReference.getDownloadURL().then(function(url)
+                        userImage = url;
+                        document.getElementById("accountImage").src = userImage;
+                        document.getElementById("accountEditImage").src = userImage;
+                    }).catch(function(error)
+                    {
+                        switch (error.code)
                         {
-                            userImage = url;
-                            document.getElementById('accountImage').src = userImage;
-                            document.getElementById('accountEditImage').src = userImage;
-                        }).catch(function(error)
-                        {
-                            document.getElementById('accountImage').src = "../Images/defaultProfileImage.jpg";
-                            document.getElementById('accountEditImage').src = "../Images/defaultProfileImage.jpg";
+                            case 'storage/object-not-found':
+                                console.log("Got an Error: File doesn't exist");
+                                break;
+                            case 'storage/unauthorized':
+                                console.log("Got an Error: User doesn't have permission to access the object");
+                                break;
+                            case 'storage/canceled':
+                                console.log("Got an Error: User canceled the upload");
+                                break;
+                            case 'storage/unknown':
+                                console.log("Got an Error: Unknown error occurred, inspect the server response");
+                                break;
+                        }
+                    });
 
-                            switch (error.code)
+                    if (userType == "Normal")
+                    {
+                        document.getElementById("accountFastInfoDataAnnouncements").innerHTML = userAnnouncementsCount.toString();
+                        document.getElementById("accountFastInfoDataPoint").innerHTML = userPoint.toString();
+                    
+                        var Size;
+                        var announcementsHolder = document.getElementById("announcementsHolder");
+                        Database.ref("/SaleItems").once("value").then((snapshot) =>
+                        {
+                            Size = (snapshot.val() && snapshot.val().Size) || 0;
+
+                            if (Size == 0)
                             {
-                                case 'storage/object-not-found':
-                                    console.log("Got an Error: File doesn't exist");
-                                    break;
-                                case 'storage/unauthorized':
-                                    console.log("Got an Error: User doesn't have permission to access the object");
-                                    break;
-                                case 'storage/canceled':
-                                    console.log("Got an Error: User canceled the upload");
-                                    break;
-                                case 'storage/unknown':
-                                    console.log("Got an Error: Unknown error occurred, inspect the server response");
-                                    break;
+                                announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+                            }
+                            else
+                            {
+                                announcementsHolder.innerHTML = "";
+                                for (let index = 1; index < Size + 1; index++)
+                                {
+                                    var announcementOwner, announcementImage, announcementTitle, announcementPrice,
+                                        announcementCondition, announcementInfo, announcementID, announcementStatus,
+                                        announcementContact;
+                                    Database.ref("/SaleItems/" + "announcement" + index).once("value").then((snapshot) =>
+                                    {
+                                        var pathReference = databaseStorage.ref("/Announcements/" + "announcement" + index.toString() + ".jpg");
+                                        pathReference.getDownloadURL().then(function(url)
+                                        {
+                                            announcementOwner = (snapshot.val() && snapshot.val().Owner) || "undefined";
+                                            announcementTitle = (snapshot.val() && snapshot.val().Title) || "undefined";
+                                            announcementPrice = (snapshot.val() && snapshot.val().Price) || 0;
+                                            announcementCondition = (snapshot.val() && snapshot.val().Condition) || "undefined";
+                                            announcementInfo = (snapshot.val() && snapshot.val().additionalInformation) || "undefined";
+                                            announcementID = (snapshot.val() && snapshot.val().ID) || "undefined";
+                                            announcementStatus = (snapshot.val() && snapshot.val().Status) || "undefined";
+                                            announcementContact = (snapshot.val() && snapshot.val().Contact) || "undefined";
+                                            announcementImage = url;
+
+                                            if (announcementStatus == "Waiting") announcementStatus = '<text style = "color: #f6d743">' + announcementStatus + '</text>';
+                                            else if (announcementStatus == "Online") announcementStatus = '<text style = "color: #81b214">' + announcementStatus + '</text>';
+                                            else if (announcementStatus == "Rejected") announcementStatus = '<text style = "color: red">' + announcementStatus + '</text>';
+                    
+                                            if (announcementOwner == Auth.currentUser.uid)
+                                            {
+                                                var newAnnouncement = "";
+                                                newAnnouncement += '<div class = "Announcement" onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" id = "';
+                                                newAnnouncement += "Announcement" + index + '"><img src = "';
+                                                newAnnouncement += announcementImage;
+                                                newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
+                                                newAnnouncement += announcementTitle
+                                                newAnnouncement += '</h3><p class = "announcementTitle"> Status: ';
+                                                newAnnouncement +=  announcementStatus + '</p><p class = "announcementText">';
+                                                newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
+                                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                                newAnnouncement +=  announcementCondition + '</p>';
+                                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                                newAnnouncement +=  announcementInfo + '</p>';
+                                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                                newAnnouncement +=  announcementID + '</p>';
+                                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                                newAnnouncement +=  announcementContact + '</p></div>';
+                    
+                                                announcementsHolder.innerHTML += newAnnouncement;
+                                            }
+                                        });
+                                    });
+                                }
                             }
                         });
+                    }
+                    else if (userType == "Staff" || userType == "Admin")
+                    {
+                        document.getElementById("accountFastInfoHolder").style.display = "none";
+                        document.getElementById("savedAnnouncementsTextBox").style.display = "none";
+                        document.getElementById("yourAnnouncementsTextBox").style.display = "none";
+                        document.getElementById("deleteAccountTextBox").style.display = "none";
                     }
                 }).catch(function(error)
                 {
@@ -100,39 +172,19 @@ function loadUserdata()
             }
             else if (document.getElementById("Title").innerHTML == "Staff - Reuse")
             {
-                var userFN, userEmail, userType,
-                    staffFN, staffEmail;
-                cloudData.doc("users/" + user.uid).get().then(function(doc)
+                var userFN, userType;
+                Database.ref("/Users/" + user.uid).once("value").then((snapshot) =>
                 {
-                    if (doc && doc.exists)
-                    {
-                        const userData = doc.data();
-                        userFN = userData.firstName;
-                        userEmail = userData.Email;
-                        userType = userData.userType;
-                        console.log(userType);
+                    userFN = (snapshot.val() && snapshot.val().firstName) || "undefined";
+                    userType = (snapshot.val() && snapshot.val().Type) || "undefined";
 
-                        if (userType == "Normal")
-                        {
-                            location.replace("../staff/logIn.html");
-                        }
-                        else
-                        {
-                            cloudData.doc("staff/" + user.uid).get().then(function(doc)
-                            {
-                                if (doc && doc.exists)
-                                {
-                                    const staffData = doc.data();
-                                    staffFN = staffData.firstName;
-                                    staffEmail = staffData.Email;
-    
-                                    document.getElementById("accountName").innerHTML = staffFN;
-                                }
-                            }).catch(function(error)
-                            {
-                                console.log("Got an Error: " +  error);
-                            });
-                        }
+                    if (userType == "Normal")
+                    {
+                        location.replace("logIn.html");
+                    }
+                    else
+                    {
+                        document.getElementById("accountName").innerHTML = userFN;
                     }
                 }).catch(function(error)
                 {
@@ -196,11 +248,11 @@ function signIn()
     {
         Auth.createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function()
         {
-            cloudData.doc("users/" + Auth.currentUser.uid).set(
+            Database.ref('Users/' + Auth.currentUser.uid).set(
             {
                 firstName: firstNameText,
                 Email: emailField.value,
-                userType: Normal,
+                Type: "Normal",
                 Residence: "",
                 announcementsCount: parseInt(0),
                 Point: parseInt(0)
@@ -458,24 +510,25 @@ function updateUserData()
 
     if (canSaveInformation)
     {
-        cloudData.doc("users/" + Auth.currentUser.uid).update(
+        Database.ref("Users/" + Auth.currentUser.uid).update(
         {
             firstName: firstNameText,
             Residence: ResidenceText
         }).catch(function(error)
         {
             console.log("Got an Error: " + error);
-        })
+        });
 
         try
         {
-            var storageRef = databaseStorage.ref("/users/" + Auth.currentUser.uid + ".jpg");
+            var storageRef = databaseStorage.ref("/Users/" + Auth.currentUser.uid + ".jpg");
             var uploadTask = storageRef.put(document.getElementById("accountImageUploadButton").files[0]);
         } catch {}
     
         document.getElementById("correctness dataSuccessfullySaved").style.display = "block";
         desableElement("correctness dataSuccessfullySaved", 2.5);
         openCloseAccountEditBox();
+        history.go(0);
     }
 }
 
@@ -544,11 +597,17 @@ function toPageAnimation()
 
 function printAnnouncements(announcementsCategory, categoryButtonID)
 {
+    var timerForNoItems;
+    clearTimeout(timerForNoItems);
     var announcementsHolder = document.getElementById("announcementsHolder");
-    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><div class = "Loader01"><div class = "circleBorder"><div class = "circleCore"></div></div></div><h3 class = "announcementTitle">Loading...</h3></div>';
     var announcementsHolderTitle = document.getElementById("announcementsHolderTitle");
     
-    if (announcementsCategory != "AAWait")
+    if (document.getElementById("Title").innerHTML == "Reuse Shop")
+        announcementsHolder.innerHTML = '<div class = "Announcement Empty"><div class = "Loader01"><div class = "circleBorder"><div class = "circleCore"></div></div></div><h3 class = "announcementTitle">Loading...</h3></div>';
+    else if (document.getElementById("Title").innerHTML == "Reuse")
+        announcementsHolder.innerHTML = '<div class = "scrollerItem Empty"><div class = "Loader01"><div class = "circleBorder"><div class = "circleCore"></div></div></div><h3 class = "scrollerItemTitle">Loading...</h3></div>';
+
+    if (announcementsCategory != "Wait")
     {
         var allCategoryButtons = document.getElementById("categoriesScroller").childNodes;
 
@@ -556,75 +615,9 @@ function printAnnouncements(announcementsCategory, categoryButtonID)
             allCategoryButtons[index].className = "scrollerItem";
 
         document.getElementById(categoryButtonID).className += " Active";
-    }
 
-    if (announcementsCategory == "AAWait")
-    {
-        cloudData.doc("announcements/" + announcementsCategory).get().then(function(doc)
-        {
-            var waitAnnouncementsList;
-            if (doc && doc.exists)
-            {
-                const userData = doc.data();
-                waitAnnouncementsList = userData.waitingAnnouncements;
-
-                if (waitAnnouncementsList.length == 0)
-                {
-                    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
-                }
-                else
-                {
-                    announcementsHolder.innerHTML = "";
-                    for (let index = 0; index < waitAnnouncementsList.length; index++)
-                    {
-                        cloudData.doc("announcements/" + waitAnnouncementsList[index] + "/Data").get().then(function(doc)
-                        {
-                            var announcementImage, announcementTitle, announcementPrice, announcementCondition, announcementInfo, announcementID, announcementStatus;
-                            if (doc && doc.exists)
-                            {
-                                const userData = doc.data();
-                                announcementTitle = userData.Title;
-                                announcementPrice = userData.Price;
-                                announcementCondition = userData.Condition;
-                                announcementInfo = userData.additionalInformation;
-                                announcementID = userData.ID;
-                                announcementStatus = userData.Status;
-        
-                                var pathReference = databaseStorage.ref("/Announcements/" + waitAnnouncementsList[index] + ".jpg");
-                                pathReference.getDownloadURL().then(function(url)
-                                {
-                                    announcementImage = url;
-        
-                                    if (announcementStatus == "Waiting")
-                                    {
-                                        var newAnnouncement = "";
-                                        newAnnouncement += '<div class = "Announcement" onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" id = "';
-                                        newAnnouncement += "Announcement" + index + '"><img src = "';
-                                        newAnnouncement += announcementImage;
-                                        newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
-                                        newAnnouncement += announcementTitle
-                                        newAnnouncement += '</h3><p class = "announcementText">';
-                                        newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
-                                        newAnnouncement += '<p class = "announcementText Hidden">';
-                                        newAnnouncement +=  announcementCondition + '</p>';
-                                        newAnnouncement += '<p class = "announcementText Hidden">';
-                                        newAnnouncement +=  announcementInfo + '</p>';
-                                        newAnnouncement += '<p class = "announcementText Hidden">';
-                                        newAnnouncement +=  announcementID + '</p><p onclick = "" class = "announcementButton Accept"><i class = "fas fa-check"></i></p><p onclick = "" class = "announcementButton Reject"><i class = "fas fa-times"></i></p>';
-        
-                                        announcementsHolder.innerHTML += newAnnouncement;
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }
-            }
-        });
-    }
-    else if (announcementsCategory != "AALast")
-    {
-        if (announcementsCategory == "bath") announcementsHolderTitle.innerHTML = "Baths";
+        if (announcementsCategory == "Last") announcementsHolderTitle.innerHTML = "Newest Items";
+        else if (announcementsCategory == "bath") announcementsHolderTitle.innerHTML = "Baths";
         else if (announcementsCategory == "blender") announcementsHolderTitle.innerHTML = "Blenders";
         else if (announcementsCategory == "camera") announcementsHolderTitle.innerHTML = "Cameras";
         else if (announcementsCategory == "chair") announcementsHolderTitle.innerHTML = "Chairs";
@@ -635,63 +628,128 @@ function printAnnouncements(announcementsCategory, categoryButtonID)
         else if (announcementsCategory == "toilet") announcementsHolderTitle.innerHTML = "Toilets";
         else if (announcementsCategory == "tv") announcementsHolderTitle.innerHTML = "Televisions";
         else if (announcementsCategory == "volume-up") announcementsHolderTitle.innerHTML = "Speakers";
+    }
 
-        cloudData.doc("announcements/" + announcementsCategory).get().then(function(doc)
+    if (announcementsCategory == "Wait")
+    {
+        var Size;
+        Database.ref("/SaleItems").once("value").then((snapshot) =>
         {
-            var Size;
-            if (doc && doc.exists)
-            {
-                const userData = doc.data();
-                Size = userData.Size;
+            Size = (snapshot.val() && snapshot.val().Size) || 0;
 
-                if (Size == 0)
+            if (Size == 0)
+            {
+                announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+            }
+            else
+            {
+                announcementsHolder.innerHTML = "";
+                for (let index = 1; index < Size + 1; index++)
                 {
-                    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
-                }
-                else
-                {
-                    announcementsHolder.innerHTML = "";
-                    for (let index = 1; index < 6 + 1; index++)
+                    var announcementImage, announcementTitle, announcementPrice,
+                        announcementCondition, announcementInfo, announcementID, announcementStatus, announcementContact;
+                    Database.ref("/SaleItems/" + "announcement" + index).once("value").then((snapshot) =>
                     {
-                        cloudData.doc("announcements/" + announcementsCategory + ("/announcement" + index) + "/Data").get().then(function(doc)
+                        var pathReference = databaseStorage.ref("/Announcements/" + "announcement" + index.toString() + ".jpg");
+                        pathReference.getDownloadURL().then(function(url)
                         {
-                            var announcementImage, announcementTitle, announcementPrice, announcementCondition, announcementInfo, announcementID, announcementStatus;
-                            if (doc && doc.exists)
+                            announcementTitle = (snapshot.val() && snapshot.val().Title) || "undefined";
+                            announcementPrice = (snapshot.val() && snapshot.val().Price) || 0;
+                            announcementCondition = (snapshot.val() && snapshot.val().Condition) || "undefined";
+                            announcementInfo = (snapshot.val() && snapshot.val().additionalInformation) || "undefined";
+                            announcementID = (snapshot.val() && snapshot.val().ID) || "undefined";
+                            announcementStatus = (snapshot.val() && snapshot.val().Status) || "undefined";
+                            announcementContact = (snapshot.val() && snapshot.val().Contact) || "undefined";
+                            announcementImage = url;
+    
+                            if (announcementStatus == "Waiting")
                             {
-                                const userData = doc.data();
-                                announcementTitle = userData.Title;
-                                announcementPrice = userData.Price;
-                                announcementCondition = userData.Condition;
-                                announcementInfo = userData.additionalInformation;
-                                announcementID = userData.ID;
-                                announcementStatus = userData.Status;
-        
-                                var pathReference = databaseStorage.ref("/Announcements/" + announcementsCategory + "/announcement" + index.toString() + ".jpg");
-                                pathReference.getDownloadURL().then(function(url)
-                                {
-                                    announcementImage = url;
-        
-                                    if (announcementStatus == "Online")
-                                    {
-                                        var newAnnouncement = "";
-                                        newAnnouncement += '<div class = "Announcement" onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" id = "';
-                                        newAnnouncement += "Announcement" + index + '"><img src = "';
-                                        newAnnouncement += announcementImage;
-                                        newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
-                                        newAnnouncement += announcementTitle
-                                        newAnnouncement += '</h3><p class = "announcementText">';
-                                        newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
-                                        newAnnouncement += '<p class = "announcementText Hidden">';
-                                        newAnnouncement +=  announcementCondition + '</p>';
-                                        newAnnouncement += '<p class = "announcementText Hidden">';
-                                        newAnnouncement +=  announcementInfo + '</p>';
-                                        newAnnouncement += '<p class = "announcementText Hidden">';
-                                        newAnnouncement +=  announcementID + '</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
-        
-                                        announcementsHolder.innerHTML += newAnnouncement;
-                                    }
-                                });
+                                var newAnnouncement = "";
+                                newAnnouncement += '<div class = "Announcement" id = "';
+                                newAnnouncement += "announcement" + index + '"><img src = "';
+                                newAnnouncement += announcementImage;
+                                newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
+                                newAnnouncement += announcementTitle
+                                newAnnouncement += '</h3><p class = "announcementText">';
+                                newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
+                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                newAnnouncement +=  announcementCondition + '</p>';
+                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                newAnnouncement +=  announcementInfo + '</p>';
+                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                newAnnouncement +=  announcementID + '</p>';
+                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                newAnnouncement +=  announcementContact + '</p>';
+                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                newAnnouncement +=  announcementContact + '</p><p onclick = "acceptAnnouncement(' + "'announcement" + index + "'" + ')" class = "announcementButton Accept"><i class = "fas fa-check"></i></p>';
+                                newAnnouncement +=  '<p onclick = "rejectAnnouncement(' + "'announcement" + index + "'" + ')" class = "announcementButton Reject"><i class = "fas fa-times"></i></p>';
+                                newAnnouncement +=  '<p onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" class = "announcementButton Info"><i class = "fas fa-info"></i></p>';
+    
+                                announcementsHolder.innerHTML += newAnnouncement;
                             }
+                        });
+                    });
+                }
+            }
+        });
+    }
+    else if (announcementsCategory == "Last")
+    {
+        var Size;
+        Database.ref("/SaleItems").once("value").then((snapshot) =>
+        {
+            Size = (snapshot.val() && snapshot.val().Size) || 0;
+
+            if (Size == 0)
+            {
+                announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+            }
+            else
+            {
+                announcementsHolder.innerHTML = "";
+                for (let index = Size; index > Size - 6; index--)
+                {
+                    if (index >= 1)
+                    {
+                        var announcementCategory, announcementImage, announcementTitle, announcementPrice,
+                            announcementCondition, announcementInfo, announcementID, announcementStatus, announcementContact;
+                        Database.ref("/SaleItems/" + "announcement" + index).once("value").then((snapshot) =>
+                        {
+                            var pathReference = databaseStorage.ref("/Announcements/" + "announcement" + index.toString() + ".jpg");
+                            pathReference.getDownloadURL().then(function(url)
+                            {
+                                announcementCategory = (snapshot.val() && snapshot.val().Category) || "undefined";
+                                announcementTitle = (snapshot.val() && snapshot.val().Title) || "undefined";
+                                announcementPrice = (snapshot.val() && snapshot.val().Price) || 0;
+                                announcementCondition = (snapshot.val() && snapshot.val().Condition) || "undefined";
+                                announcementInfo = (snapshot.val() && snapshot.val().additionalInformation) || "undefined";
+                                announcementID = (snapshot.val() && snapshot.val().ID) || "undefined";
+                                announcementStatus = (snapshot.val() && snapshot.val().Status) || "undefined";
+                                announcementContact = (snapshot.val() && snapshot.val().Contact) || "undefined";
+                                announcementImage = url;
+                
+                                if (announcementStatus == "Online")
+                                {
+                                    var newAnnouncement = "";
+                                    newAnnouncement += '<div class = "Announcement" onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" id = "';
+                                    newAnnouncement += "Announcement" + index + '"><img src = "';
+                                    newAnnouncement += announcementImage;
+                                    newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
+                                    newAnnouncement += announcementTitle
+                                    newAnnouncement += '</h3><p class = "announcementText">';
+                                    newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
+                                    newAnnouncement += '<p class = "announcementText Hidden">';
+                                    newAnnouncement +=  announcementCondition + '</p>';
+                                    newAnnouncement += '<p class = "announcementText Hidden">';
+                                    newAnnouncement +=  announcementInfo + '</p>';
+                                    newAnnouncement += '<p class = "announcementText Hidden">';
+                                    newAnnouncement +=  announcementID + '</p>';
+                                    newAnnouncement += '<p class = "announcementText Hidden">';
+                                    newAnnouncement +=  announcementContact + '</p><p onclick = "" class = "announcementButton"><i class = "fas fa-phone-alt"></i></p></div>';
+
+                                    announcementsHolder.innerHTML += newAnnouncement;
+                                }
+                            });
                         });
                     }
                 }
@@ -700,112 +758,130 @@ function printAnnouncements(announcementsCategory, categoryButtonID)
     }
     else
     {
-        cloudData.doc("announcements/" + announcementsCategory).get().then(function(doc)
+        var Size;
+        Database.ref("/SaleItems").once("value").then((snapshot) =>
         {
-            var lastAnnouncementsList;
-            if (doc && doc.exists)
+            Size = (snapshot.val() && snapshot.val().Size) || 0;
+
+            if (Size == 0)
             {
-                const userData = doc.data();
-                lastAnnouncementsList = userData.lastAnnouncements;
-
-                if (lastAnnouncementsList.length == 0)
+                announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+            }
+            else
+            {
+                announcementsHolder.innerHTML = "";
+                for (let index = 1; index < Size + 1; index++)
                 {
-                    announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
-                }
-                else
-                {
-                    announcementsHolder.innerHTML = "";
-                    for (let index = 0; index < lastAnnouncementsList.length; index++)
+                    var announcementCategory, announcementImage, announcementTitle, announcementPrice,
+                        announcementCondition, announcementInfo, announcementID, announcementStatus, announcementContact;
+                    Database.ref("/SaleItems/" + "announcement" + index).once("value").then((snapshot) =>
                     {
-                        cloudData.doc("announcements/" + lastAnnouncementsList[index]).get().then(function(doc)
+                        var pathReference = databaseStorage.ref("/Announcements/" + "announcement" + index.toString() + ".jpg");
+                        pathReference.getDownloadURL().then(function(url)
                         {
-                            var announcementImage, announcementTitle, announcementPrice, announcementCondition, announcementInfo, announcementID, announcementStatus;
-                            if (doc && doc.exists)
+                            announcementCategory = (snapshot.val() && snapshot.val().Category) || "undefined";
+                            announcementTitle = (snapshot.val() && snapshot.val().Title) || "undefined";
+                            announcementPrice = (snapshot.val() && snapshot.val().Price) || 0;
+                            announcementCondition = (snapshot.val() && snapshot.val().Condition) || "undefined";
+                            announcementInfo = (snapshot.val() && snapshot.val().additionalInformation) || "undefined";
+                            announcementID = (snapshot.val() && snapshot.val().ID) || "undefined";
+                            announcementStatus = (snapshot.val() && snapshot.val().Status) || "undefined";
+                            announcementContact = (snapshot.val() && snapshot.val().Contact) || "undefined";
+                            announcementImage = url;
+    
+                            if (announcementStatus == "Online" && announcementCategory == announcementsCategory)
                             {
-                                const userData = doc.data();
-                                announcementTitle = userData.Title;
-                                announcementPrice = userData.Price;
-                                announcementCondition = userData.Condition;
-                                announcementInfo = userData.additionalInformation;
-                                announcementID = userData.ID;
-                                announcementStatus = userData.Status;
-
-                                var lastAnnouncementsListWords = new Array("", "", "");
-                                var lastAnnouncementsListWordsIndex = 0;
-
-                                for (let charIndex = 0; charIndex < lastAnnouncementsList[index].length; charIndex++)
-                                {
-                                    if (lastAnnouncementsList[index][charIndex] != "/")
-                                        lastAnnouncementsListWords[lastAnnouncementsListWordsIndex] += lastAnnouncementsList[index][charIndex];
-                                    else lastAnnouncementsListWordsIndex += 1;
-                                }
-
-                                var pathReference = databaseStorage.ref("/Announcements/" + lastAnnouncementsListWords[0] +  "/"+ lastAnnouncementsListWords[1] + ".jpg");
-                                pathReference.getDownloadURL().then(function(url)
-                                {
-                                    announcementImage = url;
-        
-                                    if (announcementStatus == "Online")
-                                    {
-                                        var newAnnouncement = "";
-                                        if (document.getElementById("Title").innerHTML == "Reuse Shop")
-                                        {
-                                            announcementsHolderTitle.innerHTML = "Newest Items";
-        
-                                            newAnnouncement += '<div class = "Announcement"onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" id = "';
-                                            newAnnouncement += "Announcement" + index + '"><img src = "';
-                                            newAnnouncement += announcementImage;
-                                            newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
-                                            newAnnouncement += announcementTitle
-                                            newAnnouncement += '</h3><p class = "announcementText">';
-                                            newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
-                                            newAnnouncement += '<p class = "announcementText Hidden">';
-                                            newAnnouncement +=  announcementCondition + '</p>';
-                                            newAnnouncement += '<p class = "announcementText Hidden">';
-                                            newAnnouncement +=  announcementInfo + '</p>';
-                                            newAnnouncement += '<p class = "announcementText Hidden">';
-                                            newAnnouncement +=  announcementID + '</p><p onclick = "" class = "announcementButton"><i class = "fas fa-plus"></i></p></div>';
-            
-                                        }
-                                        else if (document.getElementById("Title").innerHTML == "Reuse")
-                                        {
-                                            newAnnouncement += '<div class = "scrollerItem" onclick = "openCloseAnnouncementPriview(' + "'" + "scrollerItem" + index + "'" + ')" id = "';
-                                            newAnnouncement += "scrollerItem" + index + '"><img src = "';
-                                            newAnnouncement += announcementImage;
-                                            newAnnouncement += '" class = "scrollerItemImage"><h3 class = "scrollerItemTitle">';
-                                            newAnnouncement += announcementTitle
-                                            newAnnouncement += '</h3><p class = "scrollerItemText">';
-                                            newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
-                                            newAnnouncement += '<p class = "scrollerItemText Hidden">';
-                                            newAnnouncement +=  announcementCondition + '</p>';
-                                            newAnnouncement += '<p class = "scrollerItemText Hidden">';
-                                            newAnnouncement +=  announcementInfo + '</p>';
-                                            newAnnouncement += '<p class = "scrollerItemText Hidden">';
-                                            newAnnouncement +=  announcementID + '</p><p onclick = "" class = "scrollerItemButton"><i class = "fas fa-plus"></i></p></div>';
-                                        }
-                                        announcementsHolder.innerHTML += newAnnouncement;
-                                    }
-                                });
+                                var newAnnouncement = "";
+                                newAnnouncement += '<div class = "Announcement" onclick = "openCloseAnnouncementPriview(' + "'" + "Announcement" + index + "'" + ')" id = "';
+                                newAnnouncement += "Announcement" + index + '"><img src = "';
+                                newAnnouncement += announcementImage;
+                                newAnnouncement += '" class = "announcementImage"><h3 class = "announcementTitle">';
+                                newAnnouncement += announcementTitle
+                                newAnnouncement += '</h3><p class = "announcementText">';
+                                newAnnouncement += parseFloat(announcementPrice).toFixed(2) + 'lv.</p>';
+                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                newAnnouncement +=  announcementCondition + '</p>';
+                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                newAnnouncement +=  announcementInfo + '</p>';
+                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                newAnnouncement +=  announcementID + '</p>';
+                                newAnnouncement += '<p class = "announcementText Hidden">';
+                                newAnnouncement +=  announcementContact + '</p><p onclick = "" class = "announcementButton"><i class = "fas fa-phone-alt"></i></p></div>';
+    
+                                announcementsHolder.innerHTML += newAnnouncement;
                             }
                         });
-                    }
+                    });
                 }
             }
         });
     }
 
-    if (announcementsCategory != "AAWait")
+    timerForNoItems = window.setTimeout(function()
     {
-        window.setTimeout(function()
+        if (announcementsHolder.innerHTML == "")
         {
-            console.log("Checking for items");
-            if (announcementsHolder.innerHTML == "")
-            {
+            if (document.getElementById("pageTitle").innerHTML != "Staff")
                 announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
-                console.log("No items");
-            }
-        }, 3 * 1000);
-    }
+            else
+                announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "../../Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+        }
+    }, 4 * 1000);
+}
+
+function rejectAnnouncement(announcementIndex)
+{
+    var announcementsHolder = document.getElementById("announcementsHolder");
+
+    Database.ref("SaleItems/" + announcementIndex).update(
+    {
+        Status: "Rejected"
+    }).catch(function(error)
+    {
+        console.log("Got an Error: " + error);
+    });
+
+    Database.ref("/SaleItems/" + announcementIndex).once("value").then((snapshot) =>
+    {
+        var announcementStatus = (snapshot.val() && snapshot.val().Status) || "undefined";
+        console.log(announcementStatus);
+    });
+
+
+    document.getElementById(announcementIndex).remove();
+
+    if (announcementsHolder.innerHTML == "")
+        announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "../../Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+}
+
+function acceptAnnouncement(announcementIndex)
+{
+    var announcementsHolder = document.getElementById("announcementsHolder");
+
+    Database.ref("SaleItems/" + announcementIndex).update(
+    {
+        Status: "Online"
+    }).catch(function(error)
+    {
+        console.log("Got an Error: " + error);
+    });
+
+    document.getElementById(announcementIndex).remove();
+
+    if (announcementsHolder.innerHTML == "")
+        announcementsHolder.innerHTML = '<div class = "Announcement Empty"><img src = "../../Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>';
+}
+
+function makeRandomString(Length)
+{
+    var result = "";
+    var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+
+    for ( var i = 0; i < Length; i++ )
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    
+    return result;
 }
 
 var Timer;
@@ -840,19 +916,17 @@ function openCloseAccountEditBox()
     }
     else if (!isOpenedAccountEditBox)
     {
-        document.getElementById("accountEditBoxHolder").style.animation = "fadeIn .5s ease-out forwards .1s";
         document.getElementById("accountEditBoxHolder").style.display = "unset";
+        document.getElementById("accountEditBoxHolder").style.animation = "fadeIn .5s ease-out forwards .1s";
         document.getElementById("pageTitle").innerHTML = "Edit account";
 
-        var pathReference = databaseStorage.ref("/users/" + Auth.currentUser.uid + ".jpg");
+        var pathReference = databaseStorage.ref("/Users/" + Auth.currentUser.uid + ".jpg");
         pathReference.getDownloadURL().then(function(url)
         {
             userImage = url;
             document.getElementById('accountEditImage').src = userImage;
         }).catch(function(error)
         {
-            document.getElementById('accountEditImage').src = "../Images/defaultProfileImage.jpg";
-
             switch (error.code)
             {
                 case 'storage/object-not-found':
@@ -889,21 +963,45 @@ function openCloseAnnouncementPriview(announcementID)
     }
     else if (!isOpenedAnnouncementPriview)
     {
-        document.getElementById("announcementPriviewHolder").style.animation = "fadeIn .5s ease-out forwards .1s";
-        document.getElementById("announcementPriviewHolder").style.display = "unset";
-        document.getElementById("announcementPriviewImage").src = document.getElementById(announcementID).childNodes[0].src;
-        document.getElementById("announcementPriviewTitle").innerHTML = document.getElementById(announcementID).childNodes[1].innerHTML;
-        document.getElementById("announcementPriviewPrice").innerHTML = document.getElementById(announcementID).childNodes[2].innerHTML;
-        document.getElementById("announcementPriviewStatus").innerHTML = document.getElementById(announcementID).childNodes[3].innerHTML;
+        if (document.getElementById("pageTitle").innerHTML != "My account")
+        {
+            document.getElementById("announcementPriviewHolder").style.animation = "fadeIn .5s ease-out forwards .1s";
+            document.getElementById("announcementPriviewHolder").style.display = "unset";
+            document.getElementById("announcementPriviewImage").src = document.getElementById(announcementID).childNodes[0].src;
+            document.getElementById("announcementPriviewTitle").innerHTML = document.getElementById(announcementID).childNodes[1].innerHTML;
+            document.getElementById("announcementPriviewPrice").innerHTML = document.getElementById(announcementID).childNodes[2].innerHTML;
+            document.getElementById("announcementPriviewStatus").innerHTML = document.getElementById(announcementID).childNodes[3].innerHTML;
+    
+            if (document.getElementById("announcementPriviewStatus").innerHTML == "Working")
+                document.getElementById("announcementPriviewStatus").style.color = "green";
+            else if (document.getElementById("announcementPriviewStatus").innerHTML == "Broken")
+                document.getElementById("announcementPriviewStatus").style.color = "red";
+    
+            document.getElementById("announcementPriviewID").innerHTML = document.getElementById(announcementID).childNodes[5].innerHTML;
+            document.getElementById("announcementPriviewInfo").innerHTML = document.getElementById(announcementID).childNodes[4].innerHTML;
+            document.getElementById("announcementPriviewButton").innerHTML = '<i class = "fas fa-phone-alt"></i>' + document.getElementById(announcementID).childNodes[6].innerHTML;
+            document.getElementById("announcementPriviewButton").setAttribute("onclick", "copyText(" + document.getElementById(announcementID).childNodes[6].innerHTML.toString() + ")");
+        }
+        else if (document.getElementById("pageTitle").innerHTML == "My account")
+        {
+            document.getElementById("announcementPriviewHolder").style.animation = "fadeIn .5s ease-out forwards .1s";
+            document.getElementById("announcementPriviewHolder").style.display = "unset";
+            document.getElementById("announcementPriviewImage").src = document.getElementById(announcementID).childNodes[0].src;
+            document.getElementById("announcementPriviewTitle").innerHTML = document.getElementById(announcementID).childNodes[1].innerHTML;
+            document.getElementById("announcementPriviewPrice").innerHTML = document.getElementById(announcementID).childNodes[3].innerHTML;
+            document.getElementById("announcementPriviewStatus").innerHTML = document.getElementById(announcementID).childNodes[4].innerHTML;
+    
+            if (document.getElementById("announcementPriviewStatus").innerHTML == "Working")
+                document.getElementById("announcementPriviewStatus").style.color = "green";
+            else if (document.getElementById("announcementPriviewStatus").innerHTML == "Broken")
+                document.getElementById("announcementPriviewStatus").style.color = "red";
+    
+            document.getElementById("announcementPriviewID").innerHTML = document.getElementById(announcementID).childNodes[6].innerHTML;
+            document.getElementById("announcementPriviewInfo").innerHTML = document.getElementById(announcementID).childNodes[5].innerHTML;
+            document.getElementById("announcementPriviewButton").innerHTML = '<i class = "fas fa-phone-alt"></i>' + document.getElementById(announcementID).childNodes[7].innerHTML;
+            document.getElementById("announcementPriviewButton").setAttribute("onclick", "copyText(" + document.getElementById(announcementID).childNodes[7].innerHTML.toString() + ")");
+        }
 
-        if (document.getElementById("announcementPriviewStatus").innerHTML == "Working")
-            document.getElementById("announcementPriviewStatus").style.color = "green";
-        else if (document.getElementById("announcementPriviewStatus").innerHTML == "Broken")
-            document.getElementById("announcementPriviewStatus").style.color = "red";
-
-        document.getElementById("announcementPriviewID").innerHTML = document.getElementById(announcementID).childNodes[5].innerHTML;
-        document.getElementById("announcementPriviewInfo").innerHTML = document.getElementById(announcementID).childNodes[4].innerHTML;
-        document.getElementById("announcementPriviewButton").onclick = document.getElementById(announcementID).childNodes[6].onclick;
         isOpenedAnnouncementPriview = true;
     }
 }
@@ -911,4 +1009,164 @@ function openCloseAnnouncementPriview(announcementID)
 function updateAccountImagePriview()
 {
     document.getElementById("accountEditImage").src = URL.createObjectURL(document.getElementById("accountImageUploadButton").files[0]);
+}
+
+function getDropDownMenuData()
+{
+    var dropDownMenuCategory = document.getElementById("dropDownMenu0");
+    var dropDownMenuItem = document.getElementById("dropDownMenu1");
+    var dropDownMenuCondition = document.getElementById("dropDownMenu2");
+    
+    if (dropDownMenuCategory.innerHTML != "Categoty")
+    {
+        document.getElementById("newAnnouncementBox1NextButton").className = "newAnnouncementBoxButton";
+        document.getElementById("newAnnouncementBox1NextButton").setAttribute("onclick", "nextNewAnnouncementBox(2)");
+    }
+    
+    if (dropDownMenuItem.innerHTML != "Item")
+    {
+        document.getElementById("newAnnouncementBox2NextButton").className = "newAnnouncementBoxButton";
+        document.getElementById("newAnnouncementBox2NextButton").setAttribute("onclick", "nextNewAnnouncementBox(3)");
+    }
+
+    if (dropDownMenuCondition.innerHTML != "Condition")
+    {
+        document.getElementById("newAnnouncementBox4NextButton").className = "newAnnouncementBoxButton";
+        document.getElementById("newAnnouncementBox4NextButton").setAttribute("onclick", "nextNewAnnouncementBox(5)");
+    }
+}
+
+function saveNewAnnouncementImage()
+{
+    document.getElementById("chosenFileLabel").innerHTML = document.getElementById("uploadButton").files[0].name;
+    document.getElementById("newAnnouncementBox5NextButton").className = "newAnnouncementBoxButton";
+    document.getElementById("newAnnouncementBox5NextButton").setAttribute("onclick", "nextNewAnnouncementBox(6)");
+}
+
+function checkInputFieldData(elementID, elementIndex)
+{
+    var inputFiel = document.getElementById(elementID);
+
+    if (elementIndex == 1)
+    {
+        if (inputFiel.value >= 0 && inputFiel.value <= 200 && inputFiel.value != "")
+        {
+            document.getElementById("newAnnouncementBox3NextButton").className = "newAnnouncementBoxButton";
+            document.getElementById("newAnnouncementBox3NextButton").setAttribute("onclick", "nextNewAnnouncementBox(4)");
+        }
+        else
+        {
+            document.getElementById("newAnnouncementBox3NextButton").className = "newAnnouncementBoxButton Disabled";
+            document.getElementById("newAnnouncementBox3NextButton").removeAttribute("onclick");
+        }
+    }
+    else if (elementIndex == 2)
+    {
+        if (inputFiel.value >= 359000000000 && inputFiel.value <= 359999999999)
+        {
+            document.getElementById("newAnnouncementBox6NextButton").className = "newAnnouncementBoxButton";
+            document.getElementById("newAnnouncementBox6NextButton").setAttribute("onclick", "nextNewAnnouncementBox(7)");
+        }
+        else
+        {
+            document.getElementById("newAnnouncementBox6NextButton").className = "newAnnouncementBoxButton Disabled";
+            document.getElementById("newAnnouncementBox6NextButton").removeAttribute("onclick");
+        }
+    }
+}
+
+var nowAnnouncementBoxIndex = 1;
+function nextNewAnnouncementBox(nextNewAnnouncementBoxID)
+{
+    var nowNewAnnouncementBox = document.getElementById("newAnnouncementBox" + nowAnnouncementBoxIndex);
+    var nextNewAnnouncementBox = document.getElementById("newAnnouncementBox" + nextNewAnnouncementBoxID);
+
+    if (nextNewAnnouncementBoxID == 8)
+    {
+        nowNewAnnouncementBox.style.animation = "middleToLefttItem .3s ease-out forwards";
+        nextNewAnnouncementBox.style.display = "inline-block";
+        nextNewAnnouncementBox.style.animation = "rightToMiddleItem .3s ease-out forwards";
+
+        window.setTimeout(function()
+        {
+            var newAnnouncementCategoty = document.getElementById("dropDownMenu0").innerHTML;
+            var newAnnouncementItem = document.getElementById("dropDownMenu1").innerHTML;
+            var newAnnouncementPrice = document.getElementById("priceInputField").value;
+            var newAnnouncementCondition = document.getElementById("dropDownMenu2").innerHTML;
+            var newAnnouncementContact = document.getElementById("contactInputField").value;
+            var newAnnouncementInfo = document.getElementById("infoInputField").value;
+            var newAnnouncementID = makeRandomString(8);
+            var newAnnouncementTitle = newAnnouncementCategoty + " " + newAnnouncementItem;
+            var newAnnouncementOwner = Auth.currentUser.uid;
+
+            var Size, newSize;
+            Database.ref("SaleItems").once("value").then((snapshot) =>
+            {
+                Size = (snapshot.val() && snapshot.val().Size) || 0;
+
+                Size++;
+                Database.ref("SaleItems/" + "announcement" + Size).set(
+                {
+                    Category: newAnnouncementCategoty,
+                    Condition: newAnnouncementCondition,
+                    Contact: newAnnouncementContact,
+                    ID: newAnnouncementID,
+                    Owner: newAnnouncementOwner,
+                    Price: parseFloat(newAnnouncementPrice),
+                    Status: "Waiting",
+                    Title: newAnnouncementTitle,
+                    additionalInformation: newAnnouncementInfo,
+                }).catch(function(error)
+                {
+                    console.log("Got an Error: " + error);
+                })
+
+                Database.ref("SaleItems/").update(
+                {
+                    Size: parseInt(Size)
+                }).catch(function(error)
+                {
+                    console.log("Got an Error: " + error);
+                });
+
+                var storageRef = databaseStorage.ref("/Announcements/" + "announcement" + Size + ".jpg");
+                var uploadTask = storageRef.put(document.getElementById("uploadButton").files[0]);
+            
+                document.getElementById("trigger").className += " allDoneTickDrawn";
+                window.setTimeout(function()
+                {
+                    location.replace("../me.html");
+                }, 1.2 * 1000);
+            });
+        }, .5 * 1000);
+    }
+    else if (nowAnnouncementBoxIndex + 1 == nextNewAnnouncementBoxID)
+    {
+        nowNewAnnouncementBox.style.animation = "middleToLefttItem .3s ease-out forwards";
+        nextNewAnnouncementBox.style.display = "inline-block";
+        nextNewAnnouncementBox.style.animation = "rightToMiddleItem .3s ease-out forwards";
+        
+        nowAnnouncementBoxIndex += 1;
+    }
+}
+
+function peviousNewAnnouncementBox(peviousNewAnnouncementBoxID)
+{
+    if (nowAnnouncementBoxIndex - 1 == peviousNewAnnouncementBoxID)
+    {
+        var nowNewAnnouncementBox = document.getElementById("newAnnouncementBox" + nowAnnouncementBoxIndex);
+        var peviousNewAnnouncementBox = document.getElementById("newAnnouncementBox" + peviousNewAnnouncementBoxID);
+        
+        nowNewAnnouncementBox.style.animation = "middleToRightItem .3s ease-out forwards";
+        peviousNewAnnouncementBox.style.animation = "leftToMiddleItem .3s ease-out forwards";
+
+        nowAnnouncementBoxIndex -= 1;
+    }
+}
+
+function copyText(text)
+{
+    navigator.clipboard.writeText(text);
+    document.getElementById("correctness phoneNumberCopyed").style.display = "block";
+    desableElement("correctness phoneNumberCopyed", 2.5);
 }

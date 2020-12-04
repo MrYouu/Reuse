@@ -16,6 +16,7 @@
         <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
         <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
         <script type = "text/javascript" src = "Files/Functions.js"></script>
@@ -45,6 +46,9 @@
             <!-- Correctnesses -->
             <div class = "correctnessHolder" id = "correctness dataSuccessfullySaved">
                 <p>Data successfully saved!</p>
+            </div>
+            <div class = "correctnessHolder" id = "correctness phoneNumberCopyed">
+                <p>Phone number copyed</p>
             </div>
             <div class = "correctnessHolder" id = "correctness userLoggedOut">
                 <p>User Logged Out.</p>
@@ -84,7 +88,7 @@
                     <p onclick = "openCloseAccountEditBox()" class = "accountActionButton"><i class = "fas fa-pen"></i></p>
                     <p onclick = "logOut()" class = "accountActionButton"><i class = "fas fa-sign-out-alt"></i></p>
                 </div>
-                <div class = "accountFastInfoHolder">
+                <div class = "accountFastInfoHolder" id = "accountFastInfoHolder">
                     <div class = "accountFastInfo">
                         <h1 class = "accountFastInfoData" id = "accountFastInfoDataAnnouncements">0</h1>
                         <h5 class = "accountFastInfoName">Announcements</h5>
@@ -115,15 +119,15 @@
                         <i class = "fas fa-signature" id = "FNInputFieldIcon"></i>
                     </div>
 
-                    <div class = "accountEditBoxInputField Disabled">
+                    <div class = "accountEditBoxInputField">
                         <p class = "accountEditBoxInputFieldTitle" id = "FNInputFieldTitle">Email address</p>
                         <input type = "email" placeholder = "Email address" class = "accountEditBoxInputFieldText" id = "accountEditEmailInputField" disabled>
                         <i class = "fas fa-envelope" id = "emailInputFieldIcon"></i>
                     </div>
 
-                    <div class = "accountEditBoxInputField Disabled">
+                    <div class = "accountEditBoxInputField">
                         <p class = "accountEditBoxInputFieldTitle" id = "residenceInputFieldTitle">Address of residence</p>
-                        <input type = "email" placeholder = "Address of residence" class = "accountEditBoxInputFieldText" id = "accountEditResidenceInputField">
+                        <input type = "text" placeholder = "Address of residence" class = "accountEditBoxInputFieldText" id = "accountEditResidenceInputField">
                         <i class = "fas fa-map-marker-alt" id = "residenceInputFieldIcon"></i>
                     </div>
 
@@ -131,19 +135,19 @@
                 </div>
             </div>
 
-            <div class = "textBox" id = "yourAnnouncementsTextBox">
-                <h1 class = "textBoxTitle">Saved announcements</h1>
+            <div class = "textBox" id = "savedAnnouncementsTextBox">
+                <h1 class = "textBoxTitle">Saved items</h1>
                 <p class = "textBoxText">
                     No announcements yet.
                 </p>
             </div>
 
             <div class = "textBox" id = "yourAnnouncementsTextBox">
-                <h1 class = "textBoxTitle">My announcements</h1>
-                <p class = "textBoxText">
-                    No announcements yet.
-                </p>
-                <p onclick = "" class = "textBoxButton Main"><i class = "fas fa-plus"></i></p>
+                <h1 class = "textBoxTitle">My items</h1>
+                <div class = "announcementsHolder" id = "announcementsHolder">
+                    <div class = "Announcement Empty"><img src = "Images/noDataImage.svg" class = "announcementImage"><h3 class = "announcementTitle">No items yet</h3></div>
+                </div>
+                <p onclick = "goTo('new/announcement.html')" class = "textBoxButton Main"><i class = "fas fa-plus"></i></p>
             </div>
 
             <div class = "textBox" id = "deleteAccountTextBox">
@@ -170,6 +174,19 @@
             </div>
 
             <div class = "mobileExpander"></div>
+        </div>
+
+        <div class = "announcementPriviewHolder" id = "announcementPriviewHolder">
+            <div class = "announcementPriview">
+                <div onclick = "openCloseAnnouncementPriview()" class = "XCloseButton"></div>
+                <img src = "" class = "announcementPriviewImage" id = "announcementPriviewImage">
+                <h1 class = "announcementPriviewTitle" id = "announcementPriviewTitle">Title</h1>
+                <p class = "announcementPriviewText">Price: <text id = "announcementPriviewPrice">0.00lv.</text></p>
+                <p class = "announcementPriviewText">Condition: <text id = "announcementPriviewStatus">unknown</text></p>
+                <p class = "announcementPriviewText">ID: <text id = "announcementPriviewID"></text></p>
+                <p class = "announcementPriviewText">Additional information: <text id = "announcementPriviewInfo"></text></p>
+                <p class = "announcementPriviewButton" id = "announcementPriviewButton"><i class = "fas fa-phone-alt"></i></p>
+            </div>
         </div>
     </body>
 </html>

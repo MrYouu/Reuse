@@ -16,6 +16,7 @@
         <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
         <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
         <script type = "text/javascript" src = "../Files/Functions.js"></script>
@@ -23,7 +24,7 @@
         <title id = "Title">Staff - Reuse</title>
     </head>
 
-    <body id = "body" onload = "loadUserdata(); printAnnouncements('AAWait')">
+    <body id = "body" onload = "loadUserdata(); printAnnouncements('Wait')">
         <!-- #region Default -->
         <img src = "../Images/Thumbnails/Staff.png" alt = "Link image" style = "display: none;">
 
@@ -43,6 +44,9 @@
 
         <div class = "messageHolder">
             <!-- Correctnesses -->
+            <div class = "correctnessHolder" id = "correctness phoneNumberCopyed">
+                <p>Phone number copyed</p>
+            </div>
             <div class = "correctnessHolder" id = "correctness userLoggedOut">
                 <p>User Logged Out.</p>
             </div>
@@ -53,7 +57,7 @@
             </div>
         </div>
 
-        <div class = "pageTitleHolder"><h1 class = "pageTitle">Staff</h1></div>
+        <div class = "pageTitleHolder"><h1 class = "pageTitle" id = "pageTitle">Staff</h1></div>
 
         <div class = "pageHolder">
             <div class = "toolBar Staff">
@@ -85,10 +89,10 @@
                 <img src = "" class = "announcementPriviewImage" id = "announcementPriviewImage">
                 <h1 class = "announcementPriviewTitle" id = "announcementPriviewTitle">Title</h1>
                 <p class = "announcementPriviewText">Price: <text id = "announcementPriviewPrice">0.00lv.</text></p>
-                <p class = "announcementPriviewText">Status: <text id = "announcementPriviewStatus">unknown</text></p>
+                <p class = "announcementPriviewText">Condition: <text id = "announcementPriviewStatus">unknown</text></p>
                 <p class = "announcementPriviewText">ID: <text id = "announcementPriviewID"></text></p>
-                <p class = "announcementPriviewText" style = "margin-bottom: 30px;">Additional information: <text id = "announcementPriviewInfo"></text></p>
-                <p onclick = "" class = "announcementPriviewButton" id = "announcementPriviewButton" style = "display: none;"><i class = "fas fa-plus"></i></p>
+                <p class = "announcementPriviewText">Additional information: <text id = "announcementPriviewInfo"></text></p>
+                <p class = "announcementPriviewButton" id = "announcementPriviewButton"><i class = "fas fa-phone-alt"></i></p>
             </div>
         </div>
     </body>

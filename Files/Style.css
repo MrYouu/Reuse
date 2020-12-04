@@ -19,7 +19,8 @@ body
     overflow-x: hidden;
 }
 
-body.signAccount
+body.signAccount,
+body.newAnnouncement
 {
     display: grid;
     background-image: linear-gradient(to bottom right, #97d04f, #81b214);
@@ -29,6 +30,11 @@ body.signAccount
     justify-items: center;
     align-content: space-evenly;
     align-items: center;
+}
+
+body.newAnnouncement
+{
+    background-image: linear-gradient(to bottom right, #f6d743, #f4a33a);
 }
 
 /* Colors */
@@ -364,6 +370,7 @@ underlined
     background-color: #81b214;
 }
 
+/*#region X Close button */
 .XCloseButton
 {
     float: right;
@@ -408,6 +415,248 @@ underlined
     left: -2.5;
     background-color: #81b214;
 }
+/*#endregion X Close button */
+
+/*#region Back button */
+.backButton
+{
+    position: absolute;
+    width: 40px;
+    height: 3px;
+    top: 15;
+    left: 25;
+    background-color: #888888;
+    margin: 18.5px 0px;
+}
+
+.backButton:hover,
+.backButton:hover::before,
+.backButton:hover::after,
+.backButton:hover .backButtonFiller
+{
+    background-color: #81b214;
+}
+
+.backButton::before
+{
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: #888888;
+    transform-origin: 0% calc(100% - 1.5px);
+    transform: rotate(45deg);
+    transition: ease .3s;
+}
+
+.backButton::after
+{
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: #888888;
+    transform-origin: 0% calc(100% - 1.5px);
+    transform: rotate(-45deg);
+    transition: ease .3s;
+}
+
+.backButton .backButtonFiller
+{
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    top: 0;
+    left: -1.5;
+    background-color: #888888;
+    transform: rotate(-45deg);
+}
+/*#endregion Back button */
+
+/*#region Dropdown menu */
+.droppDownMenu
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+
+    z-index: 1;
+
+    animation: fadeIn .5s ease-out forwards .6s;
+    opacity: 0;
+}
+
+.droppDownMenu.sellElementPart
+{
+    margin-top: 100px;
+}
+
+.droppDownMenu select
+{
+    display: none;
+
+    animation: dropDown .3s ease-out forwards;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.droppDownMenuSelect:after
+{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 18px;
+    right: 20px;
+    border: 6px solid transparent;
+    border-color: #111111 transparent transparent transparent;
+}
+
+.droppDownMenuSelect.select-arrow-active:after
+{
+    border-color: transparent transparent #111111 transparent;
+    top: 12px;
+}
+
+.droppDownMenuSelect
+{
+    color: #111111;
+    background-color: #ffffff;
+    border-radius: 999px;
+    padding: 10px 10px 10px 20px;
+    
+    cursor: pointer;
+    user-select: none;
+}
+
+.droppDownMenuSelectItems div
+{
+    color: #fefefe;
+    border: 2px solid transparent;
+    border-color: transparent transparent #11111120 transparent;
+    padding: 8px 16px;
+    
+    cursor: pointer;
+    user-select: none;
+}
+
+.droppDownMenuSelectItems
+{
+    position: absolute;
+    background-color: #f4a33a;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: auto;
+    max-height: 200px;
+    border-radius: 20px;
+    overflow-y: scroll;
+
+    z-index: 99;
+
+    animation: sideMenuDropdownAnimation .5s ease forwards;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+
+.droppDownMenuSelectItems::-webkit-scrollbar
+{
+    width: 0;
+}
+
+.droppDownMenuSelectHide
+{
+    display: none;
+}
+
+.droppDownMenuSelectItems div:hover,
+.same-as-selected
+{
+    background-color: #e98c12;
+}
+/*#endregion Dropdown menu */
+
+/*#region Upload button */
+.uploadButton
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.uploadButton label
+{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #111111a0;
+    background-color: #ffffff;
+    border-radius: 30px;
+    margin-top: 0px;
+    padding: 8px 30px;
+    transition: ease .3s;
+}
+
+.uploadButton label:hover
+{
+    filter: brightness(.95);
+}
+
+.uploadButton p
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    color: #11111180;
+    margin-top: 20px;
+}
+/*#endregion Upload button */
+
+/*#region All done tick */
+.doneBox .allDoneTickCirc
+{
+    opacity: 0;
+    stroke-dasharray: 130;
+    stroke-dashoffset: 130;
+    transition: all 1s;
+}
+
+.doneBox .allDoneTick
+{
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    transition: stroke-dashoffset 1s 0.5s ease-out;
+}
+
+.doneBox svg
+{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    left: calc(50% - 50px);
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.doneBox .allDoneTickDrawn + svg .path
+{
+    opacity: 1;
+    stroke-dashoffset: 0;
+}
+/*#endregion All done tick */
+
 /*#endregion Page content */
 
 /*#region Text box */
@@ -946,7 +1195,8 @@ underlined
     opacity: 0;
 }
 
-.signAccountDecoration
+.signAccountDecoration,
+.newAnnouncementDecoration
 {
     position: absolute;
     z-index: -1;
@@ -955,7 +1205,8 @@ underlined
     opacity: 0;
 }
 
-#signAccountDecoration1
+#signAccountDecoration1,
+#newAnnouncementDecoration1
 {
     float: right;
     width: 300px;
@@ -963,21 +1214,24 @@ underlined
     right: 100;
 }
 
-#signAccountDecoration2
+#signAccountDecoration2,
+#newAnnouncementDecoration2
 {
     width: 600px;
     top: -200;
     left: -190;
 }
 
-#signAccountDecoration3
+#signAccountDecoration3,
+#newAnnouncementDecoration3
 {
     width: 300px;
     top: 130;
     left: 200;
 }
 
-#signAccountDecoration4
+#signAccountDecoration4,
+#newAnnouncementDecoration4
 {
     float: right;
     width: 500px;
@@ -1079,6 +1333,17 @@ underlined
     height: auto;
 }
 
+.Scroller.Items .scrollerItem.Empty
+{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+}
+
 .Scroller .scrollerItem:last-child
 {
     margin-right: 60px;
@@ -1131,6 +1396,13 @@ underlined
     left: 15;
     color: #111111;
     margin-bottom: 10px;
+}
+
+.Scroller.Items .scrollerItem.Empty .scrollerItemTitle
+{
+    left: 0;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .Scroller.Items .scrollerItem .scrollerItemText
@@ -1338,6 +1610,12 @@ underlined
     opacity: 0;
 }
 
+.textBox .announcementsHolder
+{
+    width: calc(100% - 60px + 15px);
+    left: 30;
+}
+
 .announcementsHolder .Announcement
 {
     position: relative;
@@ -1433,13 +1711,19 @@ underlined
 
 .announcementsHolder.waitList .Announcement .announcementButton.Accept
 {
-    background-color: green;
+    background-color: #81b214;
 }
 
 .announcementsHolder.waitList .Announcement .announcementButton.Reject
 {
     right: 70;
     background-color: red;
+}
+
+.announcementsHolder.waitList .Announcement .announcementButton.Info
+{
+    right: 125;
+    background-color: #f6d743;
 }
 
 .announcementsHolder .Announcement .announcementButton:hover
@@ -1590,6 +1874,11 @@ underlined
     opacity: 0;
 }
 
+.announcementPriviewHolder .announcementPriview .announcementPriviewButton i
+{
+    margin-right: 10px;
+}
+
 .announcementPriviewHolder .announcementPriview .announcementPriviewButton:hover
 {
     filter: brightness(.9);
@@ -1597,6 +1886,188 @@ underlined
 /*#endregion Announcements priview */
 
 /*#endregion Announcements */
+
+/*#region New announcement */
+.newAnnouncementTitle
+{
+    width: calc(100% - 120px);
+    top: 50;
+    left: 60;
+    font-size: 66px;
+    font-weight: bolder;
+    text-align: center;
+    line-height: 70px;
+    color: #f8f8f8;
+
+    animation: dropDown .5s ease-out forwards .1s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.newAnnouncementBoxHolder
+{
+    position: relative;
+    width: 100%;
+    height: 330px;
+    top: 0;
+    left: 0;
+}
+
+.newAnnouncementBox
+{
+    display: inline-block;
+    position: absolute;
+    width: 600px;
+    height: auto;
+    top: 0;
+    left: calc(50% - 300px);
+    background-color: #f8f8f8;
+    border-radius: 30px;
+
+    animation: dropDown .5s ease-out forwards .2s;
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+.newAnnouncementBox#newAnnouncementBox2,
+.newAnnouncementBox#newAnnouncementBox3,
+.newAnnouncementBox#newAnnouncementBox4,
+.newAnnouncementBox#newAnnouncementBox5,
+.newAnnouncementBox#newAnnouncementBox6,
+.newAnnouncementBox#newAnnouncementBox7,
+.newAnnouncementBox#newAnnouncementBox8
+{
+    display: none;
+}
+
+.newAnnouncementBox .backButton
+{
+    width: 30px;
+}
+
+.newAnnouncementBox .backButton:hover,
+.newAnnouncementBox .backButton:hover::before,
+.newAnnouncementBox .backButton:hover::after,
+.newAnnouncementBox .backButton:hover .backButtonFiller
+{
+    background-color: #f4a33a;
+}
+
+.newAnnouncementBox .newAnnouncementBoxTitle
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+
+    animation: fadeIn .5s ease-out forwards .5s;
+    opacity: 0;
+}
+
+.newAnnouncementBox .newAnnouncementBoxInputField
+{
+    position: relative;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 30;
+    font-size: 20px;
+    margin-bottom: 20px;
+
+    animation: fadeIn .5s ease-out forwards .6s;
+    opacity: 0;
+}
+
+.newAnnouncementBox .newAnnouncementBoxInputFieldTitle
+{
+    width: 100%;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #11111180;
+    margin-bottom: 10px;
+}
+
+.newAnnouncementBox .newAnnouncementBoxInputField .newAnnouncementBoxInputFieldText
+{
+    width: 100%;
+    font-size: 22px;
+    color: #111111a0;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    padding: 10px 10px 10px 70px;
+}
+
+.newAnnouncementBox .newAnnouncementBoxInputField .newAnnouncementBoxInputFieldText::placeholder
+{
+    color: #11111120;
+}
+
+.newAnnouncementBox .newAnnouncementBoxInputField .newAnnouncementBoxInputFieldText:focus
+{
+    color: #111111;
+}
+
+.newAnnouncementBox .newAnnouncementBoxInputField .newAnnouncementBoxInputFieldText:focus ~ i
+{
+    filter: brightness(.8);
+}
+
+.newAnnouncementBox .newAnnouncementBoxInputField i
+{
+    position: absolute;
+    top: 42;
+    left: 20;
+    color: #f6d743;
+}
+
+.newAnnouncementBox .newAnnouncementBoxInputField i::after
+{
+    content: "";
+    float: right;
+    position: absolute;
+    width: 2px;
+    height: 30px;
+    top: calc(50% - 15px);
+    right: -15;
+    background-color: #11111120;
+    border-radius: 999px;
+}
+
+.newAnnouncementBox .newAnnouncementBoxButton
+{
+    position: relative;
+    width: calc(100% - 120px);
+    top: 0;
+    left: 60;
+    text-align: center;
+    color: #f8f8f8;
+    background-color: #f6d743;
+    border-radius: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 8px 0px;
+
+    animation: fadeIn .5s ease-out forwards .7s;
+    opacity: 0;
+}
+
+.newAnnouncementBox .newAnnouncementBoxButton.Disabled,
+.newAnnouncementBox .newAnnouncementBoxButton.Disabled:hover
+{
+    background-color: #f6d74360;
+    filter: brightness(1);
+}
+
+.newAnnouncementBox .newAnnouncementBoxButton:hover
+{
+    filter: brightness(.95);
+}
+/*#endregion New announcement */
 
 /*#region Account */
 .accountBox
@@ -1942,7 +2413,7 @@ underlined
     left: 0;
     background-color: transparent;
 
-    z-index: 5;
+    z-index: 30;
 }
 
 .messageHolder .errorHolder, .messageHolder .correctnessHolder
@@ -2078,6 +2549,21 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
 }
 
 /*#region Animations */
+@keyframes sideMenuDropdownAnimation
+{
+    0%
+    {
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+
+    100%
+    {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
 @keyframes textBoxTitleLine1Animation
 {
     0%
@@ -2196,6 +2682,66 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
 {
     0% { opacity: 1; }
     100% { opacity: 0; }
+}
+
+@keyframes rightToMiddleItem
+{
+    0%
+    {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    100%
+    {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes middleToLefttItem
+{
+    0%
+    {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+
+    100%
+    {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes leftToMiddleItem
+{
+    0%
+    {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    100%
+    {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes middleToRightItem
+{
+    0%
+    {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+
+    100%
+    {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 }
 
 @keyframes defaultAnimation
@@ -2564,7 +3110,8 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
         transform: translateY(50px);
     }
 
-    #signAccountDecoration4
+    #signAccountDecoration4,
+    #newAnnouncementDecoration4
     {
         width: 400px;
         top: calc(50% - 200px);
@@ -2754,14 +3301,16 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
         margin-bottom: 30px;
     }
 
-    #signAccountDecoration2
+    #signAccountDecoration2,
+    #newAnnouncementDecoration2
     {
         width: 300px;
         top: -100;
         left: -100;
     }
 
-    #signAccountDecoration3
+    #signAccountDecoration3,
+    #newAnnouncementDecoration3
     {
         float: right;
         width: 160px;
@@ -2854,7 +3403,12 @@ p, div, h1, h2, h3, h4, h5, h6, i, img, input, svg
 
     .announcementsHolder.waitList .Announcement .announcementButton.Reject
     {
-        right: 60;
+        right: 50;
+    }
+
+    .announcementsHolder.waitList .Announcement .announcementButton.Info
+    {
+        right: 85;
     }
 
     .announcementsHolder .Announcement .announcementButton i

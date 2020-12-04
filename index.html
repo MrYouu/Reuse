@@ -17,6 +17,7 @@
         <script src = "https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+        <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
         <script src = "https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
         <script src = "https://kit.fontawesome.com/190623e0b3.js" crossorigin = "anonymous"></script>
         <script type = "text/javascript" src = "Files/Functions.js"></script>
@@ -24,7 +25,7 @@
         <title id = "Title">Reuse</title>
     </head>
 
-    <body id = "body" onload = "loadUserdata(); printAnnouncements('AALast', 'allAnnouncementsCategory');">
+    <body id = "body" onload = "loadUserdata()">
         <!-- #region Default -->
         <img src = "" alt = "Link image" style = "display: none;">
 
@@ -130,25 +131,6 @@
                 </div>
             </div>
     
-            <h1 class = "freeTitle">Shop</h1>
-            <div class = "Scroller Icons" id = "categoriesScroller">
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem Active" id = "allAnnouncementsCategory"><i class = "fas fa-arrow-right"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-sink"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-bath"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-toilet"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-chair"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-couch"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-laptop"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-tv"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-desktop"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-volume-up"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-blender"></i></div>
-                <div onclick = "goTo('Shop.html')" class = "scrollerItem"><i class = "fas fa-camera"></i></div>
-            </div>
-    
-            <h2 class = "freeTitle">Newest Items <a onclick = "goTo('Shop.html')" style = "cursor: pointer;">View all</a></h2>
-            <div class = "Scroller Items" id = "announcementsHolder"></div>
-    
             <div class = "bottomBar">
                 <div class = "bottomBarLinkHolder">
                     <a onclick = "goTo('index.html')" class = "bottomBarLinks Active">Home</a>
@@ -163,19 +145,6 @@
             </div>
 
             <div class = "mobileExpander"></div>
-        </div>
-
-        <div class = "announcementPriviewHolder" id = "announcementPriviewHolder">
-            <div class = "announcementPriview">
-                <div onclick = "openCloseAnnouncementPriview()" class = "XCloseButton"></div>
-                <img src = "" class = "announcementPriviewImage" id = "announcementPriviewImage">
-                <h1 class = "announcementPriviewTitle" id = "announcementPriviewTitle">Title</h1>
-                <p class = "announcementPriviewText">Price: <text id = "announcementPriviewPrice">0.00lv.</text></p>
-                <p class = "announcementPriviewText">Status: <text id = "announcementPriviewStatus">unknown</text></p>
-                <p class = "announcementPriviewText">ID: <text id = "announcementPriviewID"></text></p>
-                <p class = "announcementPriviewText">Additional information: <text id = "announcementPriviewInfo"></text></p>
-                <p onclick = "" class = "announcementPriviewButton" id = "announcementPriviewButton"><i class = "fas fa-plus"></i></p>
-            </div>
         </div>
 
         <script>
